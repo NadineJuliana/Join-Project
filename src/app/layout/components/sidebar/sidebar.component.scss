@@ -1,26 +1,27 @@
 section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 64px 0px 64px 0px;
-    background-color: var(--primary);
-    left: 0;
-    width: 232px;
-    height: 100vh;
-    flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 64px 0px 64px 0px;
+  background-color: var(--primary);
+  left: 0;
+  width: 232px;
+  height: 100vh;
+  flex: 1;
 }
 
 .logo {
-    max-width: 120px;
-    width: 100%;
+  max-width: 120px;
+  width: 100%;
 }
 
 .policy {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    a {
-        padding: 8px;
-    }
+  a {
+    padding: 8px;
+    color: white;
+  }
 }
