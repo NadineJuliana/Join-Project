@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { SupabaseService } from '../../../core/services/supabase.service';
+import { Contact } from '../models/contact.model';
 
 @Injectable({
   providedIn: 'root',
@@ -7,12 +8,19 @@ import { SupabaseService } from '../../../core/services/supabase.service';
 export class ContactsService {
   constructor(private supabaseService: SupabaseService) {}
 
-  async getContacts() {
-    let { data: contacts, error } = await this.supabaseService.getSupabaseClient().from('Contacts').select('*');
-    if (error) {
+  contacts = signal<Contact[]>([]);
+
+  async getAllContacts() {
+    let { data: contacts, error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Contacts')
+      .select('*');
+    if (!contacts) {
       console.error('Error fetching contacts:', error);
       return null;
     }
-    return contacts;
+    this.contacts.set((contacts || []).map((c) => new Contact(c)));
   }
+
+
 }
