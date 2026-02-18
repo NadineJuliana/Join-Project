@@ -1,14 +1,37 @@
 :host {
     width: 100%;
-    display: block;
-    flex: 1;
+    height: 96px;
+    background: var(--white);
+    display: flex;
+    filter: drop-shadow(var(--drop-shadow));
+    
 }
 
 section {
-    background: var(--white);
-    top: 0;
-    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    position: relative;
+    padding: 0px 40px;
+}
 
+.profile-section{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    img{
+        width: 32px;
+        height: 32px;
+        background-color: grey
+    }
+}
+
+.profile-icon{
+    border: solid 3px var(--primary);
+    height: 56px;
+    width: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
 }
