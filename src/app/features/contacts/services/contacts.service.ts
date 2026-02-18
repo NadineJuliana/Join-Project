@@ -33,4 +33,13 @@ export class ContactsService {
     if (error) throw error;
     return new Contact(data[0]);
   }
+
+  async deleteContact(id: number) {
+    const { error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('contacts')
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
+  }
 }
