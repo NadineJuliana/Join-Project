@@ -14,10 +14,14 @@ html {
 html,
 body {
   min-height: 100vh;
-
 }
 
 body {
   display: flex;
   flex-direction: column;
+}
+
+button{
+  border: 0;
+  cursor: pointer;
 }
