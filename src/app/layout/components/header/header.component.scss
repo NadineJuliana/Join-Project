@@ -1,0 +1,14 @@
+:host {
+    width: 100%;
+    display: block;
+    flex: 1;
+}
+
+section {
+    background: var(--white);
+    top: 0;
+    right: 0;
+    width: 100%;
+    position: relative;
+
+}

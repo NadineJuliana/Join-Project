@@ -1,4 +1,3 @@
-@use "../abstracts/variables" as *;
 @use "../abstracts/breakpoints" as *;
 
 * {
@@ -29,7 +28,7 @@ h3 {
   font-size: clamp(27px, 2.5vw, 20px);
   font-weight: 700;
   line-height: 1.2;
-  color: $primary;
+  color: var(--primary);
 }
 
 // Header Subline
@@ -38,7 +37,7 @@ h4 {
   font-size: clamp(20px, 2.5vw, 27px);
   font-weight: 400;
   line-height: 1.2;
-  color: $primary;
+  color: var(--primary);
 }
 
 // Kontaktnamen
@@ -64,7 +63,7 @@ h6 {
 
 .card-text {
   font-weight: 400;
-  color: $primary;
+  color: var(--primary);
 }
 
 @media (max-width: $bp-sm) {
