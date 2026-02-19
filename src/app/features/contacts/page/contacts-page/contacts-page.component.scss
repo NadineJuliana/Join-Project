@@ -21,21 +21,25 @@
     min-height: 0;
     display: flex;
     flex-direction: column;
+
     &__groupletter {
       width: 352px;
       height: 58px;
       margin: 0 0 8px 24px;
       box-shadow: 0 1px 0px rgba(0, 0, 0, 0.15);
-      h5{
+
+      h5 {
         margin-left: 16px;
       }
     }
+
     &__items {
       display: flex;
       width: 352px;
       height: 78px;
       margin-left: 24px;
     }
+
     &__initials {
       display: flex;
       justify-content: center;
@@ -47,6 +51,7 @@
       border-radius: 100%;
       margin-right: 24px;
     }
+
     &__rows {
       height: 78px;
     }
@@ -54,6 +59,18 @@
 
   &__details {
     flex: 1;
+    &__wrapper {
+      opacity: 0;
+      transform: translateX(100%);
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+
+      &.fade-in {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
   }
 
   &__headline {
@@ -109,8 +126,10 @@
       }
     }
   }
+
   &__informations {
     margin: 30px 0 0 60px;
+
     h6 {
       font-size: 16px;
       margin-bottom: 12px;

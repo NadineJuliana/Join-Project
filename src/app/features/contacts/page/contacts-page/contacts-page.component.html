@@ -28,36 +28,38 @@
       <h3>Better with a team</h3>
     </div>
 
-    @if (selectedContact()) {
-      <div class="contacts__specifics">
-        <div class="contacts__specifics__initals">V N</div>
-        <div class="contacts__specifics__name">
-          <h2>{{ selectedContact()?.name }}</h2>
-          <div class="contacts__specifics__edits">
-            <button>
-              <img src="icons/contacts-icons/edit.svg" alt="Edit" />
-              Edit
-            </button>
-            <button>
-              <img src="icons/contacts-icons/delete.svg" alt="Delete" />
-              Delete
-            </button>
+    <div class="contacts__details__wrapper" [class.fade-in]="selectedContact() !== null">
+      @if (selectedContact()) {
+        <div class="contacts__specifics">
+          <div class="contacts__specifics__initals">V N</div>
+          <div class="contacts__specifics__name">
+            <h2>{{ selectedContact()?.name }}</h2>
+            <div class="contacts__specifics__edits">
+              <button>
+                <img src="icons/contacts-icons/edit.svg" alt="Edit" />
+                Edit
+              </button>
+              <button>
+                <img src="icons/contacts-icons/delete.svg" alt="Delete" />
+                Delete
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="contacts__informations">
-        <h5>Contact Information</h5>
+        <div class="contacts__informations">
+          <h5>Contact Information</h5>
 
-        <div class="contacts__mail">
-          <h6>Email</h6>
-          <p>{{ selectedContact()?.email }}</p>
+          <div class="contacts__mail">
+            <h6>Email</h6>
+            <p>{{ selectedContact()?.email }}</p>
+          </div>
+          <div class="contacts__phone">
+            <h6>Phone</h6>
+            <p>{{ selectedContact()?.phone }}</p>
+          </div>
         </div>
-        <div class="contacts__phone">
-          <h6>Phone</h6>
-          <p>{{ selectedContact()?.phone }}</p>
-        </div>
-      </div>
-    }
+      }
+    </div>
   </div>
 </div>

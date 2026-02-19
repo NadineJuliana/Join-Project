@@ -76,4 +76,8 @@ export class ContactsService {
   selectContact(contact: Contact | null) {
     this.selectedContact.set(contact);
   }
+
+  clearSelectedContact() {
+    this.selectedContact.set(null);
+  }
 }

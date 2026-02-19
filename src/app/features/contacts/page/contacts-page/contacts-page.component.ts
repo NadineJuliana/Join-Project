@@ -17,6 +17,7 @@ export class ContactsPageComponent {
 
   ngOnInit() {
     this.dbService.getAllContacts();
+    this.dbService.selectedContact.set(null);
   }
 
   onSelectContact(contact: Contact) {
