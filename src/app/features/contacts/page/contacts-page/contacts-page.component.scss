@@ -1,40 +1,123 @@
 @use "../../../../../styles/abstracts/breakpoints" as *;
-// @use "../../../../../styles/abstracts/variables" as *;
 
 .contacts {
   display: flex;
   flex-direction: row;
   height: calc(100vh - 96px);
   width: calc(100vw - 232px);
+
   &__listpage {
     display: flex;
     flex-direction: column;
-    width: 320px;
+    width: 400px;
     overflow-y: hidden;
     min-height: 0;
     box-shadow: 5px 0 10px rgba(0, 0, 0, 0.15);
   }
+
   &__list {
     flex: 1;
     overflow-y: auto;
     min-height: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    &__groupletter {
+      width: 352px;
+      height: 58px;
+      margin: 0 0 8px 24px;
+      box-shadow: 0 1px 0px rgba(0, 0, 0, 0.15);
+      h5{
+        margin-left: 16px;
+      }
+    }
+    &__items {
+      display: flex;
+      width: 352px;
+      height: 78px;
+      margin-left: 24px;
+    }
+    &__initials {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: orange;
+      width: 42px;
+      height: 42px;
+      border: solid 2px var(--white);
+      border-radius: 100%;
+      margin-right: 24px;
+    }
+    &__rows {
+      height: 78px;
+    }
   }
-  &__details{
+
+  &__details {
     flex: 1;
   }
-  &__headline{
+
+  &__headline {
     height: 60px;
     display: flex;
     align-items: center;
     margin: 100px 0 20px 60px;
   }
-  &__seperator{
+
+  &__seperator {
     background-color: var(--accent);
     width: 3px;
     height: 50px;
     margin: 0 16px 0 16px;
+  }
+
+  &__specifics {
+    display: flex;
+
+    &__name {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    &__initals {
+      background-color: orange;
+      width: 120px;
+      height: 120px;
+      border: solid 3px var(--white);
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 47px;
+      margin: 0 60px 0 60px;
+    }
+
+    &__edits {
+      display: flex;
+      img {
+        width: 18px;
+        height: 18px;
+      }
+      button {
+        display: flex;
+        flex-direction: row;
+        height: 24px;
+        text-align: center;
+        font-size: 16px;
+        margin-right: 16px;
+        gap: 8px;
+      }
+    }
+  }
+  &__informations {
+    margin: 30px 0 0 60px;
+    h6 {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+  }
+
+  &__mail {
+    margin: 20px 0 16px 0;
   }
 }

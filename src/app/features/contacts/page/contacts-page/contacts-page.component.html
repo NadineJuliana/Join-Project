@@ -3,16 +3,24 @@
     <button>Add Contact</button>
     <div class="contacts__list">
       @for (group of groupedContacts(); track group.letter) {
-        <h4>{{ group.letter }}</h4>
+        <div class="contacts__list__groupletter">
+          <h5>{{ group.letter }}</h5>
+        </div>
         @for (contact of group.contacts; track contact.id) {
-          <div class="contacts__rows">
-            <h5>{{ contact.name }}</h5>
-            <p>{{ contact.email }}</p>
+          <div class="contacts__list__items">
+            <div class="contacts__list__initials">
+              {{ contact.name.charAt(0) }}
+            </div>
+            <div class="contacts__list__rows">
+              <h5>{{ contact.name }}</h5>
+              <p>{{ contact.email }}</p>
+            </div>
           </div>
         }
       }
     </div>
   </div>
+
   <div class="contacts__details">
     <div class="contacts__headline">
       <h1>Contacts</h1>
@@ -21,23 +29,33 @@
     </div>
 
     <div class="contacts__specifics">
+      <div class="contacts__specifics__initals">V N</div>
       <div class="contacts__specifics__name">
-        <div class="contacts__specifics__initals"></div>
-        <h2></h2>
+        <h2>Vorname Nachname</h2>
         <div class="contacts__specifics__edits">
-          <button>Edit</button>
-          <button>Delete</button>
+          <button>
+            <img src="icons/contacts-icons/edit.svg" alt="Edit" />
+            Edit
+          </button>
+          <button>
+            <img src="icons/contacts-icons/delete.svg" alt="Delete" />
+            Delete
+          </button>
         </div>
       </div>
     </div>
 
-    <h5>Contact Information</h5>
+    <div class="contacts__informations">
+      <h5>Contact Information</h5>
 
-    <div class="contacts__mail">
-      <h6>Email</h6>
-    </div>
-    <div class="contacts__phone">
-      <h6>Phone</h6>
+      <div class="contacts__mail">
+        <h6>Email</h6>
+        <p>vornachnamatexample.com</p>
+      </div>
+      <div class="contacts__phone">
+        <h6>Phone</h6>
+        <p>+49 123 4567890</p>
+      </div>
     </div>
   </div>
 </div>
