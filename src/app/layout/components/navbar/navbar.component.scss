@@ -1,6 +1,19 @@
+@use "../../../../styles/abstracts/breakpoints" as *;
+
 nav {
   display: flex;
   flex-direction: column;
   gap: 16px;
   color: var(--lightgray);
+}
+
+@media (max-width: $bp-md) {
+  nav {
+    display: flex;
+    flex-direction: row;
+    align-items: space-between;
+
+    gap: 16px;
+    color: var(--lightgray);
+  }
 }

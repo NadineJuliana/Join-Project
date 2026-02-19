@@ -1,3 +1,11 @@
+@use "../../../../styles/abstracts/breakpoints" as *;
+
+:host {
+  display: fixed;
+  left: 0;
+  bottom: 0;
+}
+
 section {
   display: flex;
   flex-direction: column;
@@ -5,7 +13,6 @@ section {
   justify-content: space-between;
   padding: 64px 0px 64px 0px;
   background-color: var(--primary);
-  left: 0;
   width: 232px;
   height: 100vh;
   flex: 1;
@@ -23,5 +30,27 @@ section {
   a {
     padding: 8px;
     color: var(--gray);
+  }
+}
+
+@media (max-width: $bp-md) {
+
+  section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 16px 0px 16px;
+    background-color: var(--primary);
+    width: 100%;
+    height: 80px;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .policy {
+    display: none;
   }
 }
