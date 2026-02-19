@@ -1,3 +1,5 @@
+@use "../../../../styles/abstracts/breakpoints" as *;
+
 nav {
   display: flex;
   flex-direction: column;
@@ -17,4 +19,15 @@ nav {
 .navIcon {
   max-height: 25px;
   max-width: 25px;
+}
+
+@media (max-width: $bp-md) {
+  nav {
+    display: flex;
+    flex-direction: row;
+    align-items: space-between;
+
+    gap: 16px;
+    color: var(--lightgray);
+  }
 }
