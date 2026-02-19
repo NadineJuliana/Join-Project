@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { SupabaseService } from '../../../core/services/supabase.service';
 import { Contact } from '../models/contact.model';
 
@@ -8,7 +8,22 @@ import { Contact } from '../models/contact.model';
 export class ContactsService {
   constructor(private supabaseService: SupabaseService) {}
 
+  // contactListInsertChannel;
+  // contactListDeleteChannel;
+
   contacts = signal<Contact[]>([]);
+  groupedContacts = computed(() => {
+    const sorted = [...this.contacts()].sort((a, b) => a.name.localeCompare(b.name));
+    const grouped: Record<string, Contact[]> = {};
+    sorted.forEach((contact) => {
+      const letter = contact.name.charAt(0).toUpperCase();
+      if (!grouped[letter]) {
+        grouped[letter] = [];
+      }
+      grouped[letter].push(contact);
+    });
+    return Object.keys(grouped).sort().map((letter) => ({ letter, contacts: grouped[letter] }));
+  });
 
   async getAllContacts() {
     let { data: contacts, error } = await this.supabaseService
@@ -17,8 +32,10 @@ export class ContactsService {
       .select('*');
     if (!contacts) {
       console.error('Error fetching contacts:', error);
-      return null;
+      return;
     }
+    console.log('Init get All Contacts', contacts);
+
     this.contacts.set((contacts || []).map((c) => new Contact(c)));
   }
 
@@ -26,7 +43,7 @@ export class ContactsService {
     const contact_data = contact.getCleanAddJson();
     const { data, error } = await this.supabaseService
       .getSupabaseClient()
-      .from('contacts')
+      .from('Contacts')
       .insert(contact_data)
       .select();
 
@@ -38,7 +55,7 @@ export class ContactsService {
     const contact_data = contact.getCleanAddJson();
     const { data, error } = await this.supabaseService
       .getSupabaseClient()
-      .from('contacts')
+      .from('Contacts')
       .update(contact_data)
       .eq('id', contact.id)
       .select();
@@ -49,7 +66,7 @@ export class ContactsService {
   async deleteContact(id: number) {
     const { error } = await this.supabaseService
       .getSupabaseClient()
-      .from('contacts')
+      .from('Contacts')
       .delete()
       .eq('id', id);
     if (error) throw error;
