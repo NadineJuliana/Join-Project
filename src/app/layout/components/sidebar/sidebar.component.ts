@@ -3,10 +3,9 @@ import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-sidebar',
+  standalone: true,
   imports: [NavbarComponent],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent {
-
-}
+export class SidebarComponent {}
