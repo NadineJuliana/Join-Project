@@ -1,1 +1,14 @@
-<p>contacts-page works!</p>
+<div class="contacts">
+  <button>Add Contact</button>
+  <div class="contacts__list">
+    @for (group of groupedContacts(); track group.letter) {
+      <h2>{{ group.letter }}</h2>
+      @for (contact of group.contacts; track contact.id) {
+        <div class="contacts__rows">
+          <p>{{ contact.name }}</p>
+          <p>{{ contact.email }}</p>
+        </div>
+      }
+    }
+  </div>
+</div>
