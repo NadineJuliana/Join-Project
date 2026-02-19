@@ -7,7 +7,7 @@
           <h5>{{ group.letter }}</h5>
         </div>
         @for (contact of group.contacts; track contact.id) {
-          <div class="contacts__list__items">
+          <div class="contacts__list__items" (click)="onSelectContact(contact)">
             <div class="contacts__list__initials">
               {{ contact.name.charAt(0) }}
             </div>
@@ -28,34 +28,36 @@
       <h3>Better with a team</h3>
     </div>
 
-    <div class="contacts__specifics">
-      <div class="contacts__specifics__initals">V N</div>
-      <div class="contacts__specifics__name">
-        <h2>Vorname Nachname</h2>
-        <div class="contacts__specifics__edits">
-          <button>
-            <img src="icons/contacts-icons/edit.svg" alt="Edit" />
-            Edit
-          </button>
-          <button>
-            <img src="icons/contacts-icons/delete.svg" alt="Delete" />
-            Delete
-          </button>
+    @if (selectedContact()) {
+      <div class="contacts__specifics">
+        <div class="contacts__specifics__initals">V N</div>
+        <div class="contacts__specifics__name">
+          <h2>{{ selectedContact()?.name }}</h2>
+          <div class="contacts__specifics__edits">
+            <button>
+              <img src="icons/contacts-icons/edit.svg" alt="Edit" />
+              Edit
+            </button>
+            <button>
+              <img src="icons/contacts-icons/delete.svg" alt="Delete" />
+              Delete
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="contacts__informations">
-      <h5>Contact Information</h5>
+      <div class="contacts__informations">
+        <h5>Contact Information</h5>
 
-      <div class="contacts__mail">
-        <h6>Email</h6>
-        <p>vornachnamatexample.com</p>
+        <div class="contacts__mail">
+          <h6>Email</h6>
+          <p>{{ selectedContact()?.email }}</p>
+        </div>
+        <div class="contacts__phone">
+          <h6>Phone</h6>
+          <p>{{ selectedContact()?.phone }}</p>
+        </div>
       </div>
-      <div class="contacts__phone">
-        <h6>Phone</h6>
-        <p>+49 123 4567890</p>
-      </div>
-    </div>
+    }
   </div>
 </div>

@@ -12,6 +12,7 @@ export class ContactsService {
   // contactListDeleteChannel;
 
   contacts = signal<Contact[]>([]);
+  selectedContact = signal<Contact | null>(null);
   groupedContacts = computed(() => {
     const sorted = [...this.contacts()].sort((a, b) => a.name.localeCompare(b.name));
     const grouped: Record<string, Contact[]> = {};
@@ -70,5 +71,9 @@ export class ContactsService {
       .delete()
       .eq('id', id);
     if (error) throw error;
+  }
+
+  selectContact(contact: Contact | null) {
+    this.selectedContact.set(contact);
   }
 }

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ContactsService } from '../../services/contacts.service';
-
+import { Contact } from '../../models/contact.model';
 
 @Component({
   selector: 'app-contacts-page',
@@ -13,8 +13,13 @@ export class ContactsPageComponent {
 
   contactList = this.dbService.contacts;
   groupedContacts = this.dbService.groupedContacts;
+  selectedContact = this.dbService.selectedContact;
 
   ngOnInit() {
     this.dbService.getAllContacts();
+  }
+
+  onSelectContact(contact: Contact) {
+    this.dbService.selectContact(contact);
   }
 }
