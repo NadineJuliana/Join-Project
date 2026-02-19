@@ -38,13 +38,13 @@
       width: 352px;
       height: 78px;
       margin-left: 24px;
+      cursor: pointer;
     }
 
     &__initials {
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: orange;
       width: 42px;
       height: 42px;
       border: solid 2px var(--white);
@@ -138,5 +138,49 @@
 
   &__mail {
     margin: 20px 0 16px 0;
+  }
+
+  @media (max-width: $bp-xl2) {
+    &__headline {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin: 80px 0 0 60px;
+      height: 150px;
+
+      h1,
+      h3 {
+        margin: 0;
+      }
+    }
+
+    &__seperator {
+      width: 200px;
+      height: 3px;
+      margin: 16px 0;
+    }
+
+    &__specifics {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 60px;
+
+      &__initals {
+        margin: 0 30px 10px 0px;
+      }
+
+      &__name {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      &__edits {
+        display: flex;
+        flex-direction: row;
+        margin-top: 16px;
+        gap: 8px;
+      }
+    }
   }
 }
