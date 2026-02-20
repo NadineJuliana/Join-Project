@@ -3,14 +3,23 @@
         <div class="contact-form__input-wrap">
             <input type="text" formControlName="name" placeholder="Name" aria-label="Name" />
             <span class="material-icons">person</span>
+            @if (!form.controls.name.valid && form.controls.name.touched && !form.controls.name.disabled) {
+            <p>Please enter first and last name</p>
+            }
         </div>
         <div class="contact-form__input-wrap">
             <input type="email" formControlName="email" placeholder="Email" aria-label="Email" />
             <span class="material-icons">mail</span>
+            @if (!form.controls.email.valid && form.controls.email.touched && !form.controls.email.disabled) {
+            <p>Please enter a valid email</p>
+            }
         </div>
         <div class="contact-form__input-wrap">
             <input type="tel" formControlName="phone" placeholder="Phone" aria-label="Phone" />
             <span class="material-icons">call</span>
+            @if (!form.controls.phone.valid && form.controls.phone.touched && !form.controls.phone.disabled) {
+            <p>Please enter a valid phone number</p>
+            }
         </div>
     </div>
 

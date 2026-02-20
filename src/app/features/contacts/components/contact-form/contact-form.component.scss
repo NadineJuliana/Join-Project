@@ -10,7 +10,9 @@
 	&__input-wrap {
 		position: relative;
 		display: flex;
-		align-items: center;
+		flex-direction: column;
+		align-items: left;
+		justify-content: center;
 
 		.material-icons {
 			position: absolute;
