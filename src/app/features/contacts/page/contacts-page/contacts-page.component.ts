@@ -34,4 +34,15 @@ export class ContactsPageComponent {
   closeContactDialog() {
     this.showContactDialog.set(false);
   }
+
+  async onDeleteSelectedContact() {
+    const contact = this.selectedContact();
+    if (!contact) return;
+
+    try {
+      await this.dbService.deleteContact(contact.id);
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+    }
+  }
 }
