@@ -6,10 +6,12 @@ import { Contact } from '../models/contact.model';
   providedIn: 'root',
 })
 export class ContactsService {
-  constructor(private supabaseService: SupabaseService) {}
-  private contactsLoaded = false;
-  // contactListInsertChannel;
-  // contactListDeleteChannel;
+  constructor(private supabaseService: SupabaseService) {
+    this.initRealtime();
+  }
+  contactsLoaded = false;
+
+  contactsChannel: any;
 
   contacts = signal<Contact[]>([]);
   selectedContact = signal<Contact | null>(null);
@@ -29,6 +31,67 @@ export class ContactsService {
       .sort()
       .map((letter) => ({ letter, contacts: grouped[letter] }));
   });
+
+  initRealtime() {
+    this.contactsChannel = this.supabaseService
+      .getSupabaseClient()
+      .channel('custom-all-channel')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'Contacts' },
+        (payload) => {
+          console.log('Change received!', payload);
+        },
+      )
+      .subscribe();
+  }
+
+  handleRealtimeEvent(payload: any) {
+    switch (payload.eventType) {
+      case 'INSERT':
+        this.handleInsert(payload.new);
+        break;
+      case 'UPDATE':
+        this.handleUpdate(payload.new);
+        break;
+      case 'DELETE':
+        this.handleDelete(payload.old);
+        break;
+    }
+  }
+
+  handleInsert(newData: any) {
+    const newContact = new Contact(newData);
+    this.contacts.update((list) => [...list, newContact]);
+  }
+
+  handleUpdate(updatedData: any) {
+    const updatedContact = new Contact(updatedData);
+    this.contacts.update((list) =>
+      list.map((c) => (c.id === updatedContact.id ? updatedContact : c)),
+    );
+
+    if (this.selectedContact()?.id === updatedContact.id) {
+      this.selectedContact.set(updatedContact);
+    }
+  }
+
+  handleDelete(oldData: any) {
+    const deletedId = oldData.id;
+    this.contacts.update((list) => list.filter((c) => c.id !== deletedId));
+
+    if (this.selectedContact()?.id === deletedId) {
+      this.selectedContact.set(null);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.contactsChannel) {
+      this.supabaseService
+        .getSupabaseClient()
+        .removeChannel(this.contactsChannel);
+    }
+  }
 
   async getAllContacts() {
     let { data: contacts, error } = await this.supabaseService
