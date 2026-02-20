@@ -40,6 +40,7 @@ export class ContactsService {
         'postgres_changes',
         { event: '*', schema: 'public', table: 'Contacts' },
         (payload) => {
+          this.handleRealtimeEvent(payload);
           console.log('Change received!', payload);
         },
       )
