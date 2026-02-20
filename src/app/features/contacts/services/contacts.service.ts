@@ -14,7 +14,9 @@ export class ContactsService {
   contacts = signal<Contact[]>([]);
   selectedContact = signal<Contact | null>(null);
   groupedContacts = computed(() => {
-    const sorted = [...this.contacts()].sort((a, b) => a.name.localeCompare(b.name));
+    const sorted = [...this.contacts()].sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
     const grouped: Record<string, Contact[]> = {};
     sorted.forEach((contact) => {
       const letter = contact.name.charAt(0).toUpperCase();
@@ -23,7 +25,9 @@ export class ContactsService {
       }
       grouped[letter].push(contact);
     });
-    return Object.keys(grouped).sort().map((letter) => ({ letter, contacts: grouped[letter] }));
+    return Object.keys(grouped)
+      .sort()
+      .map((letter) => ({ letter, contacts: grouped[letter] }));
   });
 
   async getAllContacts() {
@@ -36,8 +40,7 @@ export class ContactsService {
       return;
     }
     console.log('Init get All Contacts', contacts);
-
-    this.contacts.set((contacts || []).map((c: Partial<Contact>) => new Contact(c)));
+    this.contacts.set((contacts || []).map((c) => new Contact(c)));
   }
 
   async addContact(contact: Contact) {
@@ -49,7 +52,9 @@ export class ContactsService {
       .select();
 
     if (error) throw error;
-    return new Contact(data[0]);
+    const newContact = new Contact(data[0]);
+    this.contacts.update((contacts) => [...contacts, newContact]);
+    return newContact;
   }
 
   async updateContact(contact: Contact) {
@@ -61,7 +66,14 @@ export class ContactsService {
       .eq('id', contact.id)
       .select();
     if (error) throw error;
-    return new Contact(data[0]);
+    const updatedContact = new Contact(data[0]);
+    this.contacts.update((list) =>
+      list.map((c) => (c.id === updatedContact.id ? updatedContact : c)),
+    );
+    if (this.selectedContact()?.id === updatedContact.id) {
+      this.selectedContact.set(updatedContact);
+    }
+    return updatedContact;
   }
 
   async deleteContact(id: number) {
@@ -71,6 +83,11 @@ export class ContactsService {
       .delete()
       .eq('id', id);
     if (error) throw error;
+    this.contacts.update((list) => list.filter((c) => c.id !== id));
+
+    if (this.selectedContact()?.id === id) {
+      this.selectedContact.set(null);
+    }
   }
 
   selectContact(contact: Contact | null) {
