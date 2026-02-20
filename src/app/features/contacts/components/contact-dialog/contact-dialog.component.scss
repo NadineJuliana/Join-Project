@@ -84,10 +84,9 @@
 		display: grid;
 		place-items: center;
 
-		svg {
-			width: 68px;
-			height: 68px;
-			fill: var(--white);
+		span {
+            font-size: 60px;
+			color: var(--white);
 		}
 	}
 }

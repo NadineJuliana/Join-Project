@@ -7,12 +7,26 @@
 		gap: 24px;
 	}
 
+	&__input-wrap {
+		position: relative;
+		display: flex;
+		align-items: center;
+
+		.material-icons {
+			position: absolute;
+			right: 20px;
+			font-size: 24px;
+			color: var(--lightgray);
+			pointer-events: none;
+		}
+	}
+
 	input {
 		width: 100%;
 		height: 50px;
 		border: 1px solid var(--lightgray);
 		border-radius: 10px;
-		padding: 0 20px;
+		padding: 13px 56px 13px 20px;
 		font-size: 20px;
 		color: var(--primary);
 		background: var(--white);

@@ -1,8 +1,17 @@
 <form class="contact-form" [formGroup]="form" (ngSubmit)="onCreate()">
     <div class="contact-form__fields">
-        <input type="text" formControlName="name" placeholder="Name" aria-label="Name" />
-        <input type="email" formControlName="email" placeholder="Email" aria-label="Email" />
-        <input type="tel" formControlName="phone" placeholder="Phone" aria-label="Phone" />
+        <div class="contact-form__input-wrap">
+            <input type="text" formControlName="name" placeholder="Name" aria-label="Name" />
+            <span class="material-icons">person</span>
+        </div>
+        <div class="contact-form__input-wrap">
+            <input type="email" formControlName="email" placeholder="Email" aria-label="Email" />
+            <span class="material-icons">mail</span>
+        </div>
+        <div class="contact-form__input-wrap">
+            <input type="tel" formControlName="phone" placeholder="Phone" aria-label="Phone" />
+            <span class="material-icons">call</span>
+        </div>
     </div>
 
     <div class="contact-form__actions">
