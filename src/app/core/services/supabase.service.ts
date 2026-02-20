@@ -6,16 +6,19 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class SupabaseService {
-  private supabaseClient: SupabaseClient;
+  private static supabaseClient: SupabaseClient;
   constructor() {
-    this.supabaseClient = createClient(
-      environment.supabaseUrl,
-      environment.supabaseKey,
-    );
+    if (!SupabaseService.supabaseClient) {
+      SupabaseService.supabaseClient = createClient(
+        environment.supabaseUrl,
+        environment.supabaseKey
+      );
+      console.log('Supabase client initialized');
+    }
   }
 
   getSupabaseClient(): SupabaseClient {
     console.log('Supabase client accessed');
-    return this.supabaseClient;
+    return SupabaseService.supabaseClient;
   }
 }
