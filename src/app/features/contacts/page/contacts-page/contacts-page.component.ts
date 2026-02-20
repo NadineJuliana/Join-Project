@@ -2,10 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { ContactsService } from '../../services/contacts.service';
 import { Contact } from '../../models/contact.model';
 import { ContactDialogComponent } from '../../components/contact-dialog/contact-dialog.component';
+import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 
 @Component({
   selector: 'app-contacts-page',
-  imports: [ContactDialogComponent],
+  imports: [ContactDialogComponent, InitialsPipe],
   templateUrl: './contacts-page.component.html',
   styleUrl: './contacts-page.component.scss',
 })

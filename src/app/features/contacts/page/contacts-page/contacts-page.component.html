@@ -11,7 +11,7 @@
       @for (contact of group.contacts; track contact.id) {
       <div class="contacts__list__items" (click)="onSelectContact(contact)">
         <div class="contacts__list__initials"  [style.backgroundColor]="contact.color">
-          {{ contact.name.charAt(0) }}
+          {{ contact.name | initials }}
         </div>
         <div class="contacts__list__rows">
           <h5>{{ contact.name }}</h5>
@@ -34,7 +34,7 @@
       @if (selectedContact()) {
       <div class="contacts__specifics">
         <div class="contacts__specifics__initals" [style.backgroundColor]="selectedContact()?.color">
-          {{ selectedContact()?.name?.charAt(0) }}
+          {{ selectedContact()?.name | initials }}
         </div>
         <div class="contacts__specifics__name">
           <h2>{{ selectedContact()?.name }}</h2>
