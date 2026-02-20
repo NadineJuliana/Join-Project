@@ -15,11 +15,13 @@ export class ContactFormComponent {
   cancelForm = output<void>();
 
   form = this.formBuilder.nonNullable.group({
-    name: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
-    phone: ['', [Validators.required]],
+    name: ['', [Validators.required, Validators.pattern(/^[a-zA-ZäöüÄÖÜß\s]+\s+[a-zA-ZäöüÄÖÜß\s]+$/)]], // Der Name muss Vorname und Nachname enthalten UND darf keine Nummern enthalten -> erledigt!
+    email: ['', [Validators.required, Validators.email]], // Email muss einem validen Regex entsprechen -> erledigt!
+    phone: ['', [Validators.required, Validators.pattern(/^\+?[0-9]+$/)]], // Phone darf nur aus Nummern bestehen (opt. “+”) -> erledigt!
   });
 
+  // Prüft ob Form valide ist → wenn nicht: markAllAsTouched() zeigt Fehler
+  // Wenn valide: createContact.emit(new Contact(form.getRawValue()))
   onCreate() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
