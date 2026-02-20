@@ -37,7 +37,7 @@ export class ContactsService {
     }
     console.log('Init get All Contacts', contacts);
 
-    this.contacts.set((contacts || []).map((c) => new Contact(c)));
+    this.contacts.set((contacts || []).map((c: Partial<Contact>) => new Contact(c)));
   }
 
   async addContact(contact: Contact) {
