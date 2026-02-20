@@ -1,0 +1,21 @@
+.btn {
+    border: none;
+    border-radius: 10px;
+    padding: 8px 16px;
+    gap: 4px;
+}
+
+.btn--primary {
+    background: var(--primary);
+    color: var(--white);
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.btn--secondary {
+    background: var(--white);
+    color: var(--primary);
+    border: solid 1px var(--primary);
+    font-size: 20px;
+    font-weight: 400;
+}
