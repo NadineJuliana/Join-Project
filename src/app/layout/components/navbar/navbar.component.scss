@@ -8,17 +8,27 @@ nav {
 
   > a {
     width: 232px;
-    padding: 8px 60px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    padding: 8px 60px;
     gap: 8px;
+  }
+
+  :hover {
+    background-color: var(--primary-light);
+  }
+
+  > a.is-active {
+    background-color: var(--primary-dark);
+    color: var(--white);
   }
 }
 
 .navIcon {
-  max-height: 25px;
-  max-width: 25px;
+  max-width: 30px;
+  max-height: 30px;
+  display: block;
 }
 
 @media (max-width: $bp-md) {
