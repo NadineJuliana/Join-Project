@@ -18,8 +18,8 @@ export class ContactsPageComponent {
   selectedContact = this.dbService.selectedContact;
   showContactDialog = signal(false);
 
-  ngOnInit() {
-    this.dbService.getAllContacts();
+  async ngOnInit() {
+    await this.dbService.getAllContacts();
     this.dbService.selectedContact.set(null);
   }
 

@@ -7,7 +7,7 @@ import { Contact } from '../models/contact.model';
 })
 export class ContactsService {
   constructor(private supabaseService: SupabaseService) {}
-
+  private contactsLoaded = false;
   // contactListInsertChannel;
   // contactListDeleteChannel;
 
@@ -41,6 +41,7 @@ export class ContactsService {
     }
     console.log('Init get All Contacts', contacts);
     this.contacts.set((contacts || []).map((c) => new Contact(c)));
+    this.contactsLoaded = true;
   }
 
   async addContact(contact: Contact) {

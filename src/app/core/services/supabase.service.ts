@@ -11,7 +11,7 @@ export class SupabaseService {
     if (!SupabaseService.supabaseClient) {
       SupabaseService.supabaseClient = createClient(
         environment.supabaseUrl,
-        environment.supabaseKey
+        environment.supabaseKey,
       );
       console.log('Supabase client initialized');
     }
