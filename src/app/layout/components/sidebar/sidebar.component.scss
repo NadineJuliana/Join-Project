@@ -13,7 +13,7 @@ section {
   justify-content: space-between;
   padding: 64px 0px 64px 0px;
   background-color: var(--primary);
-  width: 232px;
+  width: clamp(72px, 18vw, 232px);
   height: 100vh;
   flex: 1;
 }
@@ -21,23 +21,31 @@ section {
 .logo {
   max-width: 100px;
   width: 100%;
-  img{
+  img {
     width: 100%;
   }
 }
 
-.policy {
+.legal {
   display: flex;
   flex-direction: column;
 
   a {
-    padding: 8px;
+    width: 232px;
+    display: flex;
+    justify-content: flex-start;
+    padding: 8px 60px;
     color: var(--gray);
+    font-variation-settings: "wght" 400;
+
+    &:hover {
+      color: var(--accent);
+      font-weight: 700;
+    }
   }
 }
 
 @media (max-width: $bp-md) {
-
   section {
     display: flex;
     flex-direction: row;
@@ -53,7 +61,7 @@ section {
     display: none;
   }
 
-  .policy {
+  .legal {
     display: none;
   }
 }
