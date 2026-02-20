@@ -1,1 +1,15 @@
-<p>contact-form works!</p>
+<form class="contact-form" [formGroup]="form" (ngSubmit)="onCreate()">
+    <div class="contact-form__fields">
+        <input type="text" formControlName="name" placeholder="Name" aria-label="Name" />
+        <input type="email" formControlName="email" placeholder="Email" aria-label="Email" />
+        <input type="tel" formControlName="phone" placeholder="Phone" aria-label="Phone" />
+    </div>
+
+    <div class="contact-form__actions">
+        <button class="btn btn--secondary" type="button" (click)="onCancel()">Cancel <span class="material-icons">
+                close
+            </span></button>
+        <button class="btn btn--primary" type="submit">Create contact <span class="material-icons">
+            </span></button>
+    </div>
+</form>

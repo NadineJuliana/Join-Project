@@ -1,1 +1,26 @@
-<p>contact-dialog works!</p>
+<div class="contact-dialog" (click)="onClose()">
+    <div class="contact-dialog__window" (click)="$event.stopPropagation()">
+        <div class="contact-dialog__header">
+            <img class="contact-dialog__logo" src="Join Logo white.svg" alt="Join" />
+            <h1>Add contact</h1>
+            <h4>Tasks are better with a team!</h4>
+            <div class="contact-dialog__separator"></div>
+        </div>
+
+        <div class="contact-dialog__content">
+            <button class="contact-dialog__close" type="button" (click)="onClose()" aria-label="Close dialog">
+                <span class="material-icons">
+                    close
+                </span>
+            </button>
+
+            <div class="contact-dialog__contact">
+                <div class="contact-dialog__avatar">
+                    <img src="" alt="">
+                </div>
+
+                <app-contact-form (createContact)="onCreateContact($event)" (cancelForm)="onClose()"></app-contact-form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,10 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ContactsService } from '../../services/contacts.service';
 import { Contact } from '../../models/contact.model';
+import { ContactDialogComponent } from '../../components/contact-dialog/contact-dialog.component';
 
 @Component({
   selector: 'app-contacts-page',
-  imports: [],
+  imports: [ContactDialogComponent],
   templateUrl: './contacts-page.component.html',
   styleUrl: './contacts-page.component.scss',
 })
@@ -14,6 +15,7 @@ export class ContactsPageComponent {
   contactList = this.dbService.contacts;
   groupedContacts = this.dbService.groupedContacts;
   selectedContact = this.dbService.selectedContact;
+  showContactDialog = signal(false);
 
   ngOnInit() {
     this.dbService.getAllContacts();
@@ -22,5 +24,13 @@ export class ContactsPageComponent {
 
   onSelectContact(contact: Contact) {
     this.dbService.selectContact(contact);
+  }
+
+  openContactDialog() {
+    this.showContactDialog.set(true);
+  }
+
+  closeContactDialog() {
+    this.showContactDialog.set(false);
   }
 }
