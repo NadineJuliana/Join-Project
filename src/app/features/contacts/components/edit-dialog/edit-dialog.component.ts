@@ -1,11 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
+import { Contact } from '../../models/contact.model';
+import { ContactsService } from '../../services/contacts.service';
+import { ContactFormComponent } from '../contact-form/contact-form.component';
 
 @Component({
   selector: 'app-edit-dialog',
-  imports: [],
+  imports: [ContactFormComponent],
   templateUrl: './edit-dialog.component.html',
-  styleUrl: './edit-dialog.component.scss'
+  styleUrl: './edit-dialog.component.scss',
 })
 export class EditDialogComponent {
+  private contactsService = inject(ContactsService);
+
+  closeDialog = output<void>();
+
+  onClose() {
+    this.closeDialog.emit();
+  }
+
 
 }

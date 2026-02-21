@@ -41,7 +41,7 @@
         <div class="contacts__specifics__name">
           <h2>{{ selectedContact()?.name }}</h2>
           <div class="contacts__specifics__edits">
-            <button>
+            <button (click)="openEditDialog()">
               <span class="material-icons">
                 edit
               </span>
@@ -76,4 +76,7 @@
 
 @if (showContactDialog()) {
 <app-contact-dialog (closeDialog)="closeContactDialog()"></app-contact-dialog>
+}
+@if (showEditDialog()) {
+<app-edit-dialog (closeDialog)="closeEditDialog()"></app-edit-dialog>
 }

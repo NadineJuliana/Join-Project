@@ -3,10 +3,11 @@ import { ContactsService } from '../../services/contacts.service';
 import { Contact } from '../../models/contact.model';
 import { ContactDialogComponent } from '../../components/contact-dialog/contact-dialog.component';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
+import { EditDialogComponent } from '../../components/edit-dialog/edit-dialog.component';
 
 @Component({
   selector: 'app-contacts-page',
-  imports: [ContactDialogComponent, InitialsPipe],
+  imports: [ContactDialogComponent, InitialsPipe, EditDialogComponent],
   templateUrl: './contacts-page.component.html',
   styleUrl: './contacts-page.component.scss',
 })
@@ -17,6 +18,7 @@ export class ContactsPageComponent {
   groupedContacts = this.dbService.groupedContacts;
   selectedContact = this.dbService.selectedContact;
   showContactDialog = signal(false);
+  showEditDialog = signal(false);
 
   async ngOnInit() {
     await this.dbService.getAllContacts();
@@ -33,6 +35,14 @@ export class ContactsPageComponent {
 
   closeContactDialog() {
     this.showContactDialog.set(false);
+  }
+
+  openEditDialog() {
+    this.showEditDialog.set(true);
+  }
+
+  closeEditDialog() {
+    this.showEditDialog.set(false);
   }
 
   async onDeleteSelectedContact() {
