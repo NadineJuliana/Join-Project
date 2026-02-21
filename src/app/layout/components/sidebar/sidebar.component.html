@@ -4,7 +4,18 @@
   </div>
   <app-navbar></app-navbar>
   <div class="legal">
-    <a href="">Privacy Policy</a>
-    <a href="">Legal Notice</a>
+    <a
+      routerLink="/privacy-policy"
+      routerLinkActive="is-active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Privacy Policy</a
+    >
+
+    <a
+      routerLink="/legal-notice"
+      routerLinkActive="is-active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Legal notice</a
+    >
   </div>
 </section>

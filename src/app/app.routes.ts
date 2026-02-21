@@ -4,6 +4,8 @@ import { SummaryPageComponent } from './features/summary/page/summary-page/summa
 import { ContactsPageComponent } from './features/contacts/page/contacts-page/contacts-page.component';
 import { TasksPageComponent } from './features/tasks/page/tasks-page/tasks-page.component';
 import { BoardPageComponent } from './features/board/page/board-page/board-page.component';
+import { PrivacypolicyPageComponent } from './features/privacy/privacypolicy-page/privacypolicy-page.component';
+import { LegalnoticePageComponent } from './features/legalnotice/legalnotice-page/legalnotice-page.component';
 
 export const routes: Routes = [
   {
@@ -25,6 +27,14 @@ export const routes: Routes = [
       {
         path: 'contacts',
         component: ContactsPageComponent,
+      },
+      {
+        path: 'privacy-policy',
+        component: PrivacypolicyPageComponent,
+      },
+      {
+        path: 'legal-notice',
+        component: LegalnoticePageComponent,
       },
     ],
   },

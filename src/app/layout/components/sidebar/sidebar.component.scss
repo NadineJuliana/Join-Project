@@ -30,18 +30,22 @@ section {
   display: flex;
   flex-direction: column;
 
-  a {
+  > a {
     width: 232px;
     display: flex;
     justify-content: flex-start;
     padding: 8px 60px;
     color: var(--gray);
     font-variation-settings: "wght" 400;
+  }
 
-    &:hover {
-      color: var(--accent);
-      font-weight: 700;
-    }
+  :hover {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  > a.is-active {
+    background-color: var(--primary-dark);
   }
 }
 
