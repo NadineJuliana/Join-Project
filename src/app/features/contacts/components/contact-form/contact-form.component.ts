@@ -1,4 +1,4 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, output, input, effect } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Contact } from '../../models/contact.model';
 
@@ -11,7 +11,7 @@ import { Contact } from '../../models/contact.model';
 export class ContactFormComponent {
   private formBuilder = inject(FormBuilder);
 
-  createContact = output<Contact>();
+  saveContact = output<Contact>();
   cancelForm = output<void>();
 
   form = this.formBuilder.nonNullable.group({
@@ -19,6 +19,24 @@ export class ContactFormComponent {
     email: ['', [Validators.required, Validators.email, Validators.pattern(/^[^\s@]+@[^\s@]+\.[a-z]{2}$/i)]], // Email muss einem validen Regex entsprechen -> erledigt!
     phone: ['', [Validators.required, Validators.pattern(/^\+?[0-9]+$/)]], // Phone darf nur aus Nummern bestehen (opt. “+”) -> erledigt!
   });
+
+  mode = input<'create' | 'edit'>('create');
+  initialContact = input<Contact | null>(null);
+
+  constructor() {
+  effect(() => {
+    const contact = this.initialContact();
+    const currentMode = this.mode();
+    
+    if (currentMode === 'edit' && contact) {
+      this.form.patchValue({
+        name: contact.name,
+        email: contact.email,
+        phone: contact.phone
+      });
+    }
+  });
+}
 
   // Prüft ob Form valide ist → wenn nicht: markAllAsTouched() zeigt Fehler
   // Wenn valide: createContact.emit(new Contact(form.getRawValue()))
@@ -28,7 +46,7 @@ export class ContactFormComponent {
       return;
     }
 
-    this.createContact.emit(new Contact(this.form.getRawValue()));
+    this.saveContact.emit(new Contact(this.form.getRawValue()));
   }
 
   onCancel() {

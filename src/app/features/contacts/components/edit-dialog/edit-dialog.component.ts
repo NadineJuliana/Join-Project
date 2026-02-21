@@ -1,4 +1,4 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Contact } from '../../models/contact.model';
 import { ContactsService } from '../../services/contacts.service';
 import { ContactFormComponent } from '../contact-form/contact-form.component';
@@ -13,6 +13,8 @@ export class EditDialogComponent {
   private contactsService = inject(ContactsService);
 
   closeDialog = output<void>();
+
+  contact = input<Contact | null>(null);
 
   onClose() {
     this.closeDialog.emit();

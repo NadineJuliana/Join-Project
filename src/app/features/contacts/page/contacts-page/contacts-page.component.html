@@ -78,5 +78,5 @@
 <app-contact-dialog (closeDialog)="closeContactDialog()"></app-contact-dialog>
 }
 @if (showEditDialog()) {
-<app-edit-dialog (closeDialog)="closeEditDialog()"></app-edit-dialog>
+<app-edit-dialog (closeDialog)="closeEditDialog()" [contact]="selectedContact()"></app-edit-dialog>
 }

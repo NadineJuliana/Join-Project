@@ -20,7 +20,8 @@
                     </span>
                 </div>
 
-                <app-contact-form  (cancelForm)="onClose()"></app-contact-form>
+                <app-contact-form [mode]="'edit'" [initialContact]="contact()" (cancelForm)="onClose()">
+                </app-contact-form>
             </div>
         </div>
     </div>
