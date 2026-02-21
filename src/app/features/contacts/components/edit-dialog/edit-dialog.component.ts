@@ -18,6 +18,20 @@ export class EditDialogComponent {
 
   onClose() {
     this.closeDialog.emit();
+
+  }
+
+  async onSaveContact(contact: Contact) {
+    const originalContact = this.contact();
+
+    if (!originalContact) return;
+
+    contact.id = originalContact.id;
+
+    await this.contactsService.updateContact(contact);
+    await this.contactsService.getAllContacts();
+
+    this.onClose();
   }
 
 
