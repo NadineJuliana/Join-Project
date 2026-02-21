@@ -39,7 +39,7 @@ export class ContactsService {
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'Contacts' },
-        (payload) => {
+        (payload: any) => {
           this.handleRealtimeEvent(payload);
           console.log('Change received!', payload);
         },
@@ -104,7 +104,7 @@ export class ContactsService {
       return;
     }
     console.log('Init get All Contacts', contacts);
-    this.contacts.set((contacts || []).map((c) => new Contact(c)));
+    this.contacts.set((contacts || []).map((c: Partial<Contact>) => new Contact(c)));
     this.contactsLoaded = true;
   }
 
