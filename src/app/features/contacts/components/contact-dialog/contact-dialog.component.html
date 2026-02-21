@@ -21,7 +21,8 @@
                     </span>
                 </div>
 
-                <app-contact-form (saveContact)="onCreateContact($event)" (cancelForm)="onClose()"></app-contact-form>
+                <app-contact-form [mode]="'create'" (saveContact)="onCreateContact($event)"
+                    (cancelForm)="onClose()"></app-contact-form>
             </div>
         </div>
     </div>

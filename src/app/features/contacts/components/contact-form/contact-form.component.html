@@ -24,9 +24,9 @@
     </div>
 
     <div class="contact-form__actions">
-        <button class="btn btn--secondary" type="button" (click)="onCancel()">Cancel <span class="material-icons">
-                close
-            </span></button>
+        <button class="btn btn--secondary" type="button" (click)="onCancel()">
+            {{ mode() === 'edit' ? 'Delete' : 'Cancel' }}
+        </button>
         <button class="btn btn--primary" type="submit">
             {{ mode() === 'edit' ? 'Save' : 'Create contact' }}
             <span class="material-icons">check</span>

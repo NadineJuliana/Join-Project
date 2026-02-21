@@ -13,6 +13,7 @@ export class ContactFormComponent {
 
   saveContact = output<Contact>();
   cancelForm = output<void>();
+  deleteContact = output<void>();
 
   form = this.formBuilder.nonNullable.group({
     name: ['', [Validators.required, Validators.pattern(/^[a-zA-ZäöüÄÖÜß\s]+\s+[a-zA-ZäöüÄÖÜß\s]+$/)]], // Der Name muss Vorname und Nachname enthalten UND darf keine Nummern enthalten -> erledigt!
@@ -24,19 +25,19 @@ export class ContactFormComponent {
   initialContact = input<Contact | null>(null);
 
   constructor() {
-  effect(() => {
-    const contact = this.initialContact();
-    const currentMode = this.mode();
-    
-    if (currentMode === 'edit' && contact) {
-      this.form.patchValue({
-        name: contact.name,
-        email: contact.email,
-        phone: contact.phone
-      });
-    }
-  });
-}
+    effect(() => {
+      const contact = this.initialContact();
+      const currentMode = this.mode();
+
+      if (currentMode === 'edit' && contact) {
+        this.form.patchValue({
+          name: contact.name,
+          email: contact.email,
+          phone: contact.phone
+        });
+      }
+    });
+  }
 
   // Prüft ob Form valide ist → wenn nicht: markAllAsTouched() zeigt Fehler
   // Wenn valide: createContact.emit(new Contact(form.getRawValue()))
@@ -50,6 +51,11 @@ export class ContactFormComponent {
   }
 
   onCancel() {
+    if (this.mode() === 'edit') {
+      this.deleteContact.emit();
+      return;
+    }
+
     this.cancelForm.emit();
   }
 

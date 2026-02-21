@@ -21,6 +21,7 @@ export class EditDialogComponent {
 
   }
 
+  // Update-Methode
   async onSaveContact(contact: Contact) {
     const originalContact = this.contact();
 
@@ -33,6 +34,20 @@ export class EditDialogComponent {
 
     this.onClose();
   }
+
+  // Delete-Methode im Edit-Dialog
+  async onDeleteContact() {
+  const contact = this.contact();
+  if (!contact) return;
+
+  try {
+    await this.contactsService.deleteContact(contact.id);
+    await this.contactsService.getAllContacts();
+    this.onClose();
+  } catch (error) {
+    console.error('Error deleting contact:', error);
+  }
+}
 
 
 }
