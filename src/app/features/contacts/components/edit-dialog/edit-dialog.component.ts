@@ -12,12 +12,11 @@ import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 })
 export class EditDialogComponent {
   private contactsService = inject(ContactsService);
-  dbService = inject(ContactsService);
 
   closeDialog = output<void>();
 
   contact = input<Contact | null>(null);
-  selectedContact = this.dbService.selectedContact;
+  selectedContact = this.contactsService.selectedContact;
 
   onClose() {
     this.closeDialog.emit();
