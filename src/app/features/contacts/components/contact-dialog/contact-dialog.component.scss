@@ -1,3 +1,5 @@
+@use "../../../../../styles/abstracts/breakpoints" as *;
+
 .contact-dialog {
     position: fixed;
     inset: 0;
@@ -8,8 +10,8 @@
     justify-content: center;
 
     &__window {
-        width: min(1100px, calc(100vw - 48px));
-        min-height: 560px;
+        width: min(1212px, calc(100vw - 48px));
+        min-height: 592px;
         background: var(--secondary);
         border-radius: 30px;
         overflow: hidden;
@@ -27,7 +29,7 @@
         justify-content: center;
         gap: 8px;
 
-        h4{
+        h4 {
             color: var(--white);
         }
     }
@@ -51,7 +53,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 50px;
+        padding: clamp(10px, 4vw, 50px);
     }
 
     &__close {
@@ -72,6 +74,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 15px;
     }
 
     &__initials {
@@ -84,10 +87,17 @@
         display: grid;
         place-items: center;
         font-size: 47px;
+        margin-left: clamp(1px, 1vw, 40px);
 
         span {
             font-size: 60px;
             color: var(--white);
         }
+    }
+}
+
+@media (max-width: $bp-md) {
+    .contact-dialog {
+        display: none;
     }
 }
