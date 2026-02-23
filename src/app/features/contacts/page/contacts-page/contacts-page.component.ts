@@ -22,6 +22,7 @@ export class ContactsPageComponent {
 
   async ngOnInit() {
     await this.dbService.getAllContacts();
+    await this.dbService.initRealtime();
     this.dbService.selectedContact.set(null);
   }
 

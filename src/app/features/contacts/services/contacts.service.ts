@@ -6,12 +6,11 @@ import { Contact } from '../models/contact.model';
   providedIn: 'root',
 })
 export class ContactsService {
-  constructor(private supabaseService: SupabaseService) {
-    this.initRealtime();
-  }
+  constructor(private supabaseService: SupabaseService) {}
   contactsLoaded = false;
 
   contactsChannel: any;
+  initialized = false;
 
   contacts = signal<Contact[]>([]);
   selectedContact = signal<Contact | null>(null);
@@ -32,41 +31,43 @@ export class ContactsService {
       .map((letter) => ({ letter, contacts: grouped[letter] }));
   });
 
-  initRealtime() {
+  async initRealtime() {
+    if (this.initialized) return;
+    this.initialized = true;
     this.contactsChannel = this.supabaseService
       .getSupabaseClient()
       .channel('custom-all-channel')
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'Contacts' },
-        (payload: any) => {
-          this.handleRealtimeEvent(payload);
+        async (payload: any) => {
+          await this.handleRealtimeEvent(payload);
           console.log('Change received!', payload);
         },
       )
       .subscribe();
   }
 
-  handleRealtimeEvent(payload: any) {
+  async handleRealtimeEvent(payload: any) {
     switch (payload.eventType) {
       case 'INSERT':
-        this.handleInsert(payload.new);
+        await this.handleInsert(payload.new);
         break;
       case 'UPDATE':
-        this.handleUpdate(payload.new);
+        await this.handleUpdate(payload.new);
         break;
       case 'DELETE':
-        this.handleDelete(payload.old);
+        await this.handleDelete(payload.old);
         break;
     }
   }
 
-  handleInsert(newData: any) {
+  async handleInsert(newData: any) {
     const newContact = new Contact(newData);
     this.contacts.update((list) => [...list, newContact]);
   }
 
-  handleUpdate(updatedData: any) {
+  async handleUpdate(updatedData: any) {
     const updatedContact = new Contact(updatedData);
     this.contacts.update((list) =>
       list.map((c) => (c.id === updatedContact.id ? updatedContact : c)),
@@ -77,7 +78,7 @@ export class ContactsService {
     }
   }
 
-  handleDelete(oldData: any) {
+  async handleDelete(oldData: any) {
     const deletedId = oldData.id;
     this.contacts.update((list) => list.filter((c) => c.id !== deletedId));
 
