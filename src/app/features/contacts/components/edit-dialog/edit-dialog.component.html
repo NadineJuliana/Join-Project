@@ -14,10 +14,8 @@
             </button>
 
             <div class="contact-dialog__contact">
-                <div class="contact-dialog__avatar">
-                    <span class="material-icons">
-                        person
-                    </span>
+                <div class="contact-dialog__initials" [style.backgroundColor]="selectedContact()?.color">
+                    {{ selectedContact()?.name | initials }}
                 </div>
 
                 <app-contact-form [mode]="'edit'" [initialContact]="contact()" (saveContact)="onSaveContact($event)"

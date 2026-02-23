@@ -59,6 +59,7 @@
 
   &__details {
     flex: 1;
+
     &__wrapper {
       opacity: 0;
       transform: translateX(100%);
@@ -111,10 +112,12 @@
 
     &__edits {
       display: flex;
+
       img {
         width: 18px;
         height: 18px;
       }
+
       button {
         display: flex;
         flex-direction: row;
@@ -189,29 +192,29 @@
       width: 350px;
     }
 
-  &__list {
+    &__list {
 
 
-    &__groupletter {
-      width: 300px;
-      height: 58px;
-      margin: 0 0 8px 0px;
+      &__groupletter {
+        width: 300px;
+        height: 58px;
+        margin: 0 0 8px 0px;
+      }
+
+      &__items {
+        width: 300px;
+        height: 78px;
+        margin-left: 8px;
+
+      }
+
+      &__initials {
+
+        width: 42px;
+        height: 42px;
+        margin-right: 12px;
+      }
+
     }
-
-    &__items {
-      width: 300px;
-      height: 78px;
-      margin-left: 8px;
-
-    }
-
-    &__initials {
-
-      width: 42px;
-      height: 42px;
-      margin-right: 12px;
-    }
-
-  }
   }
 }
