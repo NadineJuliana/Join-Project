@@ -90,10 +90,10 @@
 			gap: 16px;
 			max-width: 422px;
 			width: 100%;
+		}
 
-			.btn--secondary {
-				display: none;
-			}
+		&__cancel {
+			display: none;
 		}
 	}
 }

@@ -24,7 +24,7 @@
     </div>
 
     <div class="contact-form__actions">
-        <button class="btn btn--secondary" type="button" (click)="onCancel()">
+        <button [class]="'btn btn--secondary' + (mode() === 'create' ? ' contact-form__cancel' : '')" type="button" (click)="onCancel()">
             {{ mode() === 'edit' ? 'Delete' : 'Cancel' }}
         </button>
         <button [disabled]="!form.valid" class="btn btn--primary" type="submit">
