@@ -7,9 +7,9 @@ export class Contact {
 
   constructor(data: Partial<Contact>) {
     this.id = data.id ?? 0;
-    this.name = data.name ?? '';
+    this.name = this.getFormattedName(data.name ?? '');
     this.email = data.email ?? '';
-    this.phone = data.phone ?? '';
+    this.phone = this.getFormattedPhone(data.phone ?? '');
     this.color = data.color ?? this.getRandomColor();
   }
 
@@ -29,10 +29,35 @@ export class Contact {
 
   getCleanAddJson() {
     return {
-      name: this.name,
+      name: this.getFormattedName(this.name),
       email: this.email,
-      phone: this.phone,
+      phone: this.getFormattedPhone(this.phone),
       color: this.color,
     };
+  }
+
+  getFormattedName(name: string): string {
+    return name
+      .trim()
+      .toLowerCase()
+      .split(' ')
+      .filter((i) => i.length > 0)
+      .map((i) => i.charAt(0).toUpperCase() + i.slice(1))
+      .join(' ');
+  }
+
+  getPrettyPhone(phone: string): string {
+    const match = phone.match(/^(\+\d{2})(\d{3})(\d+)$/);
+    if (!match) return phone;
+    return `${match[1]} ${match[2]} ${match[3].replace(/(\d{3})(?=\d)/g, '$1 ')}`;
+  }
+
+  getFormattedPhone(phone?: string | null): string {
+    if (!phone) return '';
+    phone = phone.replace(/[^\d+]/g, '');
+    if (phone.startsWith('0')) {
+      phone = '+49' + phone.substring(1);
+    }
+    return this.getPrettyPhone(phone);
   }
 }
