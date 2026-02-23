@@ -54,6 +54,14 @@ section {
   flex-direction: column;
   gap: 16px;
   color: var(--lightgray);
+
+  > a {
+    padding: 8px 16px;
+  }
+
+  :hover {
+    background-color: var(--primary-light);
+  }
 }
 
 .logo {
