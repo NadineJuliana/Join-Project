@@ -12,6 +12,7 @@ export class SupabaseService {
       SupabaseService.supabaseClient = createClient(
         environment.supabaseUrl,
         environment.supabaseKey,
+        {auth: {persistSession: true, autoRefreshToken: false, detectSessionInUrl: false}}
       );
       console.log('Supabase client initialized');
     }
