@@ -18,7 +18,7 @@ export class ContactFormComponent {
   form = this.formBuilder.nonNullable.group({
     name: ['', [Validators.required, Validators.pattern(/^[a-zA-ZäöüÄÖÜß\s]+\s+[a-zA-ZäöüÄÖÜß\s]+$/)]], // Der Name muss Vorname und Nachname enthalten UND darf keine Nummern enthalten -> erledigt!
     email: ['', [Validators.required, Validators.email, Validators.pattern(/^[^\s@]+@[^\s@]+\.[a-z]{2,6}$/i)]], // Email muss einem validen Regex entsprechen -> erledigt!
-    phone: ['', [Validators.required, Validators.pattern(/^\+?[0-9]+$/)]], // Phone darf nur aus Nummern bestehen (opt. “+”) -> erledigt!
+    phone: ['', [Validators.required, Validators.pattern(/^\+\d{2}(?:\s\d{3}\s\d{7}|\d{10})$/)]], // Phone darf nur aus Nummern bestehen (opt. “+”) -> erledigt!
   });
 
   mode = input<'create' | 'edit'>('create');
