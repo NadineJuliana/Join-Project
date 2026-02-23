@@ -1,7 +1,7 @@
 <form class="contact-form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="contact-form__fields">
         <div class="contact-form__input-wrap">
-            <input type="text" formControlName="name" placeholder="Name" aria-label="Name" />
+            <input type="text" formControlName="name" (blur)="formatNameField()" placeholder="Name" aria-label="Name" />
             <span class="material-icons">person</span>
             @if (!form.controls.name.valid && form.controls.name.touched && !form.controls.name.disabled) {
             <p>Please enter first and last name</p>
@@ -15,7 +15,7 @@
             }
         </div>
         <div class="contact-form__input-wrap">
-            <input type="tel" formControlName="phone" placeholder="Phone" aria-label="Phone" />
+            <input type="tel" formControlName="phone" (blur)="formatPhoneField()" placeholder="Phone" aria-label="Phone" />
             <span class="material-icons">call</span>
             @if (!form.controls.phone.valid && form.controls.phone.touched && !form.controls.phone.disabled) {
             <p>Please enter a valid phone number</p>

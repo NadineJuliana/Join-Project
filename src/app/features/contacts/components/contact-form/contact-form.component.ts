@@ -16,9 +16,22 @@ export class ContactFormComponent {
   deleteContact = output<void>();
 
   form = this.formBuilder.nonNullable.group({
-    name: ['', [Validators.required, Validators.pattern(/^[a-zA-ZäöüÄÖÜß\s]+\s+[a-zA-ZäöüÄÖÜß\s]+$/)]], // Der Name muss Vorname und Nachname enthalten UND darf keine Nummern enthalten -> erledigt!
-    email: ['', [Validators.required, Validators.email, Validators.pattern(/^[^\s@]+@[^\s@]+\.[a-z]{2,6}$/i)]], // Email muss einem validen Regex entsprechen -> erledigt!
-    phone: ['', [Validators.required, Validators.pattern(/^\+\d{2}(?:\s\d{3}\s\d{7}|\d{10})$/)]], // Phone darf nur aus Nummern bestehen (opt. “+”) -> erledigt!
+    name: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^[a-zA-ZäöüÄÖÜß\s]+\s+[a-zA-ZäöüÄÖÜß\s]+$/),
+      ],
+    ], // Der Name muss Vorname und Nachname enthalten UND darf keine Nummern enthalten -> erledigt!
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[^\s@]+@[^\s@]+\.[a-z]{2,6}$/i),
+      ],
+    ], // Email muss einem validen Regex entsprechen -> erledigt!
+    phone: ['', [Validators.required, Validators.pattern(/^[\d+\s]+$/)]], // Phone darf nur aus Nummern bestehen (opt. “+”) -> erledigt!
   });
 
   mode = input<'create' | 'edit'>('create');
@@ -33,7 +46,7 @@ export class ContactFormComponent {
         this.form.patchValue({
           name: contact.name,
           email: contact.email,
-          phone: contact.phone
+          phone: contact.phone,
         });
       }
     });
@@ -59,4 +72,17 @@ export class ContactFormComponent {
     this.cancelForm.emit();
   }
 
+  formatNameField() {
+    const control = this.form.controls.name;
+    control.setValue(new Contact({ name: control.value }).name, {
+      emitEvent: false,
+    });
+  }
+
+  formatPhoneField() {
+    const control = this.form.controls.phone;
+    control.setValue(new Contact({ phone: control.value }).phone, {
+      emitEvent: false,
+    });
+  }
 }
