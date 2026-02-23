@@ -21,7 +21,6 @@ export class ContactDialogComponent {
   // speichert den Kontakt via Service, lädt die Liste neu und schließt
   async onCreateContact(contact: Contact) {
     await this.contactsService.addContact(contact);
-    await this.contactsService.getAllContacts();
     this.onClose();
   }
 

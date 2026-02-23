@@ -33,7 +33,6 @@ export class EditDialogComponent {
     contact.id = originalContact.id;
 
     await this.contactsService.updateContact(contact);
-    await this.contactsService.getAllContacts();
 
     this.onClose();
   }
@@ -45,7 +44,6 @@ export class EditDialogComponent {
 
     try {
       await this.contactsService.deleteContact(contact.id);
-      await this.contactsService.getAllContacts();
       this.onClose();
     } catch (error) {
       console.error('Error deleting contact:', error);
