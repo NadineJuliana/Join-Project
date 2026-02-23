@@ -1,3 +1,5 @@
+@use "../../../../../styles/abstracts/breakpoints" as *;
+
 :host {
 	max-width: 422px;
 	width: 100%;
@@ -23,6 +25,16 @@
 		align-items: left;
 		justify-content: center;
 		width: 100%;
+
+		p{
+			position: absolute;
+			top: calc(100% + 2px);
+			left: 0;
+			margin: 0;
+			font-size: 14px;
+			color: var(--error);
+			z-index: 10;
+		}
 
 		.material-icons {
 			position: absolute;
@@ -51,6 +63,11 @@
 			outline: 1px solid var(--accent);
 			border-color: var(--accent);
 		}
+
+		&.ng-invalid.ng-touched {
+			border-color: var(--error);
+			outline-color: var(--error);
+		}
 	}
 
 	&__actions {
@@ -60,5 +77,19 @@
 		gap: 16px;
 		max-width: 422px;
 		width: 100%;
+	}
+}
+
+@media (max-width: $bp-md) {
+
+	.contact-form {
+		&__actions {
+			margin-top: 32px;
+			display: flex;
+			justify-content: center;
+			gap: 16px;
+			max-width: 422px;
+			width: 100%;
+		}
 	}
 }
