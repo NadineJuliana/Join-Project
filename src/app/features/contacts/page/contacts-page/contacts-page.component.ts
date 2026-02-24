@@ -5,6 +5,7 @@ import { ContactDialogComponent } from '../../components/contact-dialog/contact-
 import { EditDialogComponent } from '../../components/edit-dialog/edit-dialog.component';
 import { ContactsService } from '../../services/contacts.service';
 import { Contact } from '../../models/contact.model';
+import { ToastComponent } from "../../../../shared/components/toast/toast.component";
 
 @Component({
   selector: 'app-contacts-page',
@@ -13,7 +14,8 @@ import { Contact } from '../../models/contact.model';
     ContactDetailsComponent,
     ContactDialogComponent,
     EditDialogComponent,
-  ],
+    ToastComponent
+],
 
   templateUrl: './contacts-page.component.html',
   styleUrl: './contacts-page.component.scss',
