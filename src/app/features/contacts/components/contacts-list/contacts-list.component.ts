@@ -14,4 +14,8 @@ export class ContactsListComponent {
 
   @Output() selectContact = new EventEmitter<Contact>();
   @Output() addContact = new EventEmitter<void>();
+
+  onContactClick(contact: Contact) {
+    this.selectContact.emit(contact);
+  }
 }

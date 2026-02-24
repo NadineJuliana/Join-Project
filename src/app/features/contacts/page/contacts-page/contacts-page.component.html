@@ -1,10 +1,14 @@
 <div class="contacts">
-  <app-contacts-list [groupedContacts]="groupedContacts()" (selectContact)="onSelectContact($event)"
-    (addContact)="openContactDialog()">
-  </app-contacts-list>
+  @if (!isMobile() || !selectedContact()) {
+    <app-contacts-list [groupedContacts]="groupedContacts()" (selectContact)="onSelectContact($event)"
+      (addContact)="openContactDialog()">
+    </app-contacts-list>
+  }
 
-  <app-contact-details [contact]="selectedContact()" (edit)="openEditDialog()" (delete)="onDeleteSelectedContact()">
-  </app-contact-details>
+  @if (!isMobile() || selectedContact()) {
+    <app-contact-details [contact]="selectedContact()" (back)="onBackToList()" (edit)="openEditDialog()" (delete)="onDeleteSelectedContact()">
+    </app-contact-details>
+  }
 </div>
 
 @if (showContactDialog()) {

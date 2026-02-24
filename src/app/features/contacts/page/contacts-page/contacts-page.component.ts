@@ -33,12 +33,13 @@ export class ContactsPageComponent {
   async ngOnInit() {
     await this.dbService.getAllContacts();
     await this.dbService.initRealtime();
-    this.dbService.selectedContact.set(null);
+    this.setupMobileDetection();
 
-    this.setupMobileDetection(); // 👈 NEU
+    if (this.isMobile()) {
+      this.dbService.selectedContact.set(null);
+    }
   }
 
-  // 👇 NEU
   private setupMobileDetection() {
     const mediaQuery = window.matchMedia('(max-width: 768px)');
 
@@ -51,6 +52,10 @@ export class ContactsPageComponent {
 
   onSelectContact(contact: Contact) {
     this.dbService.selectContact(contact);
+  }
+
+  onBackToList() {
+    this.dbService.selectedContact.set(null);
   }
 
   openContactDialog() {

@@ -11,7 +11,7 @@
     </div>
 
     @for (contact of group.contacts; track contact.id) {
-    <div class="contacts__list__items" (click)="selectContact.emit(contact)">
+    <div class="contacts__list__items" (click)="onContactClick(contact)">
       <div class="contacts__list__initials" [style.backgroundColor]="contact.color">
         {{ contact.name | initials }}
       </div>
