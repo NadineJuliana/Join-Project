@@ -11,7 +11,6 @@ import { Contact } from '../../models/contact.model';
   imports: [
     ContactsListComponent,
     ContactDetailsComponent,
-    ContactsListComponent,
     ContactDialogComponent,
     EditDialogComponent,
   ],
@@ -22,7 +21,6 @@ import { Contact } from '../../models/contact.model';
 export class ContactsPageComponent {
   dbService = inject(ContactsService);
 
-  contactList = this.dbService.contacts;
   groupedContacts = this.dbService.groupedContacts;
   selectedContact = this.dbService.selectedContact;
   showContactDialog = signal(false);
