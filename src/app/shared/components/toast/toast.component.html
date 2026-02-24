@@ -1,1 +1,7 @@
-<p>toast works!</p>
+<div class="toast__container">
+  @for (toast of toastList; track toast) {
+    <div class="toast__message" [class]="toast.classname">
+      {{ toast.message }}
+    </div>
+  }
+</div>
