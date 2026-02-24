@@ -8,7 +8,6 @@ import { Contact } from '../models/contact.model';
 export class ContactsService {
   constructor(private supabaseService: SupabaseService) {}
   contactsLoaded = false;
-
   contactsChannel: any;
   initialized = false;
 
@@ -42,7 +41,6 @@ export class ContactsService {
         { event: '*', schema: 'public', table: 'Contacts' },
         async (payload: any) => {
           await this.handleRealtimeEvent(payload);
-          console.log('Change received!', payload);
         },
       )
       .subscribe();
@@ -59,6 +57,8 @@ export class ContactsService {
       case 'DELETE':
         await this.handleDelete(payload.old);
         break;
+      default:
+        throw new Error(`Unknown event type: ${payload.eventType}`);
     }
   }
 
@@ -107,12 +107,12 @@ export class ContactsService {
       .getSupabaseClient()
       .from('Contacts')
       .select('*');
-    if (!contacts) {
-      console.error('Error fetching contacts:', error);
-      return;
+    if (error) {
+      throw error;
     }
-    console.log('Init get All Contacts', contacts);
-    this.contacts.set((contacts || []).map((c: Partial<Contact>) => new Contact(c)));
+    this.contacts.set(
+      (contacts || []).map((c: Partial<Contact>) => new Contact(c)),
+    );
     this.contactsLoaded = true;
   }
 
