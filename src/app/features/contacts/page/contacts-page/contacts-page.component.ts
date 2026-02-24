@@ -15,6 +15,7 @@ import { Contact } from '../../models/contact.model';
     ContactDialogComponent,
     EditDialogComponent,
   ],
+
   templateUrl: './contacts-page.component.html',
   styleUrl: './contacts-page.component.scss',
 })
