@@ -1,11 +1,12 @@
 <div class="contacts">
   <div class="contacts__listpage">
-    <button class="btn btn--primary" (click)="openContactDialog()">
-      <p>Add Contact</p><span class="material-icons">
-        person_add_alt
-      </span>
-    </button>
+
     <div class="contacts__list">
+      <button class="btn btn--primary" (click)="openContactDialog()">
+        <p>Add Contact</p><span class="material-icons">
+          person_add_alt
+        </span>
+      </button>
       @for (group of groupedContacts(); track group.letter) {
       <div class="contacts__list__groupletter">
         <h5>{{ group.letter }}</h5>

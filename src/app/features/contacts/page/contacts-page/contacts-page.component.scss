@@ -10,7 +10,8 @@
     display: flex;
     flex-direction: column;
     width: 400px;
-    overflow-y: hidden;
+    box-sizing: border-box;
+    scrollbar-gutter: stable;
     min-height: 0;
     box-shadow: 5px 0 10px rgba(0, 0, 0, 0.15);
   }
@@ -19,26 +20,25 @@
     flex: 1;
     overflow-y: auto;
     min-height: 0;
+    box-sizing: border-box;
+    padding: 24px 16px 24px 24px;
     display: flex;
     flex-direction: column;
 
     &__groupletter {
-      width: 352px;
       height: 58px;
-      margin: 0 0 8px 24px;
       box-shadow: 0 1px 0px rgba(0, 0, 0, 0.15);
 
       h5 {
-        margin-left: 16px;
+        padding: 17px 36px;
       }
     }
 
     &__items {
       display: flex;
-      width: 352px;
       height: 78px;
-      margin-left: 24px;
       cursor: pointer;
+      padding: 15px 24px;
     }
 
     &__initials {
@@ -198,13 +198,11 @@
       &__groupletter {
         width: 300px;
         height: 58px;
-        margin: 0 0 8px 0px;
       }
 
       &__items {
         width: 300px;
         height: 78px;
-        margin-left: 8px;
 
       }
 
