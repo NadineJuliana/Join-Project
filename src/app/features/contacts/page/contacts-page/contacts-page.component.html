@@ -1,32 +1,18 @@
 <div class="contacts">
-  <div class="contacts__listpage">
-    <app-contacts-list
-      [groupedContacts]="groupedContacts()"
-      (selectContact)="onSelectContact($event)"
-      (addContact)="openContactDialog()"
-    >
-    </app-contacts-list>
-  </div>
+  <app-contacts-list [groupedContacts]="groupedContacts()" (selectContact)="onSelectContact($event)"
+    (addContact)="openContactDialog()">
+  </app-contacts-list>
 
-  <div class="contacts__details">
-    <app-contact-details
-      [contact]="selectedContact()"
-      (edit)="openEditDialog()"
-      (delete)="onDeleteSelectedContact()"
-    >
-    </app-contact-details>
-  </div>
+  <app-contact-details [contact]="selectedContact()" (edit)="openEditDialog()" (delete)="onDeleteSelectedContact()">
+  </app-contact-details>
 </div>
 
 @if (showContactDialog()) {
-  <app-contact-dialog (closeDialog)="closeContactDialog()"></app-contact-dialog>
+<app-contact-dialog (closeDialog)="closeContactDialog()"></app-contact-dialog>
 }
 @if (showEditDialog()) {
-  <app-edit-dialog
-    (closeDialog)="closeEditDialog()"
-    [contact]="selectedContact()"
-  >
-  </app-edit-dialog>
+<app-edit-dialog (closeDialog)="closeEditDialog()" [contact]="selectedContact()">
+</app-edit-dialog>
 }
 
 <app-toast></app-toast>

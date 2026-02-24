@@ -50,6 +50,9 @@ section {
 }
 
 @media (max-width: $bp-md) {
+  :host {
+    z-index: 3;
+  }
   section {
     display: flex;
     flex-direction: row;

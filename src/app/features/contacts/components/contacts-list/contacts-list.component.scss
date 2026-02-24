@@ -1,17 +1,14 @@
 @use "../../../../../styles/abstracts/breakpoints" as *;
 
 .contacts {
-  display: flex;
-  flex-direction: row;
-  height: calc(100vh - 96px);
-  width: calc(100vw - 232px);
-
   &__listpage {
+    background: var(--white);
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     scrollbar-gutter: stable;
     min-height: 0;
+    background: var(--white);
     box-shadow: 5px 0 10px rgba(0, 0, 0, 0.15);
   }
 
@@ -37,7 +34,7 @@
       display: flex;
       height: 78px;
       cursor: pointer;
-      padding: clamp(5px, 4vw, 15px) clamp(10px, 4vw, 24px); 
+      padding: clamp(5px, 4vw, 15px) clamp(10px, 4vw, 24px);
       gap: 35px;
       max-width: 352px;
       width: 100%;
@@ -149,6 +146,14 @@
   }
 
   @media (max-width: $bp-md) {
-
+    &__list {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+      box-sizing: border-box;
+      padding: 24px 16px 100px 24px;
+      display: flex;
+      flex-direction: column;
+    }
   }
 }

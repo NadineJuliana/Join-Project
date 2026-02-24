@@ -6,6 +6,7 @@
   background: var(--white);
   display: flex;
   filter: drop-shadow(var(--drop-shadow));
+  z-index: 3;
 }
 
 section {
