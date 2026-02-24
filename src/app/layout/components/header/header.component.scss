@@ -1,4 +1,5 @@
 @use "../../../../styles/abstracts/breakpoints" as *;
+@use "../../../../styles/abstracts/keyframes" as *;
 
 :host {
   width: 100%;
@@ -54,8 +55,9 @@ section {
   flex-direction: column;
   gap: 16px;
   color: var(--lightgray);
+  animation: slideInFromRight 0.4s ease-out;
 
-  >a {
+  > a {
     padding: 8px 16px;
   }
 
@@ -120,5 +122,9 @@ section {
 
   .help-btn {
     display: none;
+  }
+
+  .profile-menu {
+    top: 80px;
   }
 }

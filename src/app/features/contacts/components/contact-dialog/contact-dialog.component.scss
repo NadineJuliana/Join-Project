@@ -1,26 +1,5 @@
 @use "../../../../../styles/abstracts/breakpoints" as *;
-
-@keyframes slideInFromRight {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideInFromBottom {
-    from {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
+@use "../../../../../styles/abstracts/keyframes" as *;
 
 .contact-dialog {
     position: fixed;
