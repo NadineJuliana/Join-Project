@@ -7,6 +7,7 @@
   width: calc(100vw - 232px);
 
   app-contacts-list {
+    flex: 1;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -16,81 +17,11 @@
     flex: 1;
     height: 100%;
   }
-
-  &__listpage {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-    box-sizing: border-box;
-    scrollbar-gutter: stable;
-    min-height: 0;
-    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.15);
-  }
-
-  &__list {
-    flex: 1;
-    overflow-y: auto;
-    min-height: 0;
-    box-sizing: border-box;
-    padding: 24px 16px 24px 24px;
-    display: flex;
-    flex-direction: column;
-
-    &__groupletter {
-      height: 58px;
-      box-shadow: 0 1px 0px rgba(0, 0, 0, 0.15);
-
-      h5 {
-        padding: 17px 36px;
-      }
-    }
-
-    &__items {
-      display: flex;
-      height: 78px;
-      cursor: pointer;
-      padding: 15px 24px;
-    }
-
-    &__initials {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 42px;
-      height: 42px;
-      border: solid 2px var(--white);
-      border-radius: 100%;
-      margin-right: 24px;
-    }
-
-    &__rows {
-      height: 78px;
-    }
-  }
-
-  @media (max-width: $bp-lg) {
-    &__listpage {
-      width: 350px;
-    }
-
-    &__list {
-      &__groupletter {
-        width: 300px;
-        height: 58px;
-        margin-left: 0;
-      }
-
-      &__items {
-        width: 300px;
-        height: 78px;
-        margin-left: 8px;
-      }
-
-      &__initials {
-        width: 42px;
-        height: 42px;
-        margin-right: 12px;
-      }
-    }
-  }
 }
+
+  @media (max-width: $bp-md) {
+    .contacts__details{
+      display: none;
+    }
+
+  }
