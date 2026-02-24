@@ -31,7 +31,7 @@ export class ContactFormComponent {
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[a-z]{2,6}$/i),
       ],
     ], // Email muss einem validen Regex entsprechen -> erledigt!
-    phone: ['', [Validators.required, Validators.pattern(/^(\+|0)\d+$/)]], // Phone darf nur aus Nummern bestehen (opt. “+”) -> erledigt!
+    phone: ['', [Validators.required, Validators.pattern(/^(\+|0)[0-9\s]*$/)]], // Phone darf nur aus Nummern bestehen (opt. “+”) -> erledigt!
   });
 
   mode = input<'create' | 'edit'>('create');
