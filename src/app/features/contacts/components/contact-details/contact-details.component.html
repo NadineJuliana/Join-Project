@@ -1,0 +1,50 @@
+<div class="contacts__details">
+  <div class="contacts__headline">
+    <h1>Contacts</h1>
+    <div class="contacts__seperator"></div>
+    <h3>Better with a team</h3>
+  </div>
+
+  <div class="contacts__details__wrapper" [class.fade-in]="contact">
+    @if (contact) {
+      <div class="contacts__specifics">
+        <div
+          class="contacts__specifics__initals"
+          [style.backgroundColor]="contact.color"
+        >
+          {{ contact.name | initials }}
+        </div>
+
+        <div class="contacts__specifics__name">
+          <h2>{{ contact.name }}</h2>
+
+          <div class="contacts__specifics__edits">
+            <button (click)="edit.emit()">
+              <span class="material-icons">edit</span>
+              Edit
+            </button>
+
+            <button (click)="delete.emit()">
+              <span class="material-icons">delete</span>
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="contacts__informations">
+        <h5>Contact Information</h5>
+
+        <div class="contacts__mail">
+          <h6>Email</h6>
+          <p>{{ contact.email }}</p>
+        </div>
+
+        <div class="contacts__phone">
+          <h6>Phone</h6>
+          <p>{{ contact.phone }}</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>

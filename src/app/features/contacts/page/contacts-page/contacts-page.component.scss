@@ -57,162 +57,29 @@
     }
   }
 
-  &__details {
-    flex: 1;
-
-    &__wrapper {
-      opacity: 0;
-      transform: translateX(100%);
-      transition:
-        opacity 0.3s ease,
-        transform 0.3s ease;
-
-      &.fade-in {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-  }
-
-  &__headline {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    margin: 100px 0 20px 60px;
-  }
-
-  &__seperator {
-    background-color: var(--accent);
-    width: 3px;
-    height: 50px;
-    margin: 0 16px 0 16px;
-  }
-
-  &__specifics {
-    display: flex;
-
-    &__name {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    &__initals {
-      background-color: orange;
-      width: 120px;
-      height: 120px;
-      border: solid 3px var(--white);
-      border-radius: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 47px;
-      margin: 0 60px 0 60px;
-    }
-
-    &__edits {
-      display: flex;
-
-      img {
-        width: 18px;
-        height: 18px;
-      }
-
-      button {
-        display: flex;
-        flex-direction: row;
-        height: 24px;
-        text-align: center;
-        font-size: 16px;
-        margin-right: 16px;
-        gap: 8px;
-      }
-    }
-  }
-
-  &__informations {
-    margin: 30px 0 0 60px;
-
-    h6 {
-      font-size: 16px;
-      margin-bottom: 12px;
-    }
-  }
-
-  &__mail {
-    margin: 20px 0 16px 0;
-  }
-
-  @media (max-width: $bp-xl2) {
-    &__headline {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin: 80px 0 0 60px;
-      height: 150px;
-
-      h1,
-      h3 {
-        margin: 0;
-      }
-    }
-
-    &__seperator {
-      width: 200px;
-      height: 3px;
-      margin: 16px 0;
-    }
-
-    &__specifics {
-      flex-direction: column;
-      align-items: flex-start;
-      margin-left: 60px;
-
-      &__initals {
-        margin: 0 30px 10px 0px;
-      }
-
-      &__name {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      &__edits {
-        display: flex;
-        flex-direction: row;
-        margin-top: 16px;
-        gap: 8px;
-      }
-    }
-  }
-
   @media (max-width: $bp-lg) {
     &__listpage {
       width: 350px;
     }
 
     &__list {
-
-
       &__groupletter {
         width: 300px;
         height: 58px;
+        margin-left: 0;
       }
 
       &__items {
         width: 300px;
         height: 78px;
-
+        margin-left: 8px;
       }
 
       &__initials {
-
         width: 42px;
         height: 42px;
         margin-right: 12px;
       }
-
     }
   }
 }

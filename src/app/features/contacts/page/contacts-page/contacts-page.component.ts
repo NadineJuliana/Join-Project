@@ -1,13 +1,19 @@
 import { Component, inject, signal } from '@angular/core';
+import { ContactsListComponent } from '../../components/contacts-list/contacts-list.component';
+import { ContactDetailsComponent } from '../../components/contact-details/contact-details.component';
+import { ContactDialogComponent } from '../../components/contact-dialog/contact-dialog.component';
+import { EditDialogComponent } from '../../components/edit-dialog/edit-dialog.component';
 import { ContactsService } from '../../services/contacts.service';
 import { Contact } from '../../models/contact.model';
-import { ContactDialogComponent } from '../../components/contact-dialog/contact-dialog.component';
-import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
-import { EditDialogComponent } from '../../components/edit-dialog/edit-dialog.component';
 
 @Component({
   selector: 'app-contacts-page',
-  imports: [ContactDialogComponent, InitialsPipe, EditDialogComponent],
+  imports: [
+    ContactsListComponent,
+    ContactDetailsComponent,
+    ContactDialogComponent,
+    EditDialogComponent,
+  ],
   templateUrl: './contacts-page.component.html',
   styleUrl: './contacts-page.component.scss',
 })
