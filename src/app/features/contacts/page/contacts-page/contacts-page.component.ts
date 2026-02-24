@@ -11,6 +11,7 @@ import { Contact } from '../../models/contact.model';
   imports: [
     ContactsListComponent,
     ContactDetailsComponent,
+    ContactsListComponent,
     ContactDialogComponent,
     EditDialogComponent,
   ],

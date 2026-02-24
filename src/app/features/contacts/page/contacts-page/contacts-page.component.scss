@@ -6,6 +6,17 @@
   height: calc(100vh - 96px);
   width: calc(100vw - 232px);
 
+  app-contacts-list {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  app-contact-details {
+    flex: 1;
+    height: 100%;
+  }
+
   &__listpage {
     display: flex;
     flex-direction: column;

@@ -1,10 +1,12 @@
 <div class="contacts">
-  <app-contacts-list
-    [groupedContacts]="groupedContacts()"
-    (selectContact)="onSelectContact($event)"
-    (addContact)="openContactDialog()"
-  >
-  </app-contacts-list>
+  <div class="contacts__listpage">
+    <app-contacts-list
+      [groupedContacts]="groupedContacts()"
+      (selectContact)="onSelectContact($event)"
+      (addContact)="openContactDialog()"
+    >
+    </app-contacts-list>
+  </div>
 
   <div class="contacts__details">
     <app-contact-details
