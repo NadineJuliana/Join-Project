@@ -64,7 +64,14 @@ export class ContactsService {
 
   async handleInsert(newData: any) {
     const newContact = new Contact(newData);
-    this.contacts.update((list) => [...list, newContact]);
+    this.contacts.update((list) => {
+      const exists = list.some((c) => c.id === newContact.id);
+      if (exists) {
+        return list.map((c) => (c.id === newContact.id ? newContact : c));
+      } else {
+        return [...list, newContact];
+      }
+    });
   }
 
   async handleUpdate(updatedData: any) {
