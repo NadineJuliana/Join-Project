@@ -26,10 +26,25 @@ export class ContactsPageComponent {
   showContactDialog = signal(false);
   showEditDialog = signal(false);
 
+  isMobile = signal(false); // 👈 NEU
+
   async ngOnInit() {
     await this.dbService.getAllContacts();
     await this.dbService.initRealtime();
     this.dbService.selectedContact.set(null);
+
+    this.setupMobileDetection(); // 👈 NEU
+  }
+
+  // 👇 NEU
+  private setupMobileDetection() {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+
+    this.isMobile.set(mediaQuery.matches);
+
+    mediaQuery.addEventListener('change', (event) => {
+      this.isMobile.set(event.matches);
+    });
   }
 
   onSelectContact(contact: Contact) {
