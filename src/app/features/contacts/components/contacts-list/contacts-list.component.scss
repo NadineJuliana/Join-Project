@@ -10,6 +10,7 @@
     min-height: 0;
     background: var(--white);
     box-shadow: 5px 0 10px rgba(0, 0, 0, 0.15);
+    height: calc(100vh - 96px);
 
     button {
       margin: 20px;
@@ -208,6 +209,7 @@
 
   @media (max-width: $bp-md) {
     &__listpage {
+      height: calc(100vh - 160px);
       button {
         display: none;
         margin: 0px;
