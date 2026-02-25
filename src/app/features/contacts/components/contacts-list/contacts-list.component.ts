@@ -1,11 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Contact } from '../../models/contact.model';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
+import { EllipsisPipe } from '../../../../shared/pipes/ellipsis.pipe';
 
 @Component({
   selector: 'app-contacts-list',
   standalone: true,
-  imports: [InitialsPipe],
+  imports: [InitialsPipe, EllipsisPipe],
   templateUrl: './contacts-list.component.html',
   styleUrl: './contacts-list.component.scss',
 })

@@ -21,6 +21,7 @@ export class ContactFormComponent {
       [
         Validators.required,
         Validators.pattern(/^[a-zA-ZäöüÄÖÜß\s]+\s+[a-zA-ZäöüÄÖÜß\s]+$/),
+        Validators.maxLength(40),
       ],
     ], // Der Name muss Vorname und Nachname enthalten UND darf keine Nummern enthalten -> erledigt!
     email: [

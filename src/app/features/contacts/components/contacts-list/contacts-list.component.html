@@ -24,8 +24,8 @@
           </div>
 
           <div class="contacts__list__rows">
-            <h5>{{ contact.name }}</h5>
-            <p>{{ contact.email }}</p>
+            <h5>{{ contact.name | ellipsis:18 }}</h5>
+            <p>{{ contact.email | ellipsis:30 }}</p>
           </div>
         </div>
       }
