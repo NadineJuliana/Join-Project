@@ -15,4 +15,25 @@ export class ContactDetailsComponent {
   @Output() back = new EventEmitter<void>();
   @Output() edit = new EventEmitter<void>();
   @Output() delete = new EventEmitter<void>();
+
+  // Edit/Delete Button Mobile
+  isActionsMenuOpen = false;
+
+  toggleActionsMenu(): void {
+    this.isActionsMenuOpen = !this.isActionsMenuOpen;
+  }
+
+  closeActionsMenu(): void {
+    this.isActionsMenuOpen = false;
+  }
+
+  onEdit(): void {
+    this.edit.emit();
+    this.closeActionsMenu();
+  }
+
+  onDelete(): void {
+    this.delete.emit();
+    this.closeActionsMenu();
+  }
 }

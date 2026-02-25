@@ -22,12 +22,12 @@
           <h2>{{ contact.name }}</h2>
 
           <div class="contacts__specifics__edits">
-            <button (click)="edit.emit()">
+            <button type="button" (click)="onEdit()">
               <span class="material-icons">edit</span>
               Edit
             </button>
 
-            <button (click)="delete.emit()">
+            <button type="button" (click)="onDelete()">
               <span class="material-icons">delete</span>
               Delete
             </button>
@@ -50,4 +50,33 @@
       </div>
     }
   </div>
+
+  <!-- Mobile Toggle Action Menu Button -->
+
+  @if (contact) {
+    <button
+      class="btn btn--primary contacts__actions-fab"
+      type="button"
+      (click)="toggleActionsMenu()"
+      aria-label="Open contact actions"
+    >
+      <span class="material-icons">more_vert</span>
+    </button>
+
+    @if (isActionsMenuOpen) {
+      <div class="contacts__actions-overlay" (click)="closeActionsMenu()"></div>
+
+      <div class="contacts__actions-menu">
+        <button type="button" (click)="onEdit()">
+          <span class="material-icons">edit</span>
+          Edit
+        </button>
+
+        <button type="button" (click)="onDelete()">
+          <span class="material-icons">delete</span>
+          Delete
+        </button>
+      </div>
+    }
+  }
 </div>

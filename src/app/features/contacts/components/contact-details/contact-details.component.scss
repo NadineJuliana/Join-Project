@@ -1,4 +1,5 @@
 @use "../../../../../styles/abstracts/breakpoints" as *;
+@use "../../../../../styles/abstracts/keyframes" as *;
 
 .contacts {
   &__details {
@@ -77,6 +78,7 @@
       height: 120px;
       border: solid 3px var(--white);
       border-radius: 100%;
+      color: var(--white);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -85,6 +87,7 @@
 
     &__edits {
       display: flex;
+      gap: 16px;
 
       img {
         width: 18px;
@@ -98,6 +101,64 @@
         text-align: center;
         font-size: 16px;
         gap: 8px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        color: var(--primary);
+      }
+    }
+  }
+
+  &__actions-fab {
+    display: none;
+    position: fixed;
+    right: 16px;
+    bottom: 104px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+
+    .material-icons {
+      font-size: 30px;
+    }
+  }
+
+  &__actions-overlay {
+    display: none;
+  }
+
+  &__actions-menu {
+    display: none;
+    position: fixed;
+    right: 10px;
+    bottom: 100px;
+    background: var(--white);
+    border-radius: 20px 20px 0 20px;
+    box-shadow: var(--drop-shadow);
+    padding: 10px;
+    z-index: 31;
+    gap: 10px;
+    flex-direction: column;
+    animation: slideInFromRight 0.4s ease-out;
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: var(--primary);
+      line-height: 120%;
+      text-align: left;
+      cursor: pointer;
+
+      .material-icons {
+        font-size: 20px;
       }
     }
   }
@@ -144,6 +205,28 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+    }
+
+    &__specifics {
+      &__edits {
+        display: none;
+      }
+    }
+
+    &__actions-fab {
+      display: inline-flex;
+    }
+
+    &__actions-overlay {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 29;
+      background: transparent;
+    }
+
+    &__actions-menu {
+      display: flex;
     }
 
     &__specifics {
