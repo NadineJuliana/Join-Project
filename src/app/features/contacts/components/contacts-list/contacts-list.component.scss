@@ -167,6 +167,20 @@
     margin: 20px 0 16px 0;
   }
 
+  @media (max-width: $bp-xl2) {
+    
+    &__list {
+      &__items {
+        display: flex;
+        height: 78px;
+        cursor: pointer;
+        gap: 20px;
+        max-width: 50px;
+        width: 100%;
+      }
+    }
+  }
+
   @media (max-width: $bp-md) {
     &__listpage {
       button {
