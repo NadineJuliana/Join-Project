@@ -10,7 +10,6 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  // justify-content: space-between;
   padding: 64px 0px 64px 0px;
   background-color: var(--primary);
   width: clamp(72px, 18vw, 232px);
@@ -22,17 +21,19 @@ section {
   height: 120px;
   max-width: 100px;
   width: 100%;
-  margin-bottom: 120px;
+  margin-bottom: 80px;
   img {
     width: 100%;
   }
 }
 
-.links{
+.links {
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 .legal {
@@ -40,10 +41,10 @@ section {
   flex-direction: column;
 
   > a {
-    width: 232px;
+    width: 100%;
     display: flex;
     justify-content: flex-start;
-    padding: 8px 60px;
+    padding: 8px 15px;
     color: var(--gray);
     font-variation-settings: "wght" 400;
   }
@@ -57,7 +58,6 @@ section {
     background-color: var(--primary-dark);
   }
 }
-
 
 @media (max-width: $bp-md) {
   :host {
