@@ -192,9 +192,16 @@
   }
 
   @media (max-width: $bp-xl2) {
-
     &__list {
       padding: 24px 16px 24px 16px;
+
+      &__groupletter {
+        height: 58px;
+
+        h5 {
+          padding: 20px;
+        }
+      }
 
       &__items {
         display: flex;
@@ -230,8 +237,8 @@
     }
   }
 
-  @media (max-width: $bp-xs){
-    &__list{
+  @media (max-width: $bp-xs) {
+    &__list {
       padding: 24px 0px 100px 0px;
     }
   }

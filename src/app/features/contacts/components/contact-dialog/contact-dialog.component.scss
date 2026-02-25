@@ -13,7 +13,7 @@
   animation: fadeIn 0.3s ease-out;
 
   &__window {
-    margin: 16px;
+    margin: 10px;
     width: min(1212px, calc(100vw - 48px));
     min-height: 592px;
     background: var(--white);
