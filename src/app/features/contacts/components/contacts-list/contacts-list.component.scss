@@ -11,7 +11,7 @@
     background: var(--white);
     box-shadow: 5px 0 10px rgba(0, 0, 0, 0.15);
 
-    button{
+    button {
       margin: 20px;
     }
   }
@@ -150,6 +150,12 @@
   }
 
   @media (max-width: $bp-md) {
+    &__listpage {
+      button {
+        display: none;
+      }
+    }
+
     &__list {
       flex: 1;
       overflow-y: auto;
