@@ -15,7 +15,10 @@ export class ContactsListComponent {
   @Output() selectContact = new EventEmitter<Contact>();
   @Output() addContact = new EventEmitter<void>();
 
+  activeContactId: number | string | null = null;
+
   onContactClick(contact: Contact) {
+    this.activeContactId = contact.id;
     this.selectContact.emit(contact);
   }
 }

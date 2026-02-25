@@ -8,9 +8,14 @@
       <div class="contacts__list__groupletter">
         <h5>{{ group.letter }}</h5>
       </div>
+      <hr class="contacts__hrline">
 
       @for (contact of group.contacts; track contact.id) {
-        <div class="contacts__list__items" (click)="onContactClick(contact)">
+        <div
+          class="contacts__list__items"
+          [class.active]="activeContactId === contact.id"
+          (click)="onContactClick(contact)"
+        >
           <div
             class="contacts__list__initials"
             [style.backgroundColor]="contact.color"
