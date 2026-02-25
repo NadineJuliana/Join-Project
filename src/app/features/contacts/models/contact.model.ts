@@ -22,6 +22,8 @@ export class Contact {
       '#FFBB2B',
       '#1FD7C1',
       '#462F8A',
+      '#FF4646',
+      '#00BEE8',
     ];
     const randomColor = Math.floor(Math.random() * colors.length);
     return colors[randomColor];
