@@ -56,22 +56,39 @@ a.is-active {
     color: var(--lightgray);
     justify-content: space-around;
 
-    .a {
-      border-radius: 5%;
+    a{
+      border-radius: 15px;
       width: 80px;
       height: 80px;
       flex-direction: column;
       justify-content: center;
+
+      .icon{
+        width: 24px;
+        height: 24px;
+      }
     }
 
     .navlink {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      width: 76px;
+      height: 76px;
+      padding: 0;
+      span{
+        text-align: center;
+      }
     }
 
     :hover {
       background-color: unset;
+    }
+  }
+
+  @media(max-width: $bp-xs){
+    nav{
+      gap: unset;
     }
   }
 }
