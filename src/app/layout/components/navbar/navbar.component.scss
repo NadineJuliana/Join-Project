@@ -50,7 +50,7 @@ a.is-active {
   color: var(--white);
 }
 
-@media (max-width: $bp-md) {
+@media (max-width: $bp-lg) {
   nav {
     flex-direction: row;
     color: var(--lightgray);

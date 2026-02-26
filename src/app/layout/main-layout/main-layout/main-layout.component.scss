@@ -13,7 +13,7 @@ section {
     width: 100%;
 }
 
-@media (max-width: $bp-md) {
+@media (max-width: $bp-lg) {
     :host {
         display: flex;
         flex-direction: column-reverse;
