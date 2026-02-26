@@ -41,7 +41,7 @@ section {
   cursor: pointer;
 
   &:hover {
-    background-color: var(--secondary);
+    background-color: var(--blue-hover);
   }
 }
 
@@ -80,6 +80,9 @@ section {
   width: 20px;
   height: 20px;
   color: var(--gray);
+  :hover{
+    transform: scale(1.2);
+  }
 }
 
 @media (min-width: $bp-md) {
