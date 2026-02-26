@@ -71,6 +71,11 @@
       flex-direction: column;
       justify-content: center;
       row-gap: 8px;
+      h2 {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
     }
 
     &__initals {
