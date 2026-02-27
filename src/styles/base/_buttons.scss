@@ -1,27 +1,26 @@
 @use "../abstracts/breakpoints" as *;
 
 .btn {
-    border: none;
-    border-radius: 10px;
-    padding: 16px;
-    gap: 4px;
-    display: flex;
-    justify-content: center;
-}
+  border: none;
+  border-radius: 10px;
+  padding: 16px;
+  gap: 4px;
+  display: flex;
+  justify-content: center;
 
-.btn--primary {
+  &--primary {
     background: var(--primary);
     color: var(--white);
     font-size: 21px;
     font-weight: 700;
 
     &:hover {
-        background: var(--accent);
-        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+      background: var(--accent);
+      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     }
-}
-
-.btn--secondary {
+  }
+  
+  &--secondary {
     background: var(--white);
     color: var(--primary);
     border: solid 1px var(--primary);
@@ -29,14 +28,15 @@
     font-weight: 400;
 
     &:hover {
-        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-        border: solid 1px var(--accent);
-        color: var(--accent);
+      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+      border: solid 1px var(--accent);
+      color: var(--accent);
     }
+  }
 }
 
 @media (max-width: $bp-md) {
-    .btn {
-        padding: 16px 10px;
-    }
+  .btn {
+    padding: 16px 10px;
+  }
 }
