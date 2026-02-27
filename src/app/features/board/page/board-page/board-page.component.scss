@@ -1,0 +1,80 @@
+.board {
+  height: 100%;
+  width: 100%;
+
+  &__header {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 80px 88px 50px 64px;
+  }
+  &__header-headline {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__search-container {
+    display: flex;
+    gap: 32px;
+  }
+  &__search-field {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    background-color: var(--white);
+    border: solid 1px var(--gray);
+    padding: 8px 16px;
+    border-radius: 10px;
+
+    input {
+      border: none;
+      height: 100%;
+      font-size: 20px;
+      &:focus {
+        outline: none;
+      }
+      ::placeholder {
+        font-size: 20px;
+      }
+    }
+  }
+  &__separator {
+    background-color: var(--lightgray);
+    width: 1px;
+    height: 32px;
+  }
+  &__kanban {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 26px;
+    padding: 0px 64px;
+  }
+  &__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  &__container-headline {
+    display: flex;
+  }
+  &__notask {
+    display: flex;
+    justify-content: center;
+    background: var(--lightgray);
+    padding: 16px;
+    border-radius: 10px;
+    border: dashed 3px var(--gray);
+    color: var(--gray);
+  }
+  &__container-cards {
+    border-radius: 10px;
+    border: dashed 3px var(--gray);
+    max-height: 300px;
+    height: 100%;
+  }
+}
