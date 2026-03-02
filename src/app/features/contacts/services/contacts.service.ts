@@ -13,7 +13,6 @@ export class ContactsService {
     private realtimeService: SupabaseRealtimeService,
   ) {}
   contactsLoaded = false;
-  // contactsChannel: RealtimeChannel | null = null;
   initialized = false;
 
   contacts = signal<Contact[]>([]);
@@ -35,30 +34,14 @@ export class ContactsService {
       .map((letter) => ({ letter, contacts: grouped[letter] }));
   });
 
-  // async initRealtime() {
-  //   if (this.initialized) return;
-  //   this.initialized = true;
-  //   this.contactsChannel = this.supabaseService
-  //     .getSupabaseClient()
-  //     .channel('custom-all-channel')
-  //     .on(
-  //       'postgres_changes',
-  //       { event: '*', schema: 'public', table: 'Contacts' },
-  //       async (payload: any) => {
-  //         await this.handleRealtimeEvent(payload);
-  //       },
-  //     )
-  //     .subscribe();
-  // }
-
   initRealtime() {
     if (this.initialized) return;
     this.initialized = true;
     this.realtimeService.createChannel<Contact>(
       'Contacts',
       'contacts-realtime-channel',
-      async (payload) => {
-        await this.handleRealtimeEvent(payload);
+      (payload) => {
+        this.handleRealtimeEvent(payload);
       },
     );
   }
@@ -79,7 +62,7 @@ export class ContactsService {
     }
   }
 
-  async handleInsert(newData: Partial<Contact>) {
+  handleInsert(newData: Partial<Contact>) {
     const newContact = new Contact(newData);
     this.contacts.update((list) => {
       const exists = list.some((c) => c.id === newContact.id);
@@ -91,7 +74,7 @@ export class ContactsService {
     });
   }
 
-  async handleUpdate(updatedData: Partial<Contact>) {
+  handleUpdate(updatedData: Partial<Contact>) {
     const updatedContact = new Contact(updatedData);
     this.contacts.update((list) =>
       list.map((c) => (c.id === updatedContact.id ? updatedContact : c)),
@@ -102,7 +85,7 @@ export class ContactsService {
     }
   }
 
-  async handleDelete(oldData: Partial<Contact>) {
+  handleDelete(oldData: Partial<Contact>) {
     const deletedId = oldData.id;
     this.contacts.update((list) => list.filter((c) => c.id !== deletedId));
 
