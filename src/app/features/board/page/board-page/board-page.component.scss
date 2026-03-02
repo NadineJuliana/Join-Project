@@ -171,3 +171,79 @@
     border: solid 1px var(--white);
   }
 }
+
+@media (max-width: $bp-md) {
+  .board {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    &__card-container {
+      min-width: 252px;
+      max-width: 252px;
+    }
+  }
+  .header {
+    &__headline {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      button {
+        display: flex !important;
+        padding: 10px 16px;
+      }
+    }
+    &__search-container {
+      display: flex;
+      gap: 32px;
+      width: 100%;
+      button {
+        display: none;
+      }
+    }
+    &__search-field {
+      display: flex;
+      width: 100%;
+      gap: 16px;
+      align-items: center;
+      background-color: var(--white);
+      border: solid 1px var(--gray);
+      padding: 8px 16px;
+      border-radius: 10px;
+      button {
+        display: flex;
+      }
+
+      input {
+        border: none;
+        height: 100%;
+        width: 100%;
+        font-size: 20px;
+        &:focus {
+          outline: none;
+        }
+        ::placeholder {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+  .kanban {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    gap: 16px;
+
+    &__container {
+      width: 100%;
+      height: auto;
+    }
+    &__container-cards {
+      display: flex;
+      flex-direction: row !important;
+      overflow-x: auto;
+    }
+  }
+}
