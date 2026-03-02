@@ -20,6 +20,17 @@ export class TasksService {
   initialized = false;
 
   tasks = signal<Task[]>([]);
+  toDoTasks = computed(() => this.tasks().filter((t) => t.status === 'to-do'));
+  inProgressTasks = computed(() => this.tasks().filter((t) => t.status === 'in-progress'));
+  awaitFeedbackTasks = computed(() => this.tasks().filter((t) => t.status === 'await-feedback'));
+  doneTasks = computed(() => this.tasks().filter((t) => t.status === 'done'));
+
+  lowTasks = computed(() => this.tasks().filter((t) => t.priority === 'low'));
+  mediumTasks = computed(() => this.tasks().filter((t) => t.priority === 'medium'));
+  highTasks = computed(() => this.tasks().filter((t) => t.priority === 'high'));
+
+  technicalTasks = computed(() => this.tasks().filter((t) => t.category === 'technical-task'));
+  userStoryTasks = computed(() => this.tasks().filter((t) => t.category === 'user-story'));
 
   initRealtime() {
     if (this.initialized) return;
@@ -240,5 +251,4 @@ export class TasksService {
     if (error) throw error;
     this.handleDeleteTask({ id: taskId });
   }
-
 }
