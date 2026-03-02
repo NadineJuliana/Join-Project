@@ -1,86 +1,49 @@
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { TasksService } from '../../../tasks/services/tasks.service';
+import { Task } from '../../../tasks/models/task.model';
+import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
+import { EllipsisPipe } from '../../../../shared/pipes/ellipsis.pipe';
+
+// Interface - Definiert die Struktur einer Spalte
+export interface BoardColumn {
+  id: string;
+  title: string;
+  tasks: Task[];
+}
 
 @Component({
   selector: 'app-board-page',
-  imports: [CommonModule, DragDropModule],
+  imports: [CommonModule, DragDropModule, InitialsPipe, EllipsisPipe],
   templateUrl: './board-page.component.html',
   styleUrl: './board-page.component.scss',
 })
 export class BoardPageComponent {
   activeDropListId: string | null = null;
-  boardColumns: BoardColumn[] = [
-    {
-      id: 'todo',
-      title: 'To Do',
-      tasks: [
-        {
-          id: '1',
-          title: 'Kochwelt Page & Recipe Recommender',
-          description: 'Benutzer sollen sich anmelden können',
-          priority: 'High',
-          progress: 30,
-          assignee: 'MP',
-          category: 'User Story',
-        },
-        {
-          id: '2',
-          title: 'Datenbank Setup',
-          description: 'PostgreSQL Datenbank einrichten',
-          priority: 'Critical',
-          progress: 0,
-          assignee: 'AN',
-          category: 'Technical Task',
-        },
-      ],
-    },
-    {
-      id: 'inProgress',
-      title: 'In Progress',
-      tasks: [
-        {
-          id: '3',
-          title: 'API Endpoints erstellen',
-          description: 'REST API für Kontakte',
-          priority: 'High',
-          progress: 60,
-          assignee: 'MP',
-          category: 'User Story',
-        },
-      ],
-    },
-    {
-      id: 'testing',
-      title: 'Testing',
-      tasks: [
-        {
-          id: '4',
-          title: 'Unit Tests schreiben',
-          description: 'Tests für Service Layer',
-          priority: 'Medium',
-          progress: 45,
-          assignee: 'AN',
-          category: 'User Story',
-        },
-      ],
-    },
-    {
-      id: 'done',
-      title: 'Done',
-      tasks: [
-        {
-          id: '5',
-          title: 'Navigation Menu',
-          description: 'Hauptnavigation implementiert',
-          priority: 'High',
-          progress: 100,
-          assignee: 'MP',
-          category: 'Technical Task',
-        }, 
-      ],
-    },
-  ];
+  dbService = inject(TasksService);
+
+  async ngOnInit() {
+    await this.dbService.getAllTasks();
+    this.dbService.initRealtime();
+  }
+
+  get boardColumns(): BoardColumn[] {
+    return [
+      { id: 'to-do', title: 'To Do', tasks: this.dbService.toDoTasks() },
+      {
+        id: 'in-progress',
+        title: 'In Progress',
+        tasks: this.dbService.inProgressTasks(),
+      },
+      {
+        id: 'await-feedback',
+        title: 'Await Feedback',
+        tasks: this.dbService.awaitFeedbackTasks(),
+      },
+      { id: 'done', title: 'Done', tasks: this.dbService.doneTasks() },
+    ];
+  }
 
   // - Die Drop-Handler Methode
   drop(event: CdkDragDrop<Task[]>) {
@@ -118,22 +81,4 @@ export class BoardPageComponent {
   onDropListExited(columnId: string): void {
     this.activeDropListId = null;
   }
-}
-
-// Interface - Definiert die Struktur einer Task
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  priority: string;
-  progress: number;
-  assignee: string;
-  category: string;
-}
-
-// Interface - Definiert die Struktur einer Spalte
-export interface BoardColumn {
-  id: string;
-  title: string;
-  tasks: Task[];
 }
