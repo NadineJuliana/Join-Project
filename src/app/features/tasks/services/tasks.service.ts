@@ -200,4 +200,45 @@ export class TasksService {
     });
   }
 
+  async getAllTasks() {
+    const { data, error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Tasks')
+      .select('*');
+    if (error) throw error;
+    this.tasks.set((data || []).map((t) => new Task(t)));
+    this.tasksLoaded = true;
+  }
+
+  async addTask(task: Task) {
+    const { data, error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Tasks')
+      .insert(task.getCleanAddJson())
+      .select();
+    if (error) throw error;
+    this.handleInsertTask(new Task(data[0]));
+  }
+
+  async updateTask(task: Task) {
+    const { data, error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Tasks')
+      .update(task.getCleanAddJson())
+      .eq('id', task.id)
+      .select();
+    if (error) throw error;
+    this.handleUpdateTask(new Task(data[0]));
+  }
+
+  async deleteTask(taskId: number) {
+    const { error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Tasks')
+      .delete()
+      .eq('id', taskId);
+    if (error) throw error;
+    this.handleDeleteTask({ id: taskId });
+  }
+
 }
