@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'ellipsis',
 })
 export class EllipsisPipe implements PipeTransform {
-  transform(value: string | null | undefined, limit: number = 40): string {
+  transform(value: string | null | undefined, limit: number = 60): string {
     if (!value) {
       return '';
     }

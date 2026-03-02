@@ -32,7 +32,7 @@ export class ContactsPageComponent {
 
   async ngOnInit() {
     await this.dbService.getAllContacts();
-    await this.dbService.initRealtime();
+    this.dbService.initRealtime();
     this.setupMobileDetection();
 
     if (this.isMobile()) {

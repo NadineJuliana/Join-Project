@@ -14,10 +14,12 @@ export class SupabaseService {
         environment.supabaseKey,
         {auth: {persistSession: true, autoRefreshToken: false, detectSessionInUrl: false}}
       );
+       console.log('Supabase client initialized');
     }
   }
 
   getSupabaseClient(): SupabaseClient {
+    console.log('Supabase client accessed');
     return SupabaseService.supabaseClient;
   }
 }

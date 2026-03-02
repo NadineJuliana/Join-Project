@@ -217,6 +217,7 @@ export class TasksService {
       .from('Tasks')
       .select('*');
     if (error) throw error;
+    console.log('Tasks loaded', data);
     this.tasks.set((data || []).map((t) => new Task(t)));
     this.tasksLoaded = true;
   }
