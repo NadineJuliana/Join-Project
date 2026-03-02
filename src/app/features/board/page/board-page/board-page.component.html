@@ -1,20 +1,20 @@
 <section class="board">
-  <div class="board__header">
-    <div class="board__header-headline">
+  <div class="header">
+    <div class="header__headline">
       <h1>Board</h1>
       <button class="btn btn--primary none">
         <span class="material-icons">add</span>
       </button>
     </div>
-    <div class="board__search-container">
-      <div class="board__search-field">
+    <div class="header__search-container">
+      <div class="header__search-field">
         <input
           id="searchBar"
           type="text"
           class="_search-bar"
           placeholder="Find Task"
         />
-        <div class="board__separator"></div>
+        <div class="header__separator"></div>
         <button class="">
           <span class="material-icons">search</span>
         </button>
@@ -26,11 +26,11 @@
     </div>
   </div>
   <!-- Der äußere Container muss cdkDropListGroup haben -->
-  <div class="board__kanban" cdkDropListGroup>
+  <div class="kanban" cdkDropListGroup>
     <!-- Jede Spalte ist eine cdkDropList (Ablagebereich) -->
     @for (column of boardColumns; track column.id) {
-      <div class="board__container">
-        <div class="board__container-headline">
+      <div class="kanban__container">
+        <div class="kanban__headline">
           <h3>{{ column.title }}</h3>
         </div>
 
@@ -44,13 +44,13 @@
           (cdkDropListEntered)="onDropListEntered(column.id)"
           (cdkDropListExited)="onDropListExited(column.id)"
           [ngClass]="{
-            'board__container-cards--active': activeDropListId === column.id,
+            'kanban__container-cards--active': activeDropListId === column.id,
           }"
-          class="board__container-cards"
+          class="kanban__container-cards"
         >
           <!-- "No task" nur zeigen, wenn keine Tasks existieren -->
           @if (column.tasks.length === 0) {
-            <div class="board__notask">
+            <div class="kanban__notask">
               <p>No tasks</p>
             </div>
           }
