@@ -19,7 +19,7 @@ export class TaskFormComponent {
   private formBuilder = inject(FormBuilder);
 
   form = this.formBuilder.nonNullable.group({
-    title: ['', [Validators.required]],
+    title: ['', [Validators.required, Validators.maxLength(35)]],
     dueDate: ['', [Validators.required, this.notPastDateValidator]],
   });
 
