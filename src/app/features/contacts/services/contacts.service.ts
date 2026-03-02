@@ -1,14 +1,19 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { SupabaseService } from '../../../core/services/supabase.service';
 import { Contact } from '../models/contact.model';
+import { SupabaseRealtimeService } from '../../../core/services/supabase-realtime.service';
+import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContactsService {
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(
+    private supabaseService: SupabaseService,
+    private realtimeService: SupabaseRealtimeService,
+  ) {}
   contactsLoaded = false;
-  contactsChannel: any;
+  // contactsChannel: RealtimeChannel | null = null;
   initialized = false;
 
   contacts = signal<Contact[]>([]);
@@ -30,39 +35,51 @@ export class ContactsService {
       .map((letter) => ({ letter, contacts: grouped[letter] }));
   });
 
-  async initRealtime() {
+  // async initRealtime() {
+  //   if (this.initialized) return;
+  //   this.initialized = true;
+  //   this.contactsChannel = this.supabaseService
+  //     .getSupabaseClient()
+  //     .channel('custom-all-channel')
+  //     .on(
+  //       'postgres_changes',
+  //       { event: '*', schema: 'public', table: 'Contacts' },
+  //       async (payload: any) => {
+  //         await this.handleRealtimeEvent(payload);
+  //       },
+  //     )
+  //     .subscribe();
+  // }
+
+  initRealtime() {
     if (this.initialized) return;
     this.initialized = true;
-    this.contactsChannel = this.supabaseService
-      .getSupabaseClient()
-      .channel('custom-all-channel')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'Contacts' },
-        async (payload: any) => {
-          await this.handleRealtimeEvent(payload);
-        },
-      )
-      .subscribe();
+    this.realtimeService.createChannel<Contact>(
+      'Contacts',
+      'contacts-realtime-channel',
+      async (payload) => {
+        await this.handleRealtimeEvent(payload);
+      },
+    );
   }
 
-  async handleRealtimeEvent(payload: any) {
+  handleRealtimeEvent(payload: RealtimePostgresChangesPayload<Contact>) {
     switch (payload.eventType) {
       case 'INSERT':
-        await this.handleInsert(payload.new);
+        this.handleInsert(payload.new);
         break;
       case 'UPDATE':
-        await this.handleUpdate(payload.new);
+        this.handleUpdate(payload.new);
         break;
       case 'DELETE':
-        await this.handleDelete(payload.old);
+        if (payload.old) {
+          this.handleDelete(payload.old);
+        }
         break;
-      default:
-        throw new Error(`Unknown event type: ${payload.eventType}`);
     }
   }
 
-  async handleInsert(newData: any) {
+  async handleInsert(newData: Partial<Contact>) {
     const newContact = new Contact(newData);
     this.contacts.update((list) => {
       const exists = list.some((c) => c.id === newContact.id);
@@ -74,7 +91,7 @@ export class ContactsService {
     });
   }
 
-  async handleUpdate(updatedData: any) {
+  async handleUpdate(updatedData: Partial<Contact>) {
     const updatedContact = new Contact(updatedData);
     this.contacts.update((list) =>
       list.map((c) => (c.id === updatedContact.id ? updatedContact : c)),
@@ -85,7 +102,7 @@ export class ContactsService {
     }
   }
 
-  async handleDelete(oldData: any) {
+  async handleDelete(oldData: Partial<Contact>) {
     const deletedId = oldData.id;
     this.contacts.update((list) => list.filter((c) => c.id !== deletedId));
 
@@ -95,11 +112,7 @@ export class ContactsService {
   }
 
   ngOnDestroy() {
-    if (this.contactsChannel) {
-      this.supabaseService
-        .getSupabaseClient()
-        .removeChannel(this.contactsChannel);
-    }
+    this.realtimeService.removeChannel('contacts-realtime-channel');
   }
 
   async getAllContacts() {
