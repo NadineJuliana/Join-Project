@@ -20,56 +20,58 @@
             </button>
         </div>
     </div>
-    <div class="board__kanban">
+    <!-- Der äußere Container muss cdkDropListGroup haben -->
+    <div class="board__kanban" cdkDropListGroup>
+
+        <!-- Jede Spalte ist eine cdkDropList (Ablagebereich) -->
+        @for (column of boardColumns; track column.id) {
         <div class="board__container">
             <div class="board__container-headline">
-                <h3>Headline</h3>
+                <h3>{{ column.title }}</h3>
             </div>
-            <div class="board__notask">
-                <p>No task To do</p>
-            </div>
-            <div class="board__container-cards">
-                <div class="board__card-container">
+
+            <!-- Das ist der Drop-Container für eine Spalte -->
+            <div cdkDropList [id]="column.id" [cdkDropListData]="column.tasks" [cdkDropListDisabled]="false"
+                (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="onDropListEntered(column.id)"
+                (cdkDropListExited)="onDropListExited(column.id)"
+                [ngClass]="{ 'board__container-cards--active': activeDropListId === column.id }"
+                class="board__container-cards">
+
+                <!-- "No task" nur zeigen, wenn keine Tasks existieren -->
+                @if (column.tasks.length === 0) {
+                <div class="board__notask">
+                    <p>No tasks</p>
+                </div>
+                }
+
+                <!-- Jede Task ist ein draggable Element -->
+                @for (task of column.tasks; track task.id) {
+                <div cdkDrag [cdkDragData]="task" class="board__card-container">
                     <div class="board__card-category">
-                        <p>User Story</p>
+                        <p>{{ task.category }}</p>
                     </div>
                     <div class="board__card-content">
-                        <p class="board__card-content__card-headline">Titel</p>
-                        <p class="board__card-content__card-description">Lorem Ipsum</p>
+                        <p class="board__card-content__card-headline">{{ task.title }}</p>
+                        <p class="board__card-content__card-description">{{ task.description }}</p>
                     </div>
                     <div class="board__card-tools">
                         <div class="board__card-tools-first">
                             <div class="board__card-taskbar">
-                                <div>50%</div>
+                                <div>{{ task.progress }}%</div>
                             </div>
-                            <div class="board__card-tasknumber">1/2</div>
                         </div>
                         <div class="board__card-tools-second">
-                            <div class="board__card-initials"><p>NA</p></div>
-                            <div class="board__card-priority">x</div>
+                            <div class="board__card-initials">
+                                <p>{{ task.assignee }}</p>
+                            </div>
+                            <div class="board__card-priority">{{ task.priority }}</div>
                         </div>
                     </div>
                 </div>
+                }
             </div>
         </div>
-        <div class="board__container">
-            <div class="board__container__headline">
-                <h3>Headline</h3>
-            </div>
-
-        </div>
-        <div class="board__container">
-            <div class="board__container__headline">
-                <h3>Headline</h3>
-            </div>
-
-        </div>
-        <div class="board__container">
-            <div class="board__container__headline">
-                <h3>Headline</h3>
-            </div>
-
-        </div>
+        }
     </div>
 
 </section>
