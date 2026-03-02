@@ -1,1 +1,72 @@
-<p>task-form works!</p>
+<div class="task-form-layout">
+  <section class="task-form-block task-form-block--left">
+    <div class="task-form-field">
+      <h5>
+        <label for="task-title">Title<span class="required">*</span></label>
+      </h5>
+      <input id="task-title" type="text" placeholder="Enter a title" />
+    </div>
+
+    <div class="task-form-field">
+      <h5><label for="task-description">Description</label></h5>
+      <textarea
+        id="task-description"
+        placeholder="Enter a description"
+      ></textarea>
+    </div>
+
+    <div class="task-form-field">
+      <h5>
+        <label for="task-due-date"
+          >Due Date<span class="required">*</span></label
+        >
+      </h5>
+      <input id="task-due-date" type="date" [min]="todayMinDate" />
+    </div>
+  </section>
+
+  <section
+    class="task-form-block task-form-block--separator"
+    aria-hidden="true"
+  >
+    <span class="task-form-separator"></span>
+  </section>
+
+  <section class="task-form-block task-form-block--right">
+    <div class="task-form-field">
+      <h5><label for="task-priority">Priority</label></h5>
+      <input
+        id="task-priority"
+        type="text"
+        placeholder="Select task priority"
+      />
+    </div>
+
+    <div class="task-form-field">
+      <h5><label for="task-assignees">Assigned to</label></h5>
+      <input
+        id="task-assignees"
+        type="text"
+        placeholder="Select contacts to assign"
+      />
+    </div>
+
+    <div class="task-form-field">
+      <h5>
+        <label for="task-category"
+          >Category<span class="required">*</span></label
+        >
+      </h5>
+      <input
+        id="task-category"
+        type="text"
+        placeholder="Select task category"
+      />
+    </div>
+
+    <div class="task-form-field">
+      <h5><label for="task-subtasks">Subtasks</label></h5>
+      <input id="task-subtasks" type="text" placeholder="Add new subtask" />
+    </div>
+  </section>
+</div>

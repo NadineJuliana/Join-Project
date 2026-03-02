@@ -1,10 +1,31 @@
+@use "../../../../../styles/abstracts/breakpoints" as *;
+
 .add-task {
-  height: 100%;
+  height: calc(100vh - 96px);
   width: 100%;
+  overflow-y: auto;
+  min-height: 0;
+  scrollbar-gutter: stable;
 
   &__header {
     width: 100%;
     height: auto;
     padding: 80px 88px 50px 64px;
+  }
+
+  &__form {
+    width: 100%;
+  }
+}
+
+@media (max-width: $bp-lg) {
+  .add-task {
+    height: calc(100vh - 176px);
+  }
+}
+
+@media (max-width: $bp-md) {
+  .add-task {
+    height: calc(100vh - 160px);
   }
 }

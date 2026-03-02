@@ -1,0 +1,89 @@
+.task-form-layout {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: calc(1440px - 232px);
+  gap: 48px;
+  padding: 0 88px 50px 64px;
+}
+
+.task-form-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 280px;
+}
+
+.task-form-block--left,
+.task-form-block--right {
+  flex: 1;
+}
+
+.task-form-block--separator {
+  align-items: center;
+  justify-content: center;
+  min-width: 1px;
+}
+
+.task-form-separator {
+  display: block;
+  width: 1px;
+  height: 100%;
+  min-height: 280px;
+  background-color: var(--lightgray);
+}
+
+.task-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .required {
+    color: var(--required-star);
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    height: 50px;
+    border: 1px solid var(--lightgray);
+    border-radius: 10px;
+    padding: 13px 20px;
+    font-size: 20px;
+    color: var(--primary);
+    background: var(--white);
+
+    &::placeholder {
+      color: var(--lightgray);
+    }
+
+    &:focus {
+      outline: 1px solid var(--accent);
+      border-color: var(--accent);
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: var(--error);
+      outline-color: var(--error);
+    }
+  }
+
+  textarea {
+    height: 120px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .task-form-layout {
+    gap: 16px;
+  }
+
+  .task-form-block--left,
+  .task-form-block--right {
+    flex: 1 1 100%;
+  }
+
+  .task-form-block--separator {
+    display: none;
+  }
+}
