@@ -72,7 +72,26 @@
     }
     &__headline {
       display: flex;
+      justify-content: space-between;
+      padding: 5px;
+      container-type: inline-size;
+
+      h3 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 100%;
+      }
+
+      button {
+        border: solid 2px var(--primary);
+        border-radius: 8px;
+      }
     }
+    .kanban__container:last-of-type .kanban__headline button {
+      display: none;
+    }
+
     &__notask {
       display: flex;
       justify-content: center;
