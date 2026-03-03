@@ -218,7 +218,7 @@
 
 @media (max-width: $bp-md) {
   .board {
-    height: 100vh;
+    height: calc(100vh - 160px);
     display: flex;
     flex-direction: column;
     overflow-x: auto;
