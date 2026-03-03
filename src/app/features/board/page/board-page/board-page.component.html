@@ -85,7 +85,13 @@
                       <p>{{ assignee.name | initials }}</p>
                     </div>
                   }
-                  <div class="board__card-priority">{{ task.priority }}</div>
+                  <div class="board__card-priority">
+                    <img
+                      class="board_card-icon"
+                      [src]="getPriorityIcon(task.priority)"
+                      [alt]="task.priority"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

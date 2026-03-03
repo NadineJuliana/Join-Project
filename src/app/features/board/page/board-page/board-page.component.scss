@@ -190,6 +190,17 @@
     border-radius: 100%;
     border: solid 1px var(--white);
   }
+  &__card-priority{
+    height: 32px;
+    width: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+      width: 17px;
+      max-height: 12px;
+    }
+  }
 }
 
 @media (max-width: $bp-md) {
