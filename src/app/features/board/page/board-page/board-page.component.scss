@@ -183,68 +183,68 @@
       min-width: 252px;
       max-width: 252px;
     }
-  }
-  .header {
-    &__headline {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      button {
-        display: flex !important;
-        padding: 10px 16px;
-      }
-    }
-    &__search-container {
-      display: flex;
-      gap: 32px;
-      width: 100%;
-      button {
-        display: none;
-      }
-    }
-    &__search-field {
-      display: flex;
-      width: 100%;
-      gap: 16px;
-      align-items: center;
-      background-color: var(--white);
-      border: solid 1px var(--gray);
-      padding: 8px 16px;
-      border-radius: 10px;
-      button {
+
+    .header {
+      &__headline {
         display: flex;
-      }
-
-      input {
-        border: none;
-        height: 100%;
+        justify-content: space-between;
         width: 100%;
-        font-size: 20px;
-        &:focus {
-          outline: none;
+        button {
+          display: flex;
+          padding: 10px 16px;
         }
-        ::placeholder {
+      }
+      &__search-container {
+        display: flex;
+        gap: 32px;
+        width: 100%;
+        button {
+          display: none;
+        }
+      }
+      &__search-field {
+        display: flex;
+        width: 100%;
+        gap: 16px;
+        align-items: center;
+        background-color: var(--white);
+        border: solid 1px var(--gray);
+        padding: 8px 16px;
+        border-radius: 10px;
+        button {
+          display: flex;
+        }
+
+        input {
+          border: none;
+          height: 100%;
+          width: 100%;
           font-size: 20px;
+          &:focus {
+            outline: none;
+          }
+          ::placeholder {
+            font-size: 20px;
+          }
         }
       }
     }
-  }
-  .kanban {
-    width: 100%;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    height: 100% !important;
-
-    &__container {
+    .kanban {
       width: 100%;
-      height: auto;
-    }
-    &__container-cards {
+      flex: 1;
       display: flex;
-      flex-direction: row !important;
-      overflow-x: auto;
+      flex-direction: column;
+      gap: 16px;
+      height: 100%;
+
+      &__container {
+        width: 100%;
+        height: auto;
+      }
+      &__container-cards {
+        flex-direction: row;
+        overflow-x: auto;
+      }
     }
   }
 }
