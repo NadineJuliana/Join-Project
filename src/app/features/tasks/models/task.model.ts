@@ -1,6 +1,12 @@
 import { Contact } from '../../contacts/models/contact.model';
 import { Subtask } from './subtask.model';
 
+export type TaskStatus =
+  | 'to-do'
+  | 'in-progress'
+  | 'await-feedback'
+  | 'done';
+
 export class Task {
   id: number;
   title: string;
@@ -8,7 +14,8 @@ export class Task {
   due_date: string;
   priority: 'low' | 'medium' | 'high';
   category: 'technical-task' | 'user-story';
-  status: 'to-do' | 'in-progress' | 'await-feedback' | 'done';
+  status: TaskStatus;
+  position: number;
   subtasks?: Subtask[];
   assignees?: Contact[];
 
@@ -20,6 +27,7 @@ export class Task {
     this.priority = data.priority ?? 'medium';
     this.category = data.category ?? 'user-story';
     this.status = data.status ?? 'to-do';
+    this.position = data.position ?? 0;
     this.subtasks = (data.subtasks ?? []).map((s) => new Subtask(s));
     this.assignees = data.assignees ?? [];
   }
@@ -32,6 +40,7 @@ export class Task {
       priority: this.priority,
       category: this.category,
       status: this.status,
+      position: this.position,
     };
   }
 }
