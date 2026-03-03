@@ -34,7 +34,7 @@ export class TaskFormComponent implements OnInit {
   form = this.formBuilder.nonNullable.group({
     title: ['', [Validators.required, Validators.maxLength(35)]],
     dueDate: ['', [Validators.required, this.notPastDateValidator]],
-    assigneeIds: [<number[]>[]],
+    assigneeIds: [<string[]>[]],
   });
 
   todayMinDate = this.getTodayMinDate();
@@ -42,9 +42,9 @@ export class TaskFormComponent implements OnInit {
   isAssigneesDropdownOpen = signal(false);
   contacts = computed(() => this.contactsService?.contacts() ?? []);
   selectedAssigneeContacts = computed(() => {
-    const selectedIds = this.form.controls.assigneeIds.value;
+    const selectedIds = new Set(this.form.controls.assigneeIds.value);
     return this.contacts().filter((contact) =>
-      selectedIds.includes(contact.id),
+      selectedIds.has(String(contact.id)),
     );
   });
 
@@ -71,15 +71,16 @@ export class TaskFormComponent implements OnInit {
   }
 
   isAssigneeSelected(contactId: number): boolean {
-    return this.form.controls.assigneeIds.value.includes(contactId);
+    return this.form.controls.assigneeIds.value.includes(String(contactId));
   }
 
   toggleAssignee(contact: Contact): void {
+    const contactId = String(contact.id);
     const selectedIds = this.form.controls.assigneeIds.value;
-    const isSelected = selectedIds.includes(contact.id);
+    const isSelected = selectedIds.includes(contactId);
     const nextSelectedIds = isSelected
-      ? selectedIds.filter((id) => id !== contact.id)
-      : [...selectedIds, contact.id];
+      ? selectedIds.filter((id) => id !== contactId)
+      : [...selectedIds, contactId];
 
     this.form.controls.assigneeIds.setValue(nextSelectedIds);
   }
@@ -91,7 +92,11 @@ export class TaskFormComponent implements OnInit {
     }
 
     if (selectedCount === 1) {
-      return this.selectedAssigneeContacts()[0]?.name ?? '1 contact selected';
+      const selectedId = this.form.controls.assigneeIds.value[0];
+      const selectedContact = this.contacts().find(
+        (contact) => String(contact.id) === selectedId,
+      );
+      return selectedContact?.name ?? '1 contact selected';
     }
 
     return `${selectedCount} contacts selected`;
