@@ -99,7 +99,7 @@ export class ContactsService {
   }
 
   async getAllContacts() {
-    let { data: contacts, error } = await this.supabaseService
+    const { data, error } = await this.supabaseService
       .getSupabaseClient()
       .from('Contacts')
       .select('*');
@@ -107,7 +107,7 @@ export class ContactsService {
       throw error;
     }
     this.contacts.set(
-      (contacts || []).map((c: Partial<Contact>) => new Contact(c)),
+      (data || []).map((c: Partial<Contact>) => new Contact(c)),
     );
     this.contactsLoaded = true;
   }

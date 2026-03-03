@@ -21,16 +21,32 @@ export class TasksService {
 
   tasks = signal<Task[]>([]);
   toDoTasks = computed(() => this.tasks().filter((t) => t.status === 'to-do'));
-  inProgressTasks = computed(() => this.tasks().filter((t) => t.status === 'in-progress'));
-  awaitFeedbackTasks = computed(() => this.tasks().filter((t) => t.status === 'await-feedback'));
+  inProgressTasks = computed(() =>
+    this.tasks().filter((t) => t.status === 'in-progress'),
+  );
+  awaitFeedbackTasks = computed(() =>
+    this.tasks().filter((t) => t.status === 'await-feedback'),
+  );
   doneTasks = computed(() => this.tasks().filter((t) => t.status === 'done'));
 
   lowTasks = computed(() => this.tasks().filter((t) => t.priority === 'low'));
-  mediumTasks = computed(() => this.tasks().filter((t) => t.priority === 'medium'));
+  mediumTasks = computed(() =>
+    this.tasks().filter((t) => t.priority === 'medium'),
+  );
   highTasks = computed(() => this.tasks().filter((t) => t.priority === 'high'));
 
-  technicalTasks = computed(() => this.tasks().filter((t) => t.category === 'technical-task'));
-  userStoryTasks = computed(() => this.tasks().filter((t) => t.category === 'user-story'));
+  technicalTasks = computed(() =>
+    this.tasks().filter((t) => t.category === 'technical-task'),
+  );
+  userStoryTasks = computed(() =>
+    this.tasks().filter((t) => t.category === 'user-story'),
+  );
+
+  async initialize() {
+    await this.getAllTasks();
+    await this.loadSubtasks();
+    await this.loadAssignees();
+  }
 
   initRealtime() {
     if (this.initialized) return;
@@ -251,5 +267,29 @@ export class TasksService {
       .eq('id', taskId);
     if (error) throw error;
     this.handleDeleteTask({ id: taskId });
+  }
+
+  async loadSubtasks() {
+    const { data, error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Subtasks')
+      .select('*');
+    if (error) throw error;
+    console.log('Subtasks loaded', data);
+    (data || []).forEach((subtaskData) => {
+      this.handleInsertSubtask(subtaskData);
+    });
+  }
+
+  async loadAssignees() {
+    const { data, error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Assignees')
+      .select('*');
+    if (error) throw error;
+    console.log('Assignees loaded', data);
+    (data || []).forEach((entry) => {
+      this.handleInsertAssignee(entry);
+    });
   }
 }
