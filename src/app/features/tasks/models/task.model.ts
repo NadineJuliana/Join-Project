@@ -1,18 +1,14 @@
 import { Contact } from '../../contacts/models/contact.model';
 import { Subtask } from './subtask.model';
 
-export type TaskStatus =
-  | 'to-do'
-  | 'in-progress'
-  | 'await-feedback'
-  | 'done';
+export type TaskStatus = 'to-do' | 'in-progress' | 'await-feedback' | 'done';
 
 export class Task {
   id: number;
   title: string;
   description: string;
   due_date: string;
-  priority: 'low' | 'medium' | 'high';
+  priority: 'low' | 'medium' | 'urgent';
   category: 'technical-task' | 'user-story';
   status: TaskStatus;
   position: number;

@@ -33,7 +33,7 @@ export class TasksService {
   mediumTasks = computed(() =>
     this.tasks().filter((t) => t.priority === 'medium'),
   );
-  highTasks = computed(() => this.tasks().filter((t) => t.priority === 'high'));
+  highTasks = computed(() => this.tasks().filter((t) => t.priority === 'urgent'));
 
   technicalTasks = computed(() =>
     this.tasks().filter((t) => t.category === 'technical-task'),
