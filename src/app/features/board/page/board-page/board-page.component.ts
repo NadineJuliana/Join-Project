@@ -2,6 +2,7 @@ import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { TasksService } from '../../../tasks/services/tasks.service';
+import { ContactsService } from '../../../contacts/services/contacts.service';
 import { Task } from '../../../tasks/models/task.model';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import { EllipsisPipe } from '../../../../shared/pipes/ellipsis.pipe';
@@ -21,27 +22,30 @@ export interface BoardColumn {
 })
 export class BoardPageComponent {
   activeDropListId: string | null = null;
-  dbService = inject(TasksService);
+  dbContactService = inject(ContactsService);
+  dbTaskService = inject(TasksService);
 
   async ngOnInit() {
-    await this.dbService.getAllTasks();
-    this.dbService.initRealtime();
+    await this.dbContactService.getAllContacts();
+    await this.dbTaskService.initialize();
+    this.dbContactService.initRealtime();
+    this.dbTaskService.initRealtime();
   }
 
   get boardColumns(): BoardColumn[] {
     return [
-      { id: 'to-do', title: 'To Do', tasks: this.dbService.toDoTasks() },
+      { id: 'to-do', title: 'To Do', tasks: this.dbTaskService.toDoTasks() },
       {
         id: 'in-progress',
         title: 'In Progress',
-        tasks: this.dbService.inProgressTasks(),
+        tasks: this.dbTaskService.inProgressTasks(),
       },
       {
         id: 'await-feedback',
         title: 'Await Feedback',
-        tasks: this.dbService.awaitFeedbackTasks(),
+        tasks: this.dbTaskService.awaitFeedbackTasks(),
       },
-      { id: 'done', title: 'Done', tasks: this.dbService.doneTasks() },
+      { id: 'done', title: 'Done', tasks: this.dbTaskService.doneTasks() },
     ];
   }
 
