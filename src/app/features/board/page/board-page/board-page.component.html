@@ -9,7 +9,7 @@
     <div class="header__search-container">
       <div class="header__search-field">
         <input
-         [formControl]="searchControl"
+          [formControl]="searchControl"
           id="searchBar"
           type="text"
           class="_search-bar"
@@ -74,7 +74,17 @@
               <div class="board__card-tools">
                 <div class="board__card-tools-first">
                   <div class="board__card-taskbar">
-                    <div>50 %</div>
+                    <div class="progress-container">
+                      <div
+                        class="progress-bar"
+                        [style.width.%]="task.subtaskProgress.percent"
+                      ></div>
+                    </div>
+                    <div class="progress-text">
+                      {{ task.subtaskProgress.done }}/{{
+                        task.subtaskProgress.total
+                      }}
+                    </div>
                   </div>
                 </div>
                 <div class="board__card-tools-second">

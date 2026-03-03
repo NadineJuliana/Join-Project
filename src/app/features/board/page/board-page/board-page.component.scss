@@ -171,9 +171,9 @@
   }
   &__card-taskbar {
     width: 100%;
-    border-radius: 10px;
-    background: var(--lightgray);
-    gap: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   &__card-tools-second {
     display: flex;
@@ -190,16 +190,29 @@
     border-radius: 100%;
     border: solid 1px var(--white);
   }
-  &__card-priority{
+  &__card-priority {
     height: 32px;
     width: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
-    img{
+    img {
       width: 17px;
       max-height: 12px;
     }
+  }
+
+  .progress-container {
+    height: 8px;
+    width: 110px;
+    background: var(--lightgray);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--progressbar);
+    border-radius: 5px;
   }
 }
 
