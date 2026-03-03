@@ -272,6 +272,10 @@
     &--active {
       background: var(--primary);
       color: var(--white);
+
+      &:hover {
+        background: var(--primary-dark);
+      }
     }
   }
 
