@@ -152,11 +152,58 @@
 
     <div class="task-form-field">
       <h5><label for="task-assignees">Assigned to</label></h5>
-      <input
-        id="task-assignees"
-        type="text"
-        placeholder="Select contacts to assign"
-      />
+      <div class="task-form-assignees">
+        <button
+          id="task-assignees"
+          type="button"
+          class="task-form-assignees__trigger"
+          [attr.aria-expanded]="isAssigneesDropdownOpen()"
+          aria-haspopup="listbox"
+          (click)="toggleAssigneesDropdown()"
+        >
+          <span
+            class="task-form-assignees__label"
+            [class.task-form-assignees__label--placeholder]="
+              form.controls.assigneeIds.value.length === 0
+            "
+          >
+            {{ getAssigneesDisplayLabel() }}
+          </span>
+          <span
+            class="task-form-assignees__arrow"
+            [class.task-form-assignees__arrow--open]="isAssigneesDropdownOpen()"
+            aria-hidden="true"
+          ></span>
+        </button>
+
+        @if (isAssigneesDropdownOpen()) {
+          <div
+            class="task-form-assignees__dropdown"
+            role="listbox"
+            aria-multiselectable="true"
+          >
+            @for (contact of contacts(); track contact.id) {
+              <button
+                type="button"
+                class="task-form-assignees__item"
+                [class.task-form-assignees__item--active]="
+                  isAssigneeSelected(contact.id)
+                "
+                [attr.aria-selected]="isAssigneeSelected(contact.id)"
+                (click)="toggleAssignee(contact)"
+              >
+                <div
+                  class="task-form-assignees__initials"
+                  [style.backgroundColor]="contact.color"
+                >
+                  {{ contact.name | initials }}
+                </div>
+                <h5>{{ contact.name }}</h5>
+              </button>
+            }
+          </div>
+        }
+      </div>
     </div>
 
     <div class="task-form-field">
