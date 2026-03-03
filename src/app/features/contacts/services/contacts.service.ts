@@ -113,11 +113,10 @@ export class ContactsService {
   }
 
   async addContact(contact: Contact) {
-    const contact_data = contact.getCleanAddJson();
     const { data, error } = await this.supabaseService
       .getSupabaseClient()
       .from('Contacts')
-      .insert(contact_data)
+      .insert(contact.getCleanAddJson())
       .select();
 
     if (error) throw error;
@@ -127,11 +126,10 @@ export class ContactsService {
   }
 
   async updateContact(contact: Contact) {
-    const contact_data = contact.getCleanAddJson();
     const { data, error } = await this.supabaseService
       .getSupabaseClient()
       .from('Contacts')
-      .update(contact_data)
+      .update(contact.getCleanAddJson())
       .eq('id', contact.id)
       .select();
     if (error) throw error;

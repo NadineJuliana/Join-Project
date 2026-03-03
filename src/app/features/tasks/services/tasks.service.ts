@@ -43,9 +43,11 @@ export class TasksService {
   );
 
   async initialize() {
-    await this.getAllTasks();
-    await this.loadSubtasks();
-    await this.loadAssignees();
+    const tasksPromise = this.getAllTasks();
+    const subtasksPromise = this.loadSubtasks();
+    const assigneesPromise = this.loadAssignees();
+    await Promise.all([tasksPromise, subtasksPromise, assigneesPromise]);
+    this.tasksLoaded = true;
   }
 
   initRealtime() {
@@ -281,6 +283,33 @@ export class TasksService {
     });
   }
 
+  async addSubtask(subtask: Subtask) {
+    const { error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Subtasks')
+      .insert(subtask.getCleanAddJson())
+      .select();
+    if (error) throw error;
+  }
+
+  async updateSubtask(subtask: Subtask) {
+    const { error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Subtasks')
+      .update(subtask.getCleanAddJson())
+      .eq('id', subtask.id);
+    if (error) throw error;
+  }
+
+  async deleteSubtask(id: number) {
+    const { error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Subtasks')
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
+  }
+
   async loadAssignees() {
     const { data, error } = await this.supabaseService
       .getSupabaseClient()
@@ -291,5 +320,28 @@ export class TasksService {
     (data || []).forEach((entry) => {
       this.handleInsertAssignee(entry);
     });
+  }
+
+  async addAssignee(taskId: number, contactId: number) {
+    const { error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Assignees')
+      .insert({
+        task_id: taskId,
+        contact_id: contactId,
+      });
+    if (error) throw error;
+  }
+
+  async removeAssignee(taskId: number, contactId: number) {
+    const { error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Assignees')
+      .delete()
+      .match({
+        task_id: taskId,
+        contact_id: contactId,
+      });
+    if (error) throw error;
   }
 }
