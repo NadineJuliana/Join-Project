@@ -43,10 +43,8 @@ export class TasksService {
   );
 
   async initialize() {
-    const tasksPromise = this.getAllTasks();
-    const subtasksPromise = this.loadSubtasks();
-    const assigneesPromise = this.loadAssignees();
-    await Promise.all([tasksPromise, subtasksPromise, assigneesPromise]);
+    await this.getAllTasks();
+    await Promise.all([this.loadSubtasks(), this.loadAssignees()]);
     this.tasksLoaded = true;
   }
 
