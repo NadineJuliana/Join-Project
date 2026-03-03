@@ -1,12 +1,14 @@
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { TasksService } from '../../../tasks/services/tasks.service';
 import { ContactsService } from '../../../contacts/services/contacts.service';
 import { Task, TaskStatus } from '../../../tasks/models/task.model';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import { EllipsisPipe } from '../../../../shared/pipes/ellipsis.pipe';
 import { CapitalizePipe } from '../../../../shared/pipes/capitalize.pipe';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 // Interface - Definiert die Struktur einer Spalte
 export interface BoardColumn {
@@ -23,14 +25,28 @@ export interface BoardColumn {
     InitialsPipe,
     EllipsisPipe,
     CapitalizePipe,
+    ReactiveFormsModule,
   ],
   templateUrl: './board-page.component.html',
   styleUrl: './board-page.component.scss',
 })
 export class BoardPageComponent {
-  activeDropListId: string | null = null;
   dbContactService = inject(ContactsService);
   dbTaskService = inject(TasksService);
+  activeDropListId: string | null = null;
+  searchControl = new FormControl('');
+  searchResult = toSignal(this.searchControl.valueChanges, {
+    initialValue: '',
+  });
+
+  toDoTasksFiltered = computed(() => this.filterTasksByStatus('to-do'));
+  inProgressTasksFiltered = computed(() =>
+    this.filterTasksByStatus('in-progress'),
+  );
+  awaitFeedbackTasksFiltered = computed(() =>
+    this.filterTasksByStatus('await-feedback'),
+  );
+  doneTasksFiltered = computed(() => this.filterTasksByStatus('done'));
 
   async ngOnInit() {
     await this.dbContactService.getAllContacts();
@@ -41,18 +57,18 @@ export class BoardPageComponent {
 
   get boardColumns(): BoardColumn[] {
     return [
-      { id: 'to-do', title: 'To Do', tasks: this.dbTaskService.toDoTasks() },
+      { id: 'to-do', title: 'To Do', tasks: this.toDoTasksFiltered() },
       {
         id: 'in-progress',
         title: 'In Progress',
-        tasks: this.dbTaskService.inProgressTasks(),
+        tasks: this.inProgressTasksFiltered(),
       },
       {
         id: 'await-feedback',
         title: 'Await Feedback',
-        tasks: this.dbTaskService.awaitFeedbackTasks(),
+        tasks: this.awaitFeedbackTasksFiltered(),
       },
-      { id: 'done', title: 'Done', tasks: this.dbTaskService.doneTasks() },
+      { id: 'done', title: 'Done', tasks: this.doneTasksFiltered() },
     ];
   }
 
@@ -86,5 +102,18 @@ export class BoardPageComponent {
       case 'urgent':
         return 'icons/prio-icons/urgent_icon.svg';
     }
+  }
+
+  private filterTasksByStatus(status: TaskStatus): Task[] {
+    const result = (this.searchResult() ?? '').toLowerCase() || '';
+    return this.dbTaskService
+      .tasks()
+      .filter((t) => t.status === status)
+      .filter(
+        (t) =>
+          !result ||
+          t.title.toLowerCase().includes(result) ||
+          t.description.toLowerCase().includes(result),
+      );
   }
 }
