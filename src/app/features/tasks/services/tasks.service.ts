@@ -1,7 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { SupabaseRealtimeService } from '../../../core/services/supabase-realtime.service';
 import { SupabaseService } from '../../../core/services/supabase.service';
-import { Task } from '../models/task.model';
+import { Task, TaskStatus } from '../models/task.model';
 import { Subtask } from '../models/subtask.model';
 import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 import { ContactsService } from '../../contacts/services/contacts.service';
@@ -231,7 +231,8 @@ export class TasksService {
     const { data, error } = await this.supabaseService
       .getSupabaseClient()
       .from('Tasks')
-      .select('*');
+      .select('*')
+      .order('position', { ascending: true });
     if (error) throw error;
     console.log('Tasks loaded', data);
     this.tasks.set((data || []).map((t) => new Task(t)));
@@ -267,6 +268,26 @@ export class TasksService {
       .eq('id', taskId);
     if (error) throw error;
     this.handleDeleteTask({ id: taskId });
+  }
+
+  async moveTaskAndReorder(
+    task: Task,
+    columnTasks: Task[],
+    newStatus: TaskStatus,
+  ) {
+    task.status = newStatus;
+    columnTasks.forEach((t, index) => {
+      t.position = index;
+    });
+    const updates = columnTasks.map((t) => ({
+      id: t.id,
+      status: t.status,
+      position: t.position,
+    }));
+    await this.supabaseService
+      .getSupabaseClient()
+      .from('Tasks')
+      .upsert(updates);
   }
 
   async loadSubtasks() {
