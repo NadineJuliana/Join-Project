@@ -179,6 +179,9 @@
     display: flex;
     justify-content: space-between;
   }
+  &__card-container-initials{
+    display: flex;
+  }
   &__card-initials {
     background: red;
     display: flex;
@@ -189,6 +192,10 @@
     width: 32px;
     border-radius: 100%;
     border: solid 1px var(--white);
+    margin-left: -10px;
+    &:first-child {
+      margin-left: 0;
+    }
   }
   &__card-priority {
     height: 32px;

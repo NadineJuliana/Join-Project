@@ -1,114 +1,94 @@
 <section class="board">
-  <div class="header">
-    <div class="header__headline">
-      <h1>Board</h1>
-      <button class="btn btn--primary">
-        <span class="material-icons">add</span>
-      </button>
-    </div>
-    <div class="header__search-container">
-      <div class="header__search-field">
-        <input
-          [formControl]="searchControl"
-          id="searchBar"
-          type="text"
-          class="_search-bar"
-          placeholder="Find Task"
-        />
-        <div class="header__separator"></div>
-        <button class="">
-          <span class="material-icons">search</span>
-        </button>
-      </div>
-      <button class="btn btn--primary">
-        <p>Add Task</p>
-        <span class="material-icons">add</span>
-      </button>
-    </div>
-  </div>
-  <!-- Der äußere Container muss cdkDropListGroup haben -->
-  <div class="kanban" cdkDropListGroup>
-    <!-- Jede Spalte ist eine cdkDropList (Ablagebereich) -->
-    @for (column of boardColumns; track column.id) {
-      <div class="kanban__container">
-        <div class="kanban__headline">
-          <h3>{{ column.title }}</h3>
-          <button><span class="material-icons">add</span></button>
+    <div class="header">
+        <div class="header__headline">
+            <h1>Board</h1>
+            <button class="btn btn--primary">
+                <span class="material-icons">add</span>
+            </button>
         </div>
+        <div class="header__search-container">
+            <div class="header__search-field">
+                <input [formControl]="searchControl" id="searchBar" type="text" class="_search-bar"
+                    placeholder="Find Task" />
+                <div class="header__separator"></div>
+                <button class="">
+                    <span class="material-icons">search</span>
+                </button>
+            </div>
+            <button class="btn btn--primary">
+                <p>Add Task</p>
+                <span class="material-icons">add</span>
+            </button>
+        </div>
+    </div>
+    <!-- Der äußere Container muss cdkDropListGroup haben -->
+    <div class="kanban" cdkDropListGroup>
+        <!-- Jede Spalte ist eine cdkDropList (Ablagebereich) -->
+        @for (column of boardColumns; track column.id) {
+        <div class="kanban__container">
+            <div class="kanban__headline">
+                <h3>{{ column.title }}</h3>
+                <button><span class="material-icons">add</span></button>
+            </div>
 
-        <!-- Das ist der Drop-Container für eine Spalte -->
-        <div
-          cdkDropList
-          [id]="column.id"
-          [cdkDropListData]="column.tasks"
-          [cdkDropListDisabled]="false"
-          (cdkDropListDropped)="drop($event)"
-          (cdkDropListEntered)="onDropListEntered(column.id)"
-          (cdkDropListExited)="onDropListExited(column.id)"
-          [ngClass]="{
+            <!-- Das ist der Drop-Container für eine Spalte -->
+            <div cdkDropList [id]="column.id" [cdkDropListData]="column.tasks" [cdkDropListDisabled]="false"
+                (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="onDropListEntered(column.id)"
+                (cdkDropListExited)="onDropListExited(column.id)" [ngClass]="{
             'kanban__container-cards--active': activeDropListId === column.id,
-          }"
-          class="kanban__container-cards"
-        >
-          <!-- "No task" nur zeigen, wenn keine Tasks existieren -->
-          @if (column.tasks.length === 0) {
-            <div class="kanban__notask">
-              <p>No tasks</p>
-            </div>
-          }
+          }" class="kanban__container-cards">
+                <!-- "No task" nur zeigen, wenn keine Tasks existieren -->
+                @if (column.tasks.length === 0) {
+                <div class="kanban__notask">
+                    <p>No tasks</p>
+                </div>
+                }
 
-          <!-- Jede Task ist ein draggable Element -->
-          @for (task of column.tasks; track task.id) {
-            <div cdkDrag [cdkDragData]="task" class="board__card-container">
-              <div  [style.backgroundColor]="task.categoryColor" class="board__card-category">
-                <p>{{ task.category | capitalize }}</p>
-              </div>
-              <div class="board__card-content">
-                <p class="board__card-content__card-headline">
-                  {{ task.title }}
-                </p>
-                <p class="board__card-content__card-description">
-                  {{ task.description | ellipsis: 50 }}
-                </p>
-              </div>
-              <div class="board__card-tools">
-                <div class="board__card-tools-first">
-                  <div class="board__card-taskbar">
-                    <div class="progress-container">
-                      <div
-                        class="progress-bar"
-                        [style.width.%]="task.subtaskProgress.percent"
-                      ></div>
+                <!-- Jede Task ist ein draggable Element -->
+                @for (task of column.tasks; track task.id) {
+                <div cdkDrag [cdkDragData]="task" class="board__card-container">
+                    <div [style.backgroundColor]="task.categoryColor" class="board__card-category">
+                        <p>{{ task.category | capitalize }}</p>
                     </div>
-                    <div class="progress-text">
-                      {{ task.subtaskProgress.done }}/{{
-                        task.subtaskProgress.total
-                      }}
+                    <div class="board__card-content">
+                        <p class="board__card-content__card-headline">
+                            {{ task.title }}
+                        </p>
+                        <p class="board__card-content__card-description">
+                            {{ task.description | ellipsis: 50 }}
+                        </p>
                     </div>
-                  </div>
+                    <div class="board__card-tools">
+                        <div class="board__card-tools-first">
+                            <div class="board__card-taskbar">
+                                <div class="progress-container">
+                                    <div class="progress-bar" [style.width.%]="task.subtaskProgress.percent"></div>
+                                </div>
+                                <div class="progress-text">
+                                    {{ task.subtaskProgress.done }}/{{
+                                    task.subtaskProgress.total
+                                    }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="board__card-tools-second">
+                            <div class="board__card-container-initials">
+                                @for (assignee of task.assignees; track assignee.id) {
+                                <div class="board__card-initials" [style.backgroundColor]="assignee.color">
+                                    <p>{{ assignee.name | initials }}</p>
+                                </div>
+                                }
+                            </div>
+                            <div class="board__card-priority">
+                                <img class="board_card-icon" [src]="getPriorityIcon(task.priority)"
+                                    [alt]="task.priority" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="board__card-tools-second">
-                  @for (assignee of task.assignees; track assignee.id) {
-                    <div
-                      class="board__card-initials"
-                      [style.backgroundColor]="assignee.color"
-                    >
-                      <p>{{ assignee.name | initials }}</p>
-                    </div>
-                  }
-                  <div class="board__card-priority">
-                    <img
-                      class="board_card-icon"
-                      [src]="getPriorityIcon(task.priority)"
-                      [alt]="task.priority"
-                    />
-                  </div>
-                </div>
-              </div>
+                }
             </div>
-          }
         </div>
-      </div>
-    }
-  </div>
+        }
+    </div>
 </section>
