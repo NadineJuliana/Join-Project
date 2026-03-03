@@ -138,6 +138,11 @@
     border-radius: 24px;
     gap: 24px;
     filter: drop-shadow(var(--drop-shadow));
+    cursor: grab;
+    &:active,
+    &.cdk-drag-dragging {
+      cursor: grabbing;
+    }
   }
   &__card-category {
     background: var(--primary);
@@ -179,7 +184,7 @@
     display: flex;
     justify-content: space-between;
   }
-  &__card-container-initials{
+  &__card-container-initials {
     display: flex;
   }
   &__card-initials {

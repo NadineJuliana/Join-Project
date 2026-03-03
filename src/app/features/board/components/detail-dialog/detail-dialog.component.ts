@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output} from '@angular/core';
 
 @Component({
   selector: 'app-detail-dialog',
@@ -7,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './detail-dialog.component.scss'
 })
 export class DetailDialogComponent {
+  closeDialog = output<void>();
 
+  onClose() {
+    this.closeDialog.emit(); // Sendet das Signal an die Parent
+  }
 }

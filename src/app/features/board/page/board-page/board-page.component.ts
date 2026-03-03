@@ -1,6 +1,6 @@
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { TasksService } from '../../../tasks/services/tasks.service';
 import { ContactsService } from '../../../contacts/services/contacts.service';
 import { Task, TaskStatus } from '../../../tasks/models/task.model';
@@ -9,6 +9,7 @@ import { EllipsisPipe } from '../../../../shared/pipes/ellipsis.pipe';
 import { CapitalizePipe } from '../../../../shared/pipes/capitalize.pipe';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { DetailDialogComponent } from '../../components/detail-dialog/detail-dialog.component';
 
 // Interface - Definiert die Struktur einer Spalte
 export interface BoardColumn {
@@ -26,6 +27,7 @@ export interface BoardColumn {
     EllipsisPipe,
     CapitalizePipe,
     ReactiveFormsModule,
+    DetailDialogComponent,
   ],
   templateUrl: './board-page.component.html',
   styleUrl: './board-page.component.scss',
@@ -115,5 +117,15 @@ export class BoardPageComponent {
           t.title.toLowerCase().includes(result) ||
           t.description.toLowerCase().includes(result),
       );
+  }
+
+  showDetailDialog = signal(false);
+
+  openDetailDialog() {
+    this.showDetailDialog.set(true); // Signal wird TRUE
+  }
+
+  closeDetailDialog() {
+    this.showDetailDialog.set(false); // Signal wird FALSE
   }
 }

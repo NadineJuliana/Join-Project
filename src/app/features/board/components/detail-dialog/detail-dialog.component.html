@@ -1,1 +1,6 @@
-<p>detail-dialog works!</p>
+<div class="detail-dialog-container" (click)="onClose()">
+    <div class="detail-dialog" (click)="$event.stopPropagation()">
+        <p>detail-dialog works!</p>
+        <button (click)="onClose()">X</button>
+    </div>
+</div>
