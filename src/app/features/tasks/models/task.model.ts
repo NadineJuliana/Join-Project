@@ -39,4 +39,12 @@ export class Task {
       position: this.position,
     };
   }
+
+  get subtaskProgress(): { percent: number; done: number; total: number } {
+    const total = this.subtasks?.length ?? 0;
+    if (total === 0) return { percent: 0, done: 0, total: 0 };
+    const done = this.subtasks!.filter((s) => s.completed).length;
+    const percent = Math.round((done / total) * 100);
+    return { percent, done, total };
+  }
 }
