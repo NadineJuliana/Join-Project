@@ -6,6 +6,7 @@ import { ContactsService } from '../../../contacts/services/contacts.service';
 import { Task } from '../../../tasks/models/task.model';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import { EllipsisPipe } from '../../../../shared/pipes/ellipsis.pipe';
+import { CapitalizePipe } from '../../../../shared/pipes/capitalize.pipe';
 
 // Interface - Definiert die Struktur einer Spalte
 export interface BoardColumn {
@@ -16,7 +17,7 @@ export interface BoardColumn {
 
 @Component({
   selector: 'app-board-page',
-  imports: [CommonModule, DragDropModule, InitialsPipe, EllipsisPipe],
+  imports: [CommonModule, DragDropModule, InitialsPipe, EllipsisPipe, CapitalizePipe],
   templateUrl: './board-page.component.html',
   styleUrl: './board-page.component.scss',
 })

@@ -59,7 +59,7 @@
           @for (task of column.tasks; track task.id) {
             <div cdkDrag [cdkDragData]="task" class="board__card-container">
               <div class="board__card-category">
-                <p>{{ task.category }}</p>
+                <p>{{ task.category | capitalize }}</p>
               </div>
               <div class="board__card-content">
                 <p class="board__card-content__card-headline">
@@ -81,7 +81,7 @@
                       class="board__card-initials"
                       [style.backgroundColor]="assignee.color"
                     >
-                      <p> {{ assignee.name | initials }}</p>
+                      <p>{{ assignee.name | initials }}</p>
                     </div>
                   }
                   <div class="board__card-priority">{{ task.priority }}</div>
