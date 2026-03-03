@@ -47,4 +47,8 @@ export class Task {
     const percent = Math.round((done / total) * 100);
     return { percent, done, total };
   }
+
+  get categoryColor(): string{
+    return this.category === 'technical-task' ? '#1FD7C1' : '#0038FF';
+  }
 }
