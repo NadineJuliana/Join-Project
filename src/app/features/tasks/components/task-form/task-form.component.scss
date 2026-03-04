@@ -3,8 +3,9 @@
   flex-wrap: wrap;
   width: 100%;
   max-width: calc(1440px - 232px);
-  gap: 48px;
-  padding: 0 88px 50px 64px;
+  gap: clamp(12px, calc(48px - (1440px - 100vw) * 0.06), 48px);
+  padding: 0 clamp(16px, calc(88px - (1440px - 100vw) * 0.12), 88px) 50px
+    clamp(16px, calc(64px - (1440px - 100vw) * 0.09), 64px);
 }
 
 .task-form-block {
@@ -89,7 +90,7 @@
 
 .task-form-priority {
   display: flex;
-  gap: 16px;
+  gap: clamp(6px, calc(16px - (1440px - 100vw) * 0.03), 16px);
 
   &__button {
     flex: 1;
@@ -266,7 +267,18 @@
       &:hover {
         background: var(--primary-dark);
       }
+
+      .task-form-assignees__checkbox {
+        color: var(--white);
+      }
     }
+  }
+
+  &__checkbox {
+    margin-left: auto;
+    font-size: 22px;
+    color: var(--primary);
+    flex-shrink: 0;
   }
 
   &__initials {
@@ -279,6 +291,28 @@
     justify-content: center;
     color: var(--white);
     flex-shrink: 0;
+  }
+
+  &__selected {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__selected-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    height: 32px;
+    width: 32px;
+    border-radius: 100%;
+    border: solid 1px var(--white);
+    margin-left: -10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
   }
 }
 
@@ -560,9 +594,39 @@
   }
 }
 
+.task-form-footer {
+  flex: 1 1 100%;
+  margin-top: 8px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+
+  &__required-note {
+    margin: 0;
+    color: var(--primary);
+
+    .required {
+      color: var(--required-star);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
 @media (max-width: 1024px) {
   .task-form-layout {
-    gap: 16px;
+    gap: clamp(8px, calc(48px - (1024px - 100vw) * 0.12), 48px);
+    padding: 0 clamp(12px, calc(88px - (1024px - 100vw) * 0.28), 88px) 50px
+      clamp(12px, calc(64px - (1024px - 100vw) * 0.2), 64px);
+  }
+
+  .task-form-priority {
+    gap: clamp(6px, calc(16px - (1024px - 100vw) * 0.03), 16px);
   }
 
   .task-form-block--left,
@@ -572,5 +636,16 @@
 
   .task-form-block--separator {
     display: none;
+  }
+
+  .task-form-footer {
+    flex-direction: column;
+    align-items: flex-start;
+
+    &__actions {
+      width: 100%;
+      justify-content: flex-end;
+      gap: clamp(6px, calc(16px - (1024px - 100vw) * 0.03), 16px);
+    }
   }
 }
