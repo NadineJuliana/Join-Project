@@ -394,8 +394,6 @@
 }
 
 .task-form-subtasks {
-  --subtask-list-indent: 26px;
-
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -452,8 +450,9 @@
   }
 
   &__list {
-    padding-left: var(--subtask-list-indent);
+    padding-left: 0;
     list-style: disc;
+    list-style-position: inside;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -481,8 +480,8 @@
 
     &--editing {
       list-style: none;
-      margin-left: calc(-1 * var(--subtask-list-indent));
-      width: calc(100% + var(--subtask-list-indent));
+      margin-left: 0;
+      width: 100%;
       padding: 0;
       background: var(--white);
       border-radius: 0;
