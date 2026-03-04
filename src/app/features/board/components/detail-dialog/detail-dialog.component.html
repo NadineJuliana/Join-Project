@@ -10,19 +10,34 @@
         <h5>{{ task().description }}</h5>
         <div class="card-detail__due-date">
             <h5><span>Due date:</span></h5>
-            <h5>10/05/23</h5>
+            <h5>{{task().due_date}}</h5>
         </div>
         <div class="card-detail__priority">
             <h5><span>Priority:</span></h5>
-            <h5>Medium</h5>
+            <h5>{{task().priority | capitalize}}</h5>
+             <div class="card-detail__priority-icon">
+                    <img
+                      [src]="getPriorityIcon(task().priority)"
+                      [alt]="task().priority"
+                    />
+                  </div>
         </div>
         <div class="card-detail__assignet">
             <h5><span>Assigned To:</span></h5>
+            @for(assignee of (task().assignees ?? []); track assignee.id){
+              <div [style.backgroundColor]="assignee.color">
+                <p>{{assignee.name | initials}}</p>
+              </div>
+                }
         </div>
         <div class="card-detail__subtasks-container">
             <h5><span>Subtasks</span></h5>
             <div class="card-detail__subtasks">
-
+                @for(subtask of (task().subtasks ?? []); track subtask.id){
+                  <div>
+                    <p>{{subtask.content}}</p>
+                  </div>
+                }
             </div>
         </div>
         <div class="card-detail__edits">
