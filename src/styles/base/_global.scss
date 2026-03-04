@@ -8,6 +8,8 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--lightgray) #00000000;
 }
 
 html,
