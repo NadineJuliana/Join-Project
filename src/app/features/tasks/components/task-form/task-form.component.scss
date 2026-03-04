@@ -1,11 +1,13 @@
+@use "../../../../../styles/abstracts/breakpoints" as *;
+
 .task-form-layout {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  max-width: calc(1440px - 232px);
-  gap: clamp(12px, calc(48px - (1440px - 100vw) * 0.06), 48px);
-  padding: 0 clamp(16px, calc(88px - (1440px - 100vw) * 0.12), 88px) 50px
-    clamp(16px, calc(64px - (1440px - 100vw) * 0.09), 64px);
+  max-width: calc($bp-xl - 232px);
+  gap: clamp(12px, calc(48px - ($bp-xl - 100vw) * 0.06), 48px);
+  padding: 0 clamp(16px, calc(88px - ($bp-xl - 100vw) * 0.12), 88px) 50px
+    clamp(16px, calc(64px - ($bp-xl - 100vw) * 0.09), 64px);
 }
 
 .task-form-block {
@@ -212,15 +214,15 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: $bp-lg) {
   .task-form-layout {
-    gap: clamp(8px, calc(48px - (1024px - 100vw) * 0.12), 48px);
-    padding: 0 clamp(12px, calc(88px - (1024px - 100vw) * 0.28), 88px) 50px
-      clamp(12px, calc(64px - (1024px - 100vw) * 0.2), 64px);
+    gap: clamp(8px, calc(48px - ($bp-lg - 100vw) * 0.12), 48px);
+    padding: 0 clamp(12px, calc(88px - ($bp-lg - 100vw) * 0.28), 88px) 50px
+      clamp(12px, calc(64px - ($bp-lg - 100vw) * 0.2), 64px);
   }
 
   .task-form-priority {
-    gap: clamp(6px, calc(16px - (1024px - 100vw) * 0.03), 16px);
+    gap: clamp(6px, calc(16px - ($bp-lg - 100vw) * 0.03), 16px);
   }
 
   .task-form-block--left,
@@ -239,7 +241,18 @@
     &__actions {
       width: 100%;
       justify-content: flex-end;
-      gap: clamp(6px, calc(16px - (1024px - 100vw) * 0.03), 16px);
+      gap: clamp(6px, calc(16px - ($bp-lg - 100vw) * 0.03), 16px);
+    }
+  }
+}
+
+@media (max-width: $bp-sm) {
+  .task-form-priority {
+    flex-direction: column;
+
+    &__button {
+      flex: none;
+      width: 100%;
     }
   }
 }
