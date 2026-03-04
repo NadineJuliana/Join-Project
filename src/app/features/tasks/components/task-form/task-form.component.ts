@@ -11,6 +11,8 @@ import { Subtask } from '../../models/subtask.model';
 import { TaskFormAssigneesComponent } from './components/task-form-assignees/task-form-assignees.component';
 import { TaskFormCategoryComponent } from './components/task-form-category/task-form-category.component';
 import { TaskFormSubtasksComponent } from './components/task-form-subtasks/task-form-subtasks.component';
+import { TasksService } from '../../services/tasks.service';
+import { Task } from '../../models/task.model';
 
 type Priority = 'urgent' | 'medium' | 'low';
 type TaskCategory = 'technical-task' | 'user-story';
@@ -29,6 +31,7 @@ type TaskCategory = 'technical-task' | 'user-story';
 export class TaskFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private contactsService = inject(ContactsService, { optional: true });
+  private tasksService = inject(TasksService);
 
   form = this.formBuilder.nonNullable.group({
     title: ['', [Validators.required, Validators.maxLength(35)]],
@@ -90,6 +93,66 @@ export class TaskFormComponent implements OnInit {
     this.selectedPriority = 'medium';
     this.subtasks.set([]);
     this.subtasksResetTrigger += 1;
+  }
+
+  async submitTask(): Promise<void> {
+    if (this.form.invalid) {
+      this.markFormAsTouched();
+      return;
+    }
+    const task = this.createNewTask();
+    const savedTask = await this.tasksService.addTask(task);
+    await this.saveSubtasks(savedTask.id);
+    await this.saveAssignees(savedTask.id);
+    this.clearTaskForm();
+  }
+
+  private markFormAsTouched(): void {
+    Object.values(this.form.controls).forEach((control) =>
+      control.markAsTouched(),
+    );
+  }
+
+  private createNewTask(): Task {
+    const category = this.form.value.category as
+      | 'technical-task'
+      | 'user-story'
+      | undefined;
+    return new Task({
+      title: this.form.value.title,
+      description: this.form.value.description,
+      due_date: this.form.value.dueDate,
+      category: category ?? 'user-story',
+      status: 'to-do',
+      position: 0,
+      priority: this.selectedPriority,
+      subtasks: this.subtasks(),
+      assignees: this.getSelectedAssignees(),
+    });
+  }
+
+  private getSelectedAssignees() {
+    const ids: string[] = this.form.value.assigneeIds || [];
+    return this.contacts()?.filter((c) => ids.includes(String(c.id))) ?? [];
+  }
+
+  private async saveSubtasks(taskId: number) {
+    const subtasks = this.subtasks();
+    await Promise.all(
+      subtasks.map(async (subtask) => {
+        subtask.task_id = taskId;
+        await this.tasksService.addSubtask(subtask);
+      }),
+    );
+  }
+
+  private async saveAssignees(taskId: number) {
+    const assignees = this.getSelectedAssignees();
+    await Promise.all(
+      assignees.map(async (assignee) => {
+        await this.tasksService.addAssignee(taskId, assignee.id);
+      }),
+    );
   }
 
   private getTodayMinDate(): string {
