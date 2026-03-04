@@ -1,0 +1,121 @@
+<div class="task-form-subtasks">
+  <div class="task-form-subtasks__input-wrap">
+    <input
+      id="task-subtasks"
+      type="text"
+      class="task-form-subtasks__input"
+      placeholder="Add new subtask"
+      [value]="subtaskDraft()"
+      (input)="onSubtaskInput($event)"
+    />
+
+    @if (hasSubtaskDraft()) {
+      <div class="task-form-subtasks__actions">
+        <button
+          type="button"
+          class="task-form-subtasks__action"
+          aria-label="Cancel subtask"
+          (click)="resetSubtaskInput()"
+        >
+          <span class="material-icons" aria-hidden="true">close</span>
+        </button>
+
+        <span
+          class="task-form-subtasks__action-separator"
+          aria-hidden="true"
+        ></span>
+
+        <button
+          type="button"
+          class="task-form-subtasks__action"
+          aria-label="Save subtask"
+          (click)="saveSubtask()"
+        >
+          <span class="material-icons" aria-hidden="true">check</span>
+        </button>
+      </div>
+    }
+  </div>
+
+  @if (subtasks().length > 0) {
+    <ul class="task-form-subtasks__list">
+      @for (subtask of subtasks(); track $index) {
+        <li
+          class="task-form-subtasks__list-item"
+          [class.task-form-subtasks__list-item--editing]="
+            editingSubtaskIndex() === $index
+          "
+          (click)="startSubtaskEdit($index)"
+        >
+          @if (editingSubtaskIndex() === $index) {
+            <div
+              class="task-form-subtasks__edit-wrap"
+              (click)="$event.stopPropagation()"
+            >
+              <input
+                type="text"
+                class="task-form-subtasks__edit-input"
+                [value]="editingSubtaskDraft()"
+                (input)="onEditingSubtaskInput($event)"
+              />
+
+              <div class="task-form-subtasks__edit-actions">
+                <button
+                  type="button"
+                  class="task-form-subtasks__edit-action"
+                  aria-label="Delete subtask"
+                  (click)="$event.stopPropagation(); deleteEditingSubtask()"
+                >
+                  <span class="material-icons" aria-hidden="true">delete</span>
+                </button>
+
+                <span
+                  class="task-form-subtasks__action-separator"
+                  aria-hidden="true"
+                ></span>
+
+                <button
+                  type="button"
+                  class="task-form-subtasks__edit-action"
+                  aria-label="Save edited subtask"
+                  (click)="$event.stopPropagation(); saveEditedSubtask()"
+                >
+                  <span class="material-icons" aria-hidden="true">check</span>
+                </button>
+              </div>
+            </div>
+          } @else {
+            <span class="task-form-subtasks__list-content">{{
+              subtask.content
+            }}</span>
+
+            <div class="task-form-subtasks__row-actions">
+              <button
+                type="button"
+                class="task-form-subtasks__row-action"
+                aria-label="Edit subtask"
+                (click)="$event.stopPropagation(); startSubtaskEdit($index)"
+              >
+                <span class="material-icons" aria-hidden="true">edit</span>
+              </button>
+
+              <span
+                class="task-form-subtasks__action-separator"
+                aria-hidden="true"
+              ></span>
+
+              <button
+                type="button"
+                class="task-form-subtasks__row-action"
+                aria-label="Delete subtask"
+                (click)="$event.stopPropagation(); deleteSubtask($index)"
+              >
+                <span class="material-icons" aria-hidden="true">delete</span>
+              </button>
+            </div>
+          }
+        </li>
+      }
+    </ul>
+  }
+</div>
