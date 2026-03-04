@@ -33,7 +33,9 @@ export class TasksService {
   mediumTasks = computed(() =>
     this.tasks().filter((t) => t.priority === 'medium'),
   );
-  urgentTasks = computed(() => this.tasks().filter((t) => t.priority === 'urgent'));
+  urgentTasks = computed(() =>
+    this.tasks().filter((t) => t.priority === 'urgent'),
+  );
 
   technicalTasks = computed(() =>
     this.tasks().filter((t) => t.category === 'technical-task'),
@@ -239,14 +241,16 @@ export class TasksService {
     this.tasksLoaded = true;
   }
 
-  async addTask(task: Task) {
+  async addTask(task: Task): Promise<Task> {
     const { data, error } = await this.supabaseService
       .getSupabaseClient()
       .from('Tasks')
       .insert(task.getCleanAddJson())
       .select();
     if (error) throw error;
-    this.handleInsertTask(new Task(data[0]));
+    const newTask = new Task(data[0]);
+    this.handleInsertTask(newTask);
+    return newTask;
   }
 
   async updateTask(task: Task) {
