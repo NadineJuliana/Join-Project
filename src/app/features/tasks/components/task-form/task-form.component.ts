@@ -1,6 +1,5 @@
 import {
   Component,
-  ElementRef,
   HostListener,
   OnInit,
   computed,
@@ -17,8 +16,10 @@ import {
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import { ContactsService } from '../../../contacts/services/contacts.service';
 import { Contact } from '../../../contacts/models/contact.model';
+import { Subtask } from '../../models/subtask.model';
 
 type Priority = 'urgent' | 'medium' | 'low';
+type TaskCategory = 'technical-task' | 'user-story';
 
 @Component({
   selector: 'app-task-form',
@@ -29,17 +30,22 @@ type Priority = 'urgent' | 'medium' | 'low';
 export class TaskFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private contactsService = inject(ContactsService, { optional: true });
-  private elementRef = inject(ElementRef<HTMLElement>);
 
   form = this.formBuilder.nonNullable.group({
     title: ['', [Validators.required, Validators.maxLength(35)]],
     dueDate: ['', [Validators.required, this.notPastDateValidator]],
     assigneeIds: [<string[]>[]],
+    category: ['', [Validators.required]],
   });
 
   todayMinDate = this.getTodayMinDate();
   selectedPriority: Priority = 'medium';
   isAssigneesDropdownOpen = signal(false);
+  isCategoryDropdownOpen = signal(false);
+  categoryOptions: Array<{ value: TaskCategory; label: string }> = [
+    { value: 'technical-task', label: 'Technical Task' },
+    { value: 'user-story', label: 'User Story' },
+  ];
   contacts = computed(() => this.contactsService?.contacts() ?? []);
   selectedAssigneeContacts = computed(() => {
     const selectedIds = new Set(this.form.controls.assigneeIds.value);
@@ -47,6 +53,11 @@ export class TaskFormComponent implements OnInit {
       selectedIds.has(String(contact.id)),
     );
   });
+  subtaskDraft = signal('');
+  subtasks = signal<Subtask[]>([]);
+  hasSubtaskDraft = computed(() => this.subtaskDraft().trim().length > 0);
+  editingSubtaskIndex = signal<number | null>(null);
+  editingSubtaskDraft = signal('');
 
   async ngOnInit(): Promise<void> {
     if (this.contactsService && !this.contactsService.contactsLoaded) {
@@ -68,6 +79,46 @@ export class TaskFormComponent implements OnInit {
 
   closeAssigneesDropdown(): void {
     this.isAssigneesDropdownOpen.set(false);
+  }
+
+  toggleCategoryDropdown(): void {
+    if (this.isCategoryDropdownOpen()) {
+      this.closeCategoryDropdown();
+      return;
+    }
+
+    this.isCategoryDropdownOpen.set(true);
+  }
+
+  closeCategoryDropdown(): void {
+    if (!this.isCategoryDropdownOpen()) {
+      return;
+    }
+
+    this.isCategoryDropdownOpen.set(false);
+    this.form.controls.category.markAsTouched();
+  }
+
+  selectCategory(category: TaskCategory): void {
+    this.form.controls.category.setValue(category);
+    this.form.controls.category.markAsTouched();
+    this.closeCategoryDropdown();
+  }
+
+  isCategorySelected(category: TaskCategory): boolean {
+    return this.form.controls.category.value === category;
+  }
+
+  getCategoryDisplayLabel(): string {
+    const selectedCategory = this.form.controls.category.value;
+    if (!selectedCategory) {
+      return 'Select task category';
+    }
+
+    return (
+      this.categoryOptions.find((option) => option.value === selectedCategory)
+        ?.label ?? 'Select task category'
+    );
   }
 
   isAssigneeSelected(contactId: number): boolean {
@@ -102,9 +153,100 @@ export class TaskFormComponent implements OnInit {
     return `${selectedCount} contacts selected`;
   }
 
+  onSubtaskInput(event: Event): void {
+    const target = event.target as HTMLInputElement | null;
+    this.subtaskDraft.set(target?.value ?? '');
+  }
+
+  resetSubtaskInput(): void {
+    this.subtaskDraft.set('');
+  }
+
+  saveSubtask(): void {
+    const content = this.subtaskDraft().trim();
+    if (!content) {
+      return;
+    }
+
+    this.subtasks.update((currentSubtasks) => [
+      ...currentSubtasks,
+      new Subtask({ content, completed: false, task_id: 0 }),
+    ]);
+    this.resetSubtaskInput();
+  }
+
+  startSubtaskEdit(index: number): void {
+    const subtask = this.subtasks()[index];
+    if (!subtask) {
+      return;
+    }
+
+    this.editingSubtaskIndex.set(index);
+    this.editingSubtaskDraft.set(subtask.content);
+  }
+
+  onEditingSubtaskInput(event: Event): void {
+    const target = event.target as HTMLInputElement | null;
+    this.editingSubtaskDraft.set(target?.value ?? '');
+  }
+
+  saveEditedSubtask(): void {
+    const index = this.editingSubtaskIndex();
+    if (index === null) {
+      return;
+    }
+
+    const content = this.editingSubtaskDraft().trim();
+    if (!content) {
+      return;
+    }
+
+    this.subtasks.update((currentSubtasks) =>
+      currentSubtasks.map((subtask, currentIndex) =>
+        currentIndex === index ? new Subtask({ ...subtask, content }) : subtask,
+      ),
+    );
+
+    this.finishSubtaskEdit();
+  }
+
+  deleteSubtask(index: number): void {
+    this.subtasks.update((currentSubtasks) =>
+      currentSubtasks.filter((_, currentIndex) => currentIndex !== index),
+    );
+
+    const currentEditingIndex = this.editingSubtaskIndex();
+    if (currentEditingIndex === null) {
+      return;
+    }
+
+    if (currentEditingIndex === index) {
+      this.finishSubtaskEdit();
+      return;
+    }
+
+    if (index < currentEditingIndex) {
+      this.editingSubtaskIndex.set(currentEditingIndex - 1);
+    }
+  }
+
+  deleteEditingSubtask(): void {
+    const index = this.editingSubtaskIndex();
+    if (index === null) {
+      return;
+    }
+
+    this.deleteSubtask(index);
+  }
+
+  private finishSubtaskEdit(): void {
+    this.editingSubtaskIndex.set(null);
+    this.editingSubtaskDraft.set('');
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
-    if (!this.isAssigneesDropdownOpen()) {
+    if (!this.isAssigneesDropdownOpen() && !this.isCategoryDropdownOpen()) {
       return;
     }
 
@@ -113,8 +255,26 @@ export class TaskFormComponent implements OnInit {
       return;
     }
 
-    if (!this.elementRef.nativeElement.contains(target)) {
+    const targetElement =
+      target instanceof Element ? target : target.parentElement;
+
+    if (!targetElement) {
       this.closeAssigneesDropdown();
+      this.closeCategoryDropdown();
+      return;
+    }
+
+    const clickedInsideAssignees =
+      targetElement.closest('.task-form-assignees') !== null;
+    const clickedInsideCategory =
+      targetElement.closest('.task-form-category') !== null;
+
+    if (!clickedInsideAssignees) {
+      this.closeAssigneesDropdown();
+    }
+
+    if (!clickedInsideCategory) {
+      this.closeCategoryDropdown();
     }
   }
 
