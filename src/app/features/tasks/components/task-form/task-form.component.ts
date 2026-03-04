@@ -47,12 +47,6 @@ export class TaskFormComponent implements OnInit {
     { value: 'user-story', label: 'User Story' },
   ];
   contacts = computed(() => this.contactsService?.contacts() ?? []);
-  selectedAssigneeContacts = computed(() => {
-    const selectedIds = new Set(this.form.controls.assigneeIds.value);
-    return this.contacts().filter((contact) =>
-      selectedIds.has(String(contact.id)),
-    );
-  });
   subtaskDraft = signal('');
   subtasks = signal<Subtask[]>([]);
   hasSubtaskDraft = computed(() => this.subtaskDraft().trim().length > 0);
@@ -73,12 +67,44 @@ export class TaskFormComponent implements OnInit {
     return this.selectedPriority === priority;
   }
 
+  isAssigneeSelected(contactId: number): boolean {
+    return this.form.controls.assigneeIds.value.includes(String(contactId));
+  }
+
   toggleAssigneesDropdown(): void {
     this.isAssigneesDropdownOpen.update((state) => !state);
   }
 
   closeAssigneesDropdown(): void {
     this.isAssigneesDropdownOpen.set(false);
+  }
+
+  toggleAssignee(contact: Contact): void {
+    const contactId = String(contact.id);
+    const selectedIds = this.form.controls.assigneeIds.value;
+    const isSelected = selectedIds.includes(contactId);
+    const nextSelectedIds = isSelected
+      ? selectedIds.filter((id) => id !== contactId)
+      : [...selectedIds, contactId];
+
+    this.form.controls.assigneeIds.setValue(nextSelectedIds);
+  }
+
+  getAssigneesDisplayLabel(): string {
+    const selectedCount = this.form.controls.assigneeIds.value.length;
+    if (selectedCount === 0) {
+      return 'Select contacts to assign';
+    }
+
+    if (selectedCount === 1) {
+      const selectedId = this.form.controls.assigneeIds.value[0];
+      const selectedContact = this.contacts().find(
+        (contact) => String(contact.id) === selectedId,
+      );
+      return selectedContact?.name ?? '1 contact selected';
+    }
+
+    return `${selectedCount} contacts selected`;
   }
 
   toggleCategoryDropdown(): void {
@@ -121,41 +147,8 @@ export class TaskFormComponent implements OnInit {
     );
   }
 
-  isAssigneeSelected(contactId: number): boolean {
-    return this.form.controls.assigneeIds.value.includes(String(contactId));
-  }
-
-  toggleAssignee(contact: Contact): void {
-    const contactId = String(contact.id);
-    const selectedIds = this.form.controls.assigneeIds.value;
-    const isSelected = selectedIds.includes(contactId);
-    const nextSelectedIds = isSelected
-      ? selectedIds.filter((id) => id !== contactId)
-      : [...selectedIds, contactId];
-
-    this.form.controls.assigneeIds.setValue(nextSelectedIds);
-  }
-
-  getAssigneesDisplayLabel(): string {
-    const selectedCount = this.form.controls.assigneeIds.value.length;
-    if (selectedCount === 0) {
-      return 'Select contacts to assign';
-    }
-
-    if (selectedCount === 1) {
-      const selectedId = this.form.controls.assigneeIds.value[0];
-      const selectedContact = this.contacts().find(
-        (contact) => String(contact.id) === selectedId,
-      );
-      return selectedContact?.name ?? '1 contact selected';
-    }
-
-    return `${selectedCount} contacts selected`;
-  }
-
   onSubtaskInput(event: Event): void {
-    const target = event.target as HTMLInputElement | null;
-    this.subtaskDraft.set(target?.value ?? '');
+    this.subtaskDraft.set(this.getInputValue(event));
   }
 
   resetSubtaskInput(): void {
@@ -186,8 +179,7 @@ export class TaskFormComponent implements OnInit {
   }
 
   onEditingSubtaskInput(event: Event): void {
-    const target = event.target as HTMLInputElement | null;
-    this.editingSubtaskDraft.set(target?.value ?? '');
+    this.editingSubtaskDraft.set(this.getInputValue(event));
   }
 
   saveEditedSubtask(): void {
@@ -242,6 +234,11 @@ export class TaskFormComponent implements OnInit {
   private finishSubtaskEdit(): void {
     this.editingSubtaskIndex.set(null);
     this.editingSubtaskDraft.set('');
+  }
+
+  private getInputValue(event: Event): string {
+    const target = event.target as HTMLInputElement | null;
+    return target?.value ?? '';
   }
 
   @HostListener('document:click', ['$event'])
