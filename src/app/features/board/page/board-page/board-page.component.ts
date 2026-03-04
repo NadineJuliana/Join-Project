@@ -85,6 +85,7 @@ export class BoardPageComponent {
       event.container.data,
       newStatus,
     );
+    this.activeDropListId = null;
   }
 
   onDropListEntered(columnId: string): void {
