@@ -1,6 +1,9 @@
-<div class="detail-dialog-container" (click)="onClose()">
-    <div class="detail-dialog" (click)="$event.stopPropagation()">
-        <p>detail-dialog works!</p>
-        <button (click)="onClose()">X</button>
+<div class="card-detail" (click)="onClose()">
+    <div [style.backgroundColor]="task().categoryColor" class="card-detail__category"
+        (click)="$event.stopPropagation()">
+        <p>{{ task().category | capitalize }}</p> <!--das Signal wird aufgerufen um die Werkte zu bekommen-->
     </div>
+    <h1>{{ task().title }}</h1>
+    <button (click)="onClose()">X</button>
+
 </div>

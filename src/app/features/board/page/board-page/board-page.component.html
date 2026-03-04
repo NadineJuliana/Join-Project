@@ -46,7 +46,7 @@
 
                 <!-- Jede Task ist ein draggable Element -->
                 @for (task of column.tasks; track task.id) {
-                <div (click)="openDetailDialog()" cdkDrag [cdkDragData]="task" class="board__card-container">
+                <div (click)="openDetailDialog(task)" cdkDrag [cdkDragData]="task" class="board__card-container">
                     <div [style.backgroundColor]="task.categoryColor" class="board__card-category">
                         <p>{{ task.category | capitalize }}</p>
                     </div>
@@ -92,6 +92,6 @@
         }
     </div>
 </section>
-@if (showDetailDialog()) {
-  <app-detail-dialog (closeDialog)="closeDetailDialog()"></app-detail-dialog>
-}
+@if (showDetailDialog() && selectedTask()) {
+  <app-detail-dialog [task]="selectedTask()!" (closeDialog)="closeDetailDialog()"></app-detail-dialog>
+} <!-- selectedTask übergibt die gespeicherte Task an die detail-dialog Komponenten-->

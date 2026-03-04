@@ -121,12 +121,15 @@ export class BoardPageComponent {
   }
 
   showDetailDialog = signal(false);
+  selectedTask = signal<Task | null>(null); // Default ist die Task auf null
 
-  openDetailDialog() {
+  openDetailDialog(task: Task) { 
+    this.selectedTask.set(task); // SelectedTask speichert die Task 
     this.showDetailDialog.set(true); // Signal wird TRUE
   }
 
   closeDetailDialog() {
     this.showDetailDialog.set(false); // Signal wird FALSE
+    this.selectedTask.set(null); // SelectedTask wird auf null zurückgesetzt  
   }
 }
