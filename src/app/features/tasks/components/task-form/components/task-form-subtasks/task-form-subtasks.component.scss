@@ -77,22 +77,29 @@
 
   &__list {
     padding-left: 0;
-    list-style: disc;
-    list-style-position: inside;
+    list-style: none;
     display: flex;
     flex-direction: column;
     gap: 4px;
+    max-height: 150px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   &__list-item {
     position: relative;
     min-height: 32px;
     border-radius: 8px;
-    padding: 6px 92px 6px 12px;
+    padding: 6px 92px 6px 24px;
     cursor: pointer;
 
-    &::marker {
+    &::before {
+      content: "•";
+      position: absolute;
+      top: 6px;
+      left: 10px;
       color: var(--primary-dark);
+      line-height: 1;
     }
 
     &:hover {
@@ -105,7 +112,6 @@
     }
 
     &--editing {
-      list-style: none;
       margin-left: 0;
       width: 100%;
       padding: 0;
@@ -113,7 +119,7 @@
       border-radius: 0;
       cursor: default;
 
-      &::marker {
+      &::before {
         content: "";
       }
 
