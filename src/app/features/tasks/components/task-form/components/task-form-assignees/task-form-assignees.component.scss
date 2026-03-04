@@ -23,6 +23,7 @@
     font-size: 20px;
     color: var(--primary);
     padding-right: 44px;
+    cursor: text;
 
     &::placeholder {
       color: var(--lightgray);
@@ -32,12 +33,23 @@
   &__search-wrap {
     position: relative;
 
-    .task-form-assignees__arrow {
+    .task-form-assignees__arrow-button {
       position: absolute;
-      top: calc(50% - 2px);
-      right: 20px;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 44px;
+      border: none;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .task-form-assignees__arrow {
       transform: rotate(45deg) translateY(-2px);
-      pointer-events: none;
 
       &.task-form-assignees__arrow--open {
         transform: rotate(-135deg) translateY(-1px);

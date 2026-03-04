@@ -69,6 +69,23 @@ export class TaskFormAssigneesComponent {
     this.isDropdownOpen.set(true);
   }
 
+  onSearchInputClick(): void {
+    if (!this.isDropdownOpen()) {
+      return;
+    }
+
+    this.isDropdownOpen.set(false);
+  }
+
+  toggleSearchDropdownFromArrow(): void {
+    const shouldOpen = !this.isDropdownOpen();
+    this.isDropdownOpen.set(shouldOpen);
+
+    if (!shouldOpen) {
+      this.assigneeSearchInput?.nativeElement.blur();
+    }
+  }
+
   toggleAssignee(contact: Contact): void {
     const contactId = String(contact.id);
     const selectedIds = this.selectedAssigneeIds();

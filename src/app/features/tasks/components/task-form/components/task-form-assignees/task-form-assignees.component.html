@@ -34,13 +34,26 @@
         [attr.aria-expanded]="isDropdownOpen()"
         aria-haspopup="listbox"
         (focus)="isDropdownOpen.set(true)"
+        (click)="onSearchInputClick()"
         (input)="onSearchInput($event)"
       />
-      <span
-        class="task-form-assignees__arrow"
-        [class.task-form-assignees__arrow--open]="isDropdownOpen()"
-        aria-hidden="true"
-      ></span>
+      <button
+        type="button"
+        class="task-form-assignees__arrow-button"
+        [attr.aria-label]="
+          isDropdownOpen()
+            ? 'Close assignees dropdown'
+            : 'Open assignees dropdown'
+        "
+        (mousedown)="$event.preventDefault()"
+        (click)="toggleSearchDropdownFromArrow()"
+      >
+        <span
+          class="task-form-assignees__arrow"
+          [class.task-form-assignees__arrow--open]="isDropdownOpen()"
+          aria-hidden="true"
+        ></span>
+      </button>
     </div>
   }
 
