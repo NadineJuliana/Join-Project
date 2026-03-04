@@ -3,6 +3,7 @@ import { CapitalizePipe } from '../../../../shared/pipes/capitalize.pipe';
 import { Task } from '../../../tasks/models/task.model';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import { EllipsisPipe } from '../../../../shared/pipes/ellipsis.pipe';
+import { TasksService } from '../../../tasks/services/tasks.service';
 
 @Component({
   selector: 'app-detail-dialog',
@@ -14,8 +15,19 @@ export class DetailDialogComponent {
   task = input.required<Task>(); // Eingabe von Parent - die Komponente wird Task von außen erhalten
   closeDialog = output<void>();
 
+  constructor(private tasksService: TasksService) {}
+
   onClose() {
     this.closeDialog.emit(); // Sendet das Signal an die Parent
+  }
+
+  async deleteTask() {
+    try {
+      await this.tasksService.deleteTask(this.task().id);
+      this.onClose();
+    } catch (error) {
+      console.error('Fehler beim Löschen der Task:', error);
+    }
   }
 
   getPriorityIcon(priority: 'low' | 'medium' | 'urgent') {
