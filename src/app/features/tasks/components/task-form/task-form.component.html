@@ -26,6 +26,7 @@
       <h5><label for="task-description">Description</label></h5>
       <textarea
         id="task-description"
+        formControlName="description"
         placeholder="Enter a description"
       ></textarea>
     </div>
@@ -199,7 +200,34 @@
                   {{ contact.name | initials }}
                 </div>
                 <h5>{{ contact.name }}</h5>
+                <span
+                  class="task-form-assignees__checkbox material-icons"
+                  aria-hidden="true"
+                >
+                  {{
+                    isAssigneeSelected(contact.id)
+                      ? "check_box"
+                      : "check_box_outline_blank"
+                  }}
+                </span>
               </button>
+            }
+          </div>
+        }
+
+        @if (getSelectedAssigneeContacts().length > 0) {
+          <div
+            class="task-form-assignees__selected"
+            aria-label="Selected contacts"
+          >
+            @for (contact of getSelectedAssigneeContacts(); track contact.id) {
+              <div
+                class="task-form-assignees__selected-avatar"
+                [style.backgroundColor]="contact.color"
+                [attr.title]="contact.name"
+              >
+                <p>{{ contact.name | initials }}</p>
+              </div>
             }
           </div>
         }
@@ -404,6 +432,28 @@
           </ul>
         }
       </div>
+    </div>
+  </section>
+
+  <section class="task-form-footer">
+    <p class="task-form-footer__required-note">
+      <span class="required">*</span>This field is required
+    </p>
+
+    <div class="task-form-footer__actions">
+      <button
+        type="button"
+        class="btn btn--secondary"
+        (click)="clearTaskForm()"
+      >
+        Clear
+        <span class="material-icons" aria-hidden="true">close</span>
+      </button>
+
+      <button type="button" class="btn btn--primary">
+        Create Task
+        <span class="material-icons" aria-hidden="true">check</span>
+      </button>
     </div>
   </section>
 </div>
