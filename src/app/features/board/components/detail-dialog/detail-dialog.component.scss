@@ -47,7 +47,31 @@ section {
     gap: 25px;
   }
   &__assignet {
-
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    > div {
+      max-height: 175px;
+      overflow: hidden;
+      overflow-y: auto;
+      > div {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        padding: 8px;
+        > div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: var(--white);
+          height: 42px;
+          width: 42px;
+          aspect-ratio: 1 / 1;
+          border-radius: 100%;
+          border: solid 2px var(--white);
+        }
+      }
+    }
   }
   &__priority {
     display: flex;
