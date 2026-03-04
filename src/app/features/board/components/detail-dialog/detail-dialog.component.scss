@@ -26,12 +26,15 @@ section {
   display: flex;
   flex-direction: column;
   h5 {
-    max-height: 170px;
-    overflow: hidden;
-    overflow-y: auto;
     span {
       color: var(--primary);
     }
+  }
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
   }
   &__header {
     display: flex;

@@ -7,6 +7,7 @@
             <button (click)="onClose()"><span class="material-icons">close</span></button>
         </div>
         <h1>{{ task().title | ellipsis: 38 }}</h1>
+        <div class="card-detail__container">
         <h5>{{ task().description }}</h5>
         <div class="card-detail__due-date">
             <h5><span>Due date:</span></h5>
@@ -42,10 +43,11 @@
                 }
             </div>
         </div>
-        <div class="card-detail__edits">
-            <button><span class="material-icons">delete</span>Delete</button>
-            <button><span class="material-icons">edit</span>Edit</button>
-        </div>
 
+    </div>
+    <div class="card-detail__edits">
+        <button><span class="material-icons">delete</span>Delete</button>
+        <button><span class="material-icons">edit</span>Edit</button>
+    </div>
     </div>
 </section>
