@@ -2,10 +2,11 @@ import { Component, input, output } from '@angular/core';
 import { CapitalizePipe } from '../../../../shared/pipes/capitalize.pipe';
 import { Task } from '../../../tasks/models/task.model';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
+import { EllipsisPipe } from '../../../../shared/pipes/ellipsis.pipe';
 
 @Component({
   selector: 'app-detail-dialog',
-  imports: [CapitalizePipe, InitialsPipe, CapitalizePipe],
+  imports: [CapitalizePipe, InitialsPipe, CapitalizePipe, EllipsisPipe],
   templateUrl: './detail-dialog.component.html',
   styleUrl: './detail-dialog.component.scss',
 })
