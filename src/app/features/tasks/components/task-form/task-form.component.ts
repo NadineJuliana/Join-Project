@@ -28,11 +28,13 @@ type TaskCategory = 'technical-task' | 'user-story';
   styleUrl: './task-form.component.scss',
 })
 export class TaskFormComponent implements OnInit {
+  private readonly categoryPlaceholder = 'Select task category';
   private formBuilder = inject(FormBuilder);
   private contactsService = inject(ContactsService, { optional: true });
 
   form = this.formBuilder.nonNullable.group({
     title: ['', [Validators.required, Validators.maxLength(35)]],
+    description: [''],
     dueDate: ['', [Validators.required, this.notPastDateValidator]],
     assigneeIds: [<string[]>[]],
     category: ['', [Validators.required]],
@@ -67,8 +69,24 @@ export class TaskFormComponent implements OnInit {
     return this.selectedPriority === priority;
   }
 
+  clearTaskForm(): void {
+    this.form.reset({
+      title: '',
+      description: '',
+      dueDate: '',
+      assigneeIds: [],
+      category: '',
+    });
+    this.selectedPriority = 'medium';
+    this.subtasks.set([]);
+    this.resetSubtaskInput();
+    this.finishSubtaskEdit();
+    this.closeAssigneesDropdown();
+    this.closeCategoryDropdown();
+  }
+
   isAssigneeSelected(contactId: number): boolean {
-    return this.form.controls.assigneeIds.value.includes(String(contactId));
+    return this.getSelectedAssigneeIds().includes(String(contactId));
   }
 
   toggleAssigneesDropdown(): void {
@@ -81,7 +99,7 @@ export class TaskFormComponent implements OnInit {
 
   toggleAssignee(contact: Contact): void {
     const contactId = String(contact.id);
-    const selectedIds = this.form.controls.assigneeIds.value;
+    const selectedIds = this.getSelectedAssigneeIds();
     const isSelected = selectedIds.includes(contactId);
     const nextSelectedIds = isSelected
       ? selectedIds.filter((id) => id !== contactId)
@@ -91,13 +109,14 @@ export class TaskFormComponent implements OnInit {
   }
 
   getAssigneesDisplayLabel(): string {
-    const selectedCount = this.form.controls.assigneeIds.value.length;
+    const selectedIds = this.getSelectedAssigneeIds();
+    const selectedCount = selectedIds.length;
     if (selectedCount === 0) {
       return 'Select contacts to assign';
     }
 
     if (selectedCount === 1) {
-      const selectedId = this.form.controls.assigneeIds.value[0];
+      const selectedId = selectedIds[0];
       const selectedContact = this.contacts().find(
         (contact) => String(contact.id) === selectedId,
       );
@@ -105,6 +124,13 @@ export class TaskFormComponent implements OnInit {
     }
 
     return `${selectedCount} contacts selected`;
+  }
+
+  getSelectedAssigneeContacts(): Contact[] {
+    const selectedIds = new Set(this.getSelectedAssigneeIds());
+    return this.contacts().filter((contact) =>
+      selectedIds.has(String(contact.id)),
+    );
   }
 
   toggleCategoryDropdown(): void {
@@ -138,12 +164,12 @@ export class TaskFormComponent implements OnInit {
   getCategoryDisplayLabel(): string {
     const selectedCategory = this.form.controls.category.value;
     if (!selectedCategory) {
-      return 'Select task category';
+      return this.categoryPlaceholder;
     }
 
     return (
       this.categoryOptions.find((option) => option.value === selectedCategory)
-        ?.label ?? 'Select task category'
+        ?.label ?? this.categoryPlaceholder
     );
   }
 
@@ -224,11 +250,9 @@ export class TaskFormComponent implements OnInit {
 
   deleteEditingSubtask(): void {
     const index = this.editingSubtaskIndex();
-    if (index === null) {
-      return;
+    if (index !== null) {
+      this.deleteSubtask(index);
     }
-
-    this.deleteSubtask(index);
   }
 
   private finishSubtaskEdit(): void {
@@ -239,6 +263,10 @@ export class TaskFormComponent implements OnInit {
   private getInputValue(event: Event): string {
     const target = event.target as HTMLInputElement | null;
     return target?.value ?? '';
+  }
+
+  private getSelectedAssigneeIds(): string[] {
+    return this.form.controls.assigneeIds.value;
   }
 
   @HostListener('document:click', ['$event'])
