@@ -208,6 +208,33 @@
     }
   }
 
+  &__search-input {
+    justify-content: flex-start;
+    font-size: 20px;
+    color: var(--primary);
+    padding-right: 44px;
+
+    &::placeholder {
+      color: var(--lightgray);
+    }
+  }
+
+  &__search-wrap {
+    position: relative;
+
+    .task-form-assignees__arrow {
+      position: absolute;
+      top: calc(50% - 2px);
+      right: 20px;
+      transform: rotate(45deg) translateY(-2px);
+      pointer-events: none;
+
+      &.task-form-assignees__arrow--open {
+        transform: rotate(-135deg) translateY(-1px);
+      }
+    }
+  }
+
   &__label {
     font-size: 20px;
     color: var(--primary);
@@ -241,6 +268,13 @@
     border-radius: 10px;
     box-shadow: var(--drop-shadow);
     padding: 8px;
+  }
+
+  &__empty {
+    margin: 4px 0;
+    padding: 8px 12px;
+    color: var(--gray);
+    font-size: 16px;
   }
 
   &__item {

@@ -1,7 +1,9 @@
 import {
   Component,
+  ElementRef,
   HostListener,
   OnInit,
+  ViewChild,
   computed,
   inject,
   signal,
@@ -49,11 +51,25 @@ export class TaskFormComponent implements OnInit {
     { value: 'user-story', label: 'User Story' },
   ];
   contacts = computed(() => this.contactsService?.contacts() ?? []);
+  assigneeSearchTerm = signal('');
+  isAssigneeSearchActive = signal(false);
+  filteredContacts = computed(() => {
+    const normalizedSearchTerm = this.assigneeSearchTerm().trim().toLowerCase();
+    if (!normalizedSearchTerm) {
+      return this.contacts();
+    }
+
+    return this.contacts().filter((contact) =>
+      contact.name.toLowerCase().includes(normalizedSearchTerm),
+    );
+  });
   subtaskDraft = signal('');
   subtasks = signal<Subtask[]>([]);
   hasSubtaskDraft = computed(() => this.subtaskDraft().trim().length > 0);
   editingSubtaskIndex = signal<number | null>(null);
   editingSubtaskDraft = signal('');
+  @ViewChild('assigneeSearchInput')
+  assigneeSearchInput?: ElementRef<HTMLInputElement>;
 
   async ngOnInit(): Promise<void> {
     if (this.contactsService && !this.contactsService.contactsLoaded) {
@@ -95,6 +111,17 @@ export class TaskFormComponent implements OnInit {
 
   closeAssigneesDropdown(): void {
     this.isAssigneesDropdownOpen.set(false);
+    this.isAssigneeSearchActive.set(false);
+    this.assigneeSearchTerm.set('');
+  }
+
+  activateAssigneeSearch(): void {
+    this.isAssigneeSearchActive.set(true);
+    this.isAssigneesDropdownOpen.set(true);
+
+    setTimeout(() => {
+      this.assigneeSearchInput?.nativeElement.focus();
+    });
   }
 
   toggleAssignee(contact: Contact): void {
@@ -124,6 +151,11 @@ export class TaskFormComponent implements OnInit {
     }
 
     return `${selectedCount} contacts selected`;
+  }
+
+  onAssigneeSearchInput(event: Event): void {
+    this.assigneeSearchTerm.set(this.getInputValue(event));
+    this.isAssigneesDropdownOpen.set(true);
   }
 
   getSelectedAssigneeContacts(): Contact[] {
