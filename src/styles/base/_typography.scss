@@ -50,6 +50,9 @@ h5 {
   font-size: 20px;
   font-weight: 400;
   line-height: 1.4;
+  @media (max-width: $bp-md) {
+    font-size: 16px;
+  }
 }
 
 // Summary Datum
