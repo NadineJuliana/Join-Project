@@ -139,10 +139,7 @@
     gap: 24px;
     filter: drop-shadow(var(--drop-shadow));
     cursor: grab;
-    &:active,
-    &.cdk-drag-dragging {
-      cursor: grabbing;
-    }
+
   }
   &__card-category {
     background: var(--primary);
