@@ -1,9 +1,34 @@
-<div class="card-detail" (click)="onClose()">
-    <div [style.backgroundColor]="task().categoryColor" class="card-detail__category"
-        (click)="$event.stopPropagation()">
-        <p>{{ task().category | capitalize }}</p> <!--das Signal wird aufgerufen um die Werkte zu bekommen-->
-    </div>
-    <h1>{{ task().title }}</h1>
-    <button (click)="onClose()">X</button>
+<section (click)="onClose()">
+    <div class="card-detail" (click)="$event.stopPropagation()">
+        <div class="card-detail__header">
+            <div [style.backgroundColor]="task().categoryColor" class="card-detail__category">
+                <p>{{ task().category | capitalize }}</p> <!--das Signal wird aufgerufen um die Werkte zu bekommen-->
+            </div>
+            <button (click)="onClose()"><span class="material-icons">close</span></button>
+        </div>
+        <h1>{{ task().title }}</h1>
+        <h5>{{ task().description }}</h5>
+        <div class="card-detail__due-date">
+            <h5><span>Due date:</span></h5>
+            <h5>10/05/23</h5>
+        </div>
+        <div class="card-detail__priority">
+            <h5><span>Priority:</span></h5>
+            <h5>Medium</h5>
+        </div>
+        <div class="card-detail__assignet">
+            <h5><span>Assigned To:</span></h5>
+        </div>
+        <div class="card-detail__subtasks-container">
+            <h5><span>Subtasks</span></h5>
+            <div class="card-detail__subtasks">
 
-</div>
+            </div>
+        </div>
+        <div class="card-detail__edits">
+            <button><span class="material-icons">delete</span>Delete</button>
+            <button><span class="material-icons">edit</span>Edit</button>
+        </div>
+
+    </div>
+</section>

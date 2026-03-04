@@ -1,4 +1,6 @@
-:host {
+@use "../../../../../styles/abstracts/breakpoints" as *;
+
+section {
   position: fixed;
   top: 0;
   left: 0;
@@ -20,7 +22,48 @@
   max-height: 931px;
   height: 100%;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  &__category{
+  gap: 24px;
+  display: flex;
+  flex-direction: column;
+  h5 {
+    span {
+      color: var(--primary);
+    }
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__category {
+    padding: 4px 16px;
+    color: var(--white);
+    border-radius: 8px;
+  }
+  &__due-date {
+    display: flex;
+    gap: 25px;
+  }
+  &__priority {
+    display: flex;
+    gap: 41px;
+  }
+  &__edits{
+    display: flex;
+    justify-content: end;
+    gap: 16px;
+    align-self: flex-end;
+    margin-top: auto;
+    button{
+      color: var(--primary);
+      gap: 8px;
+    }
+  }
+}
 
+@media (max-width: $bp-md) {
+  .card-detail {
+    h1 {
+      font-size: 36px;
+    }
   }
 }
