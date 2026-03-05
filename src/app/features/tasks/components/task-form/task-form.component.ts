@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, output, signal } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -32,6 +32,7 @@ export class TaskFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private contactsService = inject(ContactsService, { optional: true });
   private tasksService = inject(TasksService);
+  taskCreated = output<Task>();
 
   form = this.formBuilder.nonNullable.group({
     title: ['', [Validators.required, Validators.maxLength(35)]],
@@ -104,6 +105,7 @@ export class TaskFormComponent implements OnInit {
     const savedTask = await this.tasksService.addTask(task);
     await this.saveSubtasks(savedTask.id);
     await this.saveAssignees(savedTask.id);
+    this.taskCreated.emit(savedTask);
     this.clearTaskForm();
   }
 

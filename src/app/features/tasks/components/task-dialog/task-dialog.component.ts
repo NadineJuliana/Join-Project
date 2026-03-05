@@ -1,11 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
+import { Task } from '../../models/task.model';
+import { TaskFormComponent } from '../task-form/task-form.component';
 
 @Component({
   selector: 'app-task-dialog',
-  imports: [],
+  imports: [TaskFormComponent],
   templateUrl: './task-dialog.component.html',
-  styleUrl: './task-dialog.component.scss'
+  styleUrl: './task-dialog.component.scss',
 })
 export class TaskDialogComponent {
+  dialogClosed = output<void>();
+  taskCreated = output<Task>();
 
+  closeDialog(): void {
+    this.dialogClosed.emit();
+  }
+
+  handleTaskCreated(task: Task): void {
+    this.taskCreated.emit(task);
+    this.closeDialog();
+  }
 }
