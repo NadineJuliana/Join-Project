@@ -43,6 +43,7 @@
           type="date"
           formControlName="dueDate"
           [min]="todayMinDate"
+          [max]="maxDueDate"
         />
         @if (
           !form.controls.dueDate.valid &&

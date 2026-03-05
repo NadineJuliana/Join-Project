@@ -1,4 +1,11 @@
-import { Component, OnInit, computed, inject, output, signal } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  computed,
+  inject,
+  output,
+  signal,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -43,6 +50,7 @@ export class TaskFormComponent implements OnInit {
   });
 
   todayMinDate = this.getTodayMinDate();
+  maxDueDate = '9999-12-31';
   selectedPriority: Priority = 'medium';
   categoryOptions: Array<{ value: TaskCategory; label: string }> = [
     { value: 'technical-task', label: 'Technical Task' },
@@ -172,6 +180,10 @@ export class TaskFormComponent implements OnInit {
   ): ValidationErrors | null {
     if (!control.value) {
       return null;
+    }
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(control.value)) {
+      return { invalidDate: true };
     }
 
     const selectedDate = new Date(control.value);
