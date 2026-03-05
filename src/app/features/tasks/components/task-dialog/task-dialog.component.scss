@@ -1,0 +1,30 @@
+.dialog {
+  &__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+  }
+  &__content {
+    height: 86dvh;
+    width: 80dvw;
+    border-radius: 15px;
+    background: white;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+  }
+  h2 {
+    font-size: clamp(47px, 5vw, 61px);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+}

@@ -1,1 +1,11 @@
-<p>task-dialog works!</p>
+<section class="dialog">
+  <div class="dialog__backdrop" (click)="closeDialog()">
+    <div class="dialog__content" (click)="$event.stopPropagation()">
+      <header class="dialog__header">
+        <h2>Add Task</h2>
+        <button class="dialog__close" (click)="closeDialog()">✕</button>
+      </header>
+      <app-task-form (taskCreated)="handleTaskCreated($event)"></app-task-form>
+    </div>
+  </div>
+</section>
