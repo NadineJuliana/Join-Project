@@ -1,5 +1,5 @@
-import { Component, output } from '@angular/core';
-import { Task } from '../../models/task.model';
+import { Component, input, output } from '@angular/core';
+import { Task, TaskStatus } from '../../models/task.model';
 import { TaskFormComponent } from '../task-form/task-form.component';
 
 @Component({
@@ -9,6 +9,7 @@ import { TaskFormComponent } from '../task-form/task-form.component';
   styleUrl: './task-dialog.component.scss',
 })
 export class TaskDialogComponent {
+  status = input<TaskStatus>('to-do');
   dialogClosed = output<void>();
   taskCreated = output<Task>();
 

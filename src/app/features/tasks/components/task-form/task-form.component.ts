@@ -3,6 +3,7 @@ import {
   OnInit,
   computed,
   inject,
+  input,
   output,
   signal,
 } from '@angular/core';
@@ -19,7 +20,7 @@ import { TaskFormAssigneesComponent } from './components/task-form-assignees/tas
 import { TaskFormCategoryComponent } from './components/task-form-category/task-form-category.component';
 import { TaskFormSubtasksComponent } from './components/task-form-subtasks/task-form-subtasks.component';
 import { TasksService } from '../../services/tasks.service';
-import { Task } from '../../models/task.model';
+import { Task, TaskStatus } from '../../models/task.model';
 import { Router } from '@angular/router';
 
 type Priority = 'urgent' | 'medium' | 'low';
@@ -42,6 +43,7 @@ export class TaskFormComponent implements OnInit {
   private contactsService = inject(ContactsService, { optional: true });
   private tasksService = inject(TasksService);
   taskCreated = output<Task>();
+  status = input<TaskStatus>('to-do');
 
   form = this.formBuilder.nonNullable.group({
     title: ['', [Validators.required, Validators.maxLength(35)]],
@@ -136,7 +138,7 @@ export class TaskFormComponent implements OnInit {
       description: this.form.value.description,
       due_date: this.form.value.dueDate,
       category: category ?? 'user-story',
-      status: 'to-do',
+      status: this.status(),
       position: 0,
       priority: this.selectedPriority,
       subtasks: this.subtasks(),

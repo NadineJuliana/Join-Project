@@ -33,7 +33,7 @@
       <div class="kanban__container">
         <div class="kanban__headline">
           <h3>{{ column.title }}</h3>
-          <button><span class="material-icons">add</span></button>
+          <button (click)="openAddTaskDialog(column.id)"><span class="material-icons">add</span></button>
         </div>
 
         <!-- Das ist der Drop-Container für eine Spalte -->
@@ -139,5 +139,5 @@
 <!-- selectedTask übergibt die gespeicherte Task an die detail-dialog Komponenten-->
 
 @if (showAddTaskDialog()){
-  <app-task-dialog (dialogClosed)=" closeAddTaskDialog()"  (taskCreated)="onTaskCreated($event)"></app-task-dialog>
+  <app-task-dialog [status]="addTaskStatus()" (dialogClosed)=" closeAddTaskDialog()"  (taskCreated)="onTaskCreated($event)"></app-task-dialog>
 }

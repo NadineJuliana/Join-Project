@@ -43,6 +43,7 @@ export class BoardPageComponent {
   showDetailDialog = signal(false);
   selectedTask = signal<Task | null>(null); // Default ist die Task auf null
   showAddTaskDialog = signal(false);
+  addTaskStatus = signal<TaskStatus>('to-do');
   searchResult = toSignal(this.searchControl.valueChanges, {
     initialValue: '',
   });
@@ -136,7 +137,8 @@ export class BoardPageComponent {
     this.selectedTask.set(null); // SelectedTask wird auf null zurückgesetzt
   }
 
-  openAddTaskDialog(): void {
+  openAddTaskDialog(status: TaskStatus = 'to-do'): void {
+    this.addTaskStatus.set(status);
     this.showAddTaskDialog.set(true);
   }
 
@@ -144,7 +146,15 @@ export class BoardPageComponent {
     this.showAddTaskDialog.set(false);
   }
 
-  onTaskCreated(task: Task): void{
+  // async onTaskCreated(task: Task): Promise<void> {
+  //   this.closeAddTaskDialog();
+  //   await this.dbTaskService.addTask(task);
+  //   await Promise.all([
+  //     this.dbTaskService.loadSubtasks(),
+  //     this.dbTaskService.loadAssignees(),
+  //   ]);
+  // }
+  onTaskCreated(task: Task): void {
     this.closeAddTaskDialog();
   }
 }

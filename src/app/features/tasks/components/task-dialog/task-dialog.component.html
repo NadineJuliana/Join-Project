@@ -5,7 +5,7 @@
         <h2>Add Task</h2>
         <button class="dialog__close" (click)="closeDialog()">✕</button>
       </header>
-      <app-task-form (taskCreated)="handleTaskCreated($event)"></app-task-form>
+      <app-task-form  [status]="status()" (taskCreated)="handleTaskCreated($event)"></app-task-form>
     </div>
   </div>
 </section>
