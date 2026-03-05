@@ -1,77 +1,66 @@
 <section (click)="onClose()">
-  <div class="card-detail" (click)="$event.stopPropagation()">
-    <div class="card-detail__header">
-      <div
-        [style.backgroundColor]="task().categoryColor"
-        class="card-detail__category"
-      >
-        <p>{{ task().category | capitalize }}</p>
-        <!--das Signal wird aufgerufen um die Werkte zu bekommen-->
-      </div>
-      <button (click)="onClose()">
-        <span class="material-icons">close</span>
-      </button>
-    </div>
-    <h1>{{ task().title | ellipsis: 38 }}</h1>
-    <div class="card-detail__container">
-      <h5>{{ task().description }}</h5>
-      <div class="card-detail__due-date">
-        <h5><span>Due date:</span></h5>
-        <h5>{{ task().due_date }}</h5>
-      </div>
-      <div class="card-detail__priority">
-        <h5><span>Priority:</span></h5>
-        <div class="card-detail__priority__bag">
-          <h5>{{ task().priority | capitalize }}</h5>
-          <img
-            [src]="getPriorityIcon(task().priority)"
-            [alt]="task().priority"
-          />
-        </div>
-      </div>
-      <div class="card-detail__assignet">
-        <h5><span>Assigned To:</span></h5>
-        <div>
-          @for (assignee of task().assignees ?? []; track assignee.id) {
-            <div>
-              <div [style.backgroundColor]="assignee.color">
-                <p>{{ assignee.name | initials }}</p>
-              </div>
-              <h5>{{ assignee.name }}</h5>
+    <div class="card-detail" (click)="$event.stopPropagation()">
+        @if (!isEditMode()) {
+        <div class="card-detail__header">
+            <div [style.backgroundColor]="task().categoryColor" class="card-detail__category">
+                <p>{{ task().category | capitalize }}</p>
             </div>
-          }
+            <button (click)="onClose()">
+                <span class="material-icons">close</span>
+            </button>
         </div>
-      </div>
-      <div class="card-detail__subtasks-container">
-        <h5><span>Subtasks</span></h5>
-        <div class="card-detail__subtasks">
-          @for (subtask of task().subtasks ?? []; track subtask.id) {
-            <label class="card-detail__subtasks-item">
-              <input
-                [checked]="subtask.completed"
-                (change)="toggleSubtask(subtask, $event)"
-                type="checkbox"
-                class="card-detail__subtasks-item-checkbox"
-              />
-              <span
-                class="material-icons card-detail__subtasks-item-icon card-detail__subtasks-item-icon--empty"
-                >check_box_outline_blank</span
-              >
-              <span
-                class="material-icons card-detail__subtasks-item-icon card-detail__subtasks-item-icon--checked"
-                >check_box</span
-              >
-              <p>{{ subtask.content }}</p>
-            </label>
-          }
+        <h1>{{ task().title | ellipsis: 38 }}</h1>
+        <div class="card-detail__container">
+            <h5>{{ task().description }}</h5>
+            <div class="card-detail__due-date">
+                <h5><span>Due date:</span></h5>
+                <h5>{{ task().due_date }}</h5>
+            </div>
+            <div class="card-detail__priority">
+                <h5><span>Priority:</span></h5>
+                <div class="card-detail__priority__bag">
+                    <h5>{{ task().priority | capitalize }}</h5>
+                    <img [src]="getPriorityIcon(task().priority)" [alt]="task().priority" />
+                </div>
+            </div>
+            <div class="card-detail__assignet">
+                <h5><span>Assigned To:</span></h5>
+                <div>
+                    @for (assignee of task().assignees ?? []; track assignee.id) {
+                    <div>
+                        <div [style.backgroundColor]="assignee.color">
+                            <p>{{ assignee.name | initials }}</p>
+                        </div>
+                        <h5>{{ assignee.name }}</h5>
+                    </div>
+                    }
+                </div>
+            </div>
+            <div class="card-detail__subtasks-container">
+                <h5><span>Subtasks</span></h5>
+                <div class="card-detail__subtasks">
+                    @for (subtask of task().subtasks ?? []; track subtask.id) {
+                    <label class="card-detail__subtasks-item">
+                        <input [checked]="subtask.completed" (change)="toggleSubtask(subtask, $event)" type="checkbox"
+                            class="card-detail__subtasks-item-checkbox" />
+                        <span
+                            class="material-icons card-detail__subtasks-item-icon card-detail__subtasks-item-icon--empty">check_box_outline_blank</span>
+                        <span
+                            class="material-icons card-detail__subtasks-item-icon card-detail__subtasks-item-icon--checked">check_box</span>
+                        <p>{{ subtask.content }}</p>
+                    </label>
+                    }
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="card-detail__edits">
+            <button (click)="deleteTask()">
+                <span class="material-icons">delete</span>Delete
+            </button>
+            <button (click)="onEdit()"><span class="material-icons">edit</span>Edit</button>
+        </div>
+        } @else {
+        <app-task-form></app-task-form>
+        }
     </div>
-    <div class="card-detail__edits">
-      <button (click)="deleteTask()">
-        <span class="material-icons">delete</span>Delete
-      </button>
-      <button><span class="material-icons">edit</span>Edit</button>
-    </div>
-  </div>
 </section>

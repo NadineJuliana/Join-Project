@@ -1,5 +1,12 @@
 @use "../../../../../styles/abstracts/breakpoints" as *;
 
+//------------  Edit task-form Component
+
+::ng-deep .task-form-block--separator {
+  display: none !important;
+}
+
+//------------  Detail Window
 section {
   position: fixed;
   top: 0;

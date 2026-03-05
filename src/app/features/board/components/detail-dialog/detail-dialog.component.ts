@@ -1,25 +1,35 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { CapitalizePipe } from '../../../../shared/pipes/capitalize.pipe';
 import { Task } from '../../../tasks/models/task.model';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import { EllipsisPipe } from '../../../../shared/pipes/ellipsis.pipe';
 import { TasksService } from '../../../tasks/services/tasks.service';
 import { Subtask } from '../../../tasks/models/subtask.model';
+import { TaskFormComponent } from '../../../tasks/components/task-form/task-form.component';
 
 @Component({
   selector: 'app-detail-dialog',
-  imports: [CapitalizePipe, InitialsPipe, CapitalizePipe, EllipsisPipe],
+  imports: [CapitalizePipe, InitialsPipe, CapitalizePipe, EllipsisPipe, TaskFormComponent],
   templateUrl: './detail-dialog.component.html',
   styleUrl: './detail-dialog.component.scss',
 })
 export class DetailDialogComponent {
   task = input.required<Task>(); // Eingabe von Parent - die Komponente wird Task von außen erhalten
   closeDialog = output<void>();
+  isEditMode = signal(false);
 
   constructor(private tasksService: TasksService) {}
 
   onClose() {
     this.closeDialog.emit(); // Sendet das Signal an die Parent
+  }
+
+  onEdit(): void {
+    this.isEditMode.set(true);
+  }
+
+  onCancelEdit(): void {
+    this.isEditMode.set(false);
   }
 
   async deleteTask() {
