@@ -1,21 +1,25 @@
+@use "../../../../../styles/abstracts/breakpoints" as *;
+
 .dialog {
   &__backdrop {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 3;
   }
+
   &__content {
-    height: 86dvh;
-    width: 80dvw;
+    margin: 10px;
+    width: min(1212px, calc(100vw - 48px));
+    height: min(86dvh, calc(100dvh - 48px));
     border-radius: 15px;
     background: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
   &__header {
     display: flex;
@@ -26,5 +30,22 @@
     font-size: clamp(47px, 5vw, 61px);
     font-weight: 700;
     line-height: 1.2;
+  }
+
+  app-task-form {
+    display: block;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: $bp-md) {
+  .dialog {
+    &__content {
+      width: min(396px, calc(100vw - 20px));
+      max-height: 760px;
+      height: 100%;
+    }
   }
 }

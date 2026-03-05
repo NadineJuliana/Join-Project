@@ -249,6 +249,18 @@
 }
 
 @media (max-width: $bp-sm) {
+  .task-form-block {
+    min-width: 0;
+  }
+
+  .task-form-footer {
+    &__actions {
+      .btn {
+        padding-inline: clamp(6px, calc(10px - ($bp-sm - 100vw) * 0.08), 10px);
+      }
+    }
+  }
+
   .task-form-priority {
     flex-direction: column;
 
