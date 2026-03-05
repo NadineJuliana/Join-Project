@@ -4,6 +4,7 @@ import { Task } from '../../../tasks/models/task.model';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import { EllipsisPipe } from '../../../../shared/pipes/ellipsis.pipe';
 import { TasksService } from '../../../tasks/services/tasks.service';
+import { Subtask } from '../../../tasks/models/subtask.model';
 
 @Component({
   selector: 'app-detail-dialog',
@@ -39,5 +40,11 @@ export class DetailDialogComponent {
       case 'urgent':
         return 'icons/prio-icons/urgent_icon.svg';
     }
+  }
+
+  toggleSubtask(subtask: Subtask, event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+    subtask.completed = checked;
+    this.tasksService.updateSubtask(subtask);
   }
 }
