@@ -57,7 +57,7 @@
                 </div>
             </div>}
             @if (isEditMode()) {
-            <app-task-form></app-task-form>
+            <app-task-form [editTask]="task()"></app-task-form>
             }
         </div>
         @if (!isEditMode()) {

@@ -44,7 +44,10 @@ export class TaskFormComponent implements OnInit {
   private contactsService = inject(ContactsService, { optional: true });
   private tasksService = inject(TasksService);
   private toastService = inject(ToastsService);
+
+  taskUpdated = output<Task>();
   taskCreated = output<Task>();
+  editTask = input<Task | null>(null);
   status = input<TaskStatus>('to-do');
 
   form = this.formBuilder.nonNullable.group({
@@ -56,7 +59,7 @@ export class TaskFormComponent implements OnInit {
   });
 
   todayMinDate = this.getTodayMinDate();
-  maxDueDate = '9999-12-31';
+  maxDueDate = '2100-12-31';
   selectedPriority: Priority = 'medium';
   categoryOptions: Array<{ value: TaskCategory; label: string }> = [
     { value: 'technical-task', label: 'Technical Task' },
@@ -69,6 +72,9 @@ export class TaskFormComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     if (this.contactsService && !this.contactsService.contactsLoaded) {
       await this.contactsService.getAllContacts();
+    }
+    if (this.editTask()) {
+      this.formForEdit(this.editTask()!);
     }
   }
 
@@ -115,17 +121,18 @@ export class TaskFormComponent implements OnInit {
       this.markFormAsTouched();
       return;
     }
-    const task = this.createNewTask();
-    const savedTask = await this.tasksService.addTask(task);
-    await this.saveSubtasks(savedTask.id);
-    await this.saveAssignees(savedTask.id);
-    this.insertTaskIntoBoard(savedTask);
-    this.taskCreated.emit(savedTask);
-    this.clearTaskForm();
-    this.createToastMessage();
-    setTimeout(() => {
-      this.router.navigate(['/board']);
-    }, 500);
+    if (this.editTask()) {
+      await this.updateExistingTask(this.editTask()!);
+      this.taskUpdated.emit(this.editTask()!);
+    } else {
+      const newTask = await this.createNewTask();
+      this.taskCreated.emit(newTask);
+      this.clearTaskForm();
+      this.createToastMessage();
+      setTimeout(() => {
+        this.router.navigate(['/board']);
+      }, 500);
+    }
   }
 
   private markFormAsTouched(): void {
@@ -134,22 +141,36 @@ export class TaskFormComponent implements OnInit {
     );
   }
 
-  private createNewTask(): Task {
-    const category = this.form.value.category as
-      | 'technical-task'
-      | 'user-story'
-      | undefined;
-    return new Task({
+  async createNewTask(): Promise<Task> {
+    const task = new Task({
       title: this.form.value.title,
       description: this.form.value.description,
       due_date: this.form.value.dueDate,
-      category: category ?? 'user-story',
+      category: this.form.value.category as TaskCategory,
       status: this.status(),
       position: 0,
       priority: this.selectedPriority,
       subtasks: this.subtasks(),
       assignees: this.getSelectedAssignees(),
     });
+    const savedTask = await this.tasksService.addTask(task);
+    await this.saveSubtasks(savedTask.id);
+    await this.saveAssignees(savedTask.id);
+    this.insertTaskIntoBoard(savedTask);
+    return savedTask;
+  }
+
+  private async updateExistingTask(task: Task): Promise<void> {
+    task.title = this.form.value.title ?? '';
+    task.description = this.form.value.description ?? '';
+    task.due_date = this.form.value.dueDate ?? '';
+    task.priority = this.selectedPriority;
+    task.category = this.form.value.category as TaskCategory;
+    task.assignees = this.getSelectedAssignees();
+    task.subtasks = this.subtasks();
+    await this.tasksService.updateTask(task);
+    await this.saveSubtasks(task.id);
+    await this.saveAssignees(task.id);
   }
 
   private getSelectedAssignees() {
@@ -192,6 +213,18 @@ export class TaskFormComponent implements OnInit {
     const month = monthNumber < 10 ? `0${monthNumber}` : `${monthNumber}`;
     const day = dayNumber < 10 ? `0${dayNumber}` : `${dayNumber}`;
     return `${year}-${month}-${day}`;
+  }
+
+  private formForEdit(task: Task) {
+    this.form.patchValue({
+      title: task.title,
+      description: task.description,
+      dueDate: task.due_date,
+      category: task.category,
+      assigneeIds: task.assignees?.map((a) => String(a.id)) ?? [],
+    });
+    this.selectedPriority = task.priority;
+    this.subtasks.set(task.subtasks ?? []);
   }
 
   private notPastDateValidator(
