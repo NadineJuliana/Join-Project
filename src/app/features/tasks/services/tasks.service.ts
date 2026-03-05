@@ -106,7 +106,7 @@ export class TasksService {
     }
   }
 
-  private handleInsertTask(newData: Partial<Task>) {
+  handleInsertTask(newData: Partial<Task>) {
     const newTask = new Task(newData);
     this.tasks.update((list) => {
       const exists = list.some((t) => t.id === newTask.id);
@@ -146,7 +146,7 @@ export class TasksService {
     }
   }
 
-  private handleInsertSubtask(newData: Partial<Subtask>) {
+  handleInsertSubtask(newData: Partial<Subtask>) {
     const newSubtask = new Subtask(newData);
     const task = this.tasks().find((t) => t.id === newSubtask.task_id);
     if (!task) return;
@@ -195,7 +195,7 @@ export class TasksService {
     }
   }
 
-  private handleInsertAssignee(data: { task_id: number; contact_id: number }) {
+  handleInsertAssignee(data: { task_id: number; contact_id: number }) {
     const task = this.tasks().find((t) => t.id === data.task_id);
     if (!task) return;
     const contact = this.contactsService
@@ -248,9 +248,7 @@ export class TasksService {
       .insert(task.getCleanAddJson())
       .select();
     if (error) throw error;
-    const newTask = new Task(data[0]);
-    this.handleInsertTask(newTask);
-    return newTask;
+    return new Task(data[0]);
   }
 
   async updateTask(task: Task) {
