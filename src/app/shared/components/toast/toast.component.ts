@@ -14,10 +14,7 @@ export class ToastComponent {
     return this.toastService.toastList();
   }
 
-  //  constructor() {
-  //   this.toastService.showToast({
-  //     message: 'Contact successfully created',
-  //     classname: 'toast__success',
-  //     duration: 999999
-  //   });
+  get isCenterPosition(): boolean {
+    return this.toastList.some((t) => t.position === 'center');
+  }
 }

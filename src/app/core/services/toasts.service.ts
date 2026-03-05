@@ -4,6 +4,8 @@ export interface Toast {
   message: string;
   classname?: string;
   duration?: number;
+  icon?: string;
+  position?: 'bottom' | 'center';
 }
 
 @Injectable({

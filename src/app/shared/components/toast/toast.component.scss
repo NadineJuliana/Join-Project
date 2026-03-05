@@ -38,9 +38,30 @@
   pointer-events: none;
 }
 
+.toast__container-center {
+  top: 45%;
+  bottom: unset;
+  left: 50%;
+}
+
+.toast__icon {
+  width: 32px;
+  height: 32px;
+}
+
+.toast__added {
+  background: var(--primary);
+  min-width: 300px;
+  gap: 32px;
+}
+
 @media (max-width: $bp-md) {
   .toast__container {
     bottom: 10%;
+    left: 50%;
+  }
+  .toast__container-center {
+    top: 20%;
     left: 50%;
   }
 }

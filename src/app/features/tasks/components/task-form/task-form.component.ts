@@ -22,6 +22,7 @@ import { TaskFormSubtasksComponent } from './components/task-form-subtasks/task-
 import { TasksService } from '../../services/tasks.service';
 import { Task, TaskStatus } from '../../models/task.model';
 import { Router } from '@angular/router';
+import { ToastsService } from '../../../../core/services/toasts.service';
 
 type Priority = 'urgent' | 'medium' | 'low';
 type TaskCategory = 'technical-task' | 'user-story';
@@ -42,6 +43,7 @@ export class TaskFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private contactsService = inject(ContactsService, { optional: true });
   private tasksService = inject(TasksService);
+  private toastService = inject(ToastsService);
   taskCreated = output<Task>();
   status = input<TaskStatus>('to-do');
 
@@ -120,7 +122,10 @@ export class TaskFormComponent implements OnInit {
     this.insertTaskIntoBoard(savedTask);
     this.taskCreated.emit(savedTask);
     this.clearTaskForm();
-    this.router.navigate(['/board']);
+    this.createToastMessage();
+    setTimeout(() => {
+      this.router.navigate(['/board']);
+    }, 500);
   }
 
   private markFormAsTouched(): void {
@@ -211,5 +216,15 @@ export class TaskFormComponent implements OnInit {
     today.setHours(0, 0, 0, 0);
 
     return selectedDate < today ? { pastDate: true } : null;
+  }
+
+  private createToastMessage() {
+    this.toastService.showToast({
+      message: 'Task added to board',
+      classname: 'toast__added',
+      icon: 'icons/nav-icons/board_icon_gray.svg',
+      position: 'center',
+      duration: 1000,
+    });
   }
 }

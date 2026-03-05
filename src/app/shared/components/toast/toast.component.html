@@ -1,7 +1,13 @@
-<div class="toast__container">
+<div
+  class="toast__container"
+  [class.toast__container-center]="isCenterPosition"
+>
   @for (toast of toastList; track toast) {
     <div class="toast__message" [class]="toast.classname">
-      {{ toast.message }}
+      <span>{{ toast.message }}</span>
+      @if (toast.icon) {
+        <img class="toast__icon" [src]="toast.icon" alt="Board Icon" />
+      }
     </div>
   }
 </div>
