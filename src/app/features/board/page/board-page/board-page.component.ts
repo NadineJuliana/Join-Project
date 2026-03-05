@@ -1,3 +1,4 @@
+import { TaskDialogComponent } from './../../../tasks/components/task-dialog/task-dialog.component';
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
@@ -28,6 +29,7 @@ export interface BoardColumn {
     CapitalizePipe,
     ReactiveFormsModule,
     DetailDialogComponent,
+    TaskDialogComponent,
   ],
   templateUrl: './board-page.component.html',
   styleUrl: './board-page.component.scss',
@@ -37,6 +39,10 @@ export class BoardPageComponent {
   dbTaskService = inject(TasksService);
   activeDropListId: string | null = null;
   searchControl = new FormControl('');
+
+  showDetailDialog = signal(false);
+  selectedTask = signal<Task | null>(null); // Default ist die Task auf null
+  showAddTaskDialog = signal(false);
   searchResult = toSignal(this.searchControl.valueChanges, {
     initialValue: '',
   });
@@ -120,16 +126,25 @@ export class BoardPageComponent {
       );
   }
 
-  showDetailDialog = signal(false);
-  selectedTask = signal<Task | null>(null); // Default ist die Task auf null
-
-  openDetailDialog(task: Task) { 
-    this.selectedTask.set(task); // SelectedTask speichert die Task 
+  openDetailDialog(task: Task) {
+    this.selectedTask.set(task); // SelectedTask speichert die Task
     this.showDetailDialog.set(true); // Signal wird TRUE
   }
 
   closeDetailDialog() {
     this.showDetailDialog.set(false); // Signal wird FALSE
-    this.selectedTask.set(null); // SelectedTask wird auf null zurückgesetzt  
+    this.selectedTask.set(null); // SelectedTask wird auf null zurückgesetzt
+  }
+
+  openAddTaskDialog(): void {
+    this.showAddTaskDialog.set(true);
+  }
+
+  closeAddTaskDialog(): void {
+    this.showAddTaskDialog.set(false);
+  }
+
+  onTaskCreated(task: Task): void{
+    this.closeAddTaskDialog();
   }
 }

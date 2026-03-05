@@ -20,7 +20,7 @@
           <span class="material-icons">search</span>
         </button>
       </div>
-      <button class="btn btn--primary">
+      <button (click)="openAddTaskDialog()" class="btn btn--primary">
         <p>Add Task</p>
         <span class="material-icons">add</span>
       </button>
@@ -137,3 +137,7 @@
   ></app-detail-dialog>
 }
 <!-- selectedTask übergibt die gespeicherte Task an die detail-dialog Komponenten-->
+
+@if (showAddTaskDialog()){
+  <app-task-dialog (dialogClosed)=" closeAddTaskDialog()"  (taskCreated)="onTaskCreated($event)"></app-task-dialog>
+}
