@@ -117,11 +117,7 @@ export class TaskFormComponent implements OnInit {
     const savedTask = await this.tasksService.addTask(task);
     await this.saveSubtasks(savedTask.id);
     await this.saveAssignees(savedTask.id);
-    this.tasksService.handleInsertTask({
-      ...savedTask,
-      subtasks: this.subtasks(),
-      assignees: this.getSelectedAssignees(),
-    });
+    this.insertTaskIntoBoard(savedTask);
     this.taskCreated.emit(savedTask);
     this.clearTaskForm();
     this.router.navigate(['/board']);
@@ -173,6 +169,14 @@ export class TaskFormComponent implements OnInit {
         await this.tasksService.addAssignee(taskId, assignee.id);
       }),
     );
+  }
+
+  private insertTaskIntoBoard(task: Task): void {
+    this.tasksService.handleInsertTask({
+      ...task,
+      subtasks: this.subtasks(),
+      assignees: this.getSelectedAssignees(),
+    });
   }
 
   private getTodayMinDate(): string {
