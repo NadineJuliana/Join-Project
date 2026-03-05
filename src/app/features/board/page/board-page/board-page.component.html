@@ -98,7 +98,7 @@
                 <div class="board__card-tools-second">
                   <div class="board__card-container-initials">
                     @for (
-                      assignee of (task.assignees ?? []).slice(0, 5);
+                      assignee of (task.assignees ?? []).slice(0, 3);
                       track assignee.id
                     ) {
                       <div
@@ -108,9 +108,9 @@
                         <p>{{ assignee.name | initials }}</p>
                       </div>
                     }
-                    @if ((task.assignees?.length ?? 0) > 5) {
+                    @if ((task.assignees?.length ?? 0) > 3) {
                       <div class="board__card-initials-more">
-                        <p>+{{ (task.assignees?.length ?? 0) - 5 }}</p>
+                        <p>+{{ (task.assignees?.length ?? 0) - 3 }}</p>
                       </div>
                     }
                   </div>
