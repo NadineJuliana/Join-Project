@@ -10,6 +10,13 @@
   padding: 0 !important;
 }
 
+::ng-deep .task-form-footer{
+  position: sticky !important;
+  bottom: 0 !important;
+  background-color: white !important;
+  border-top: solid 20px white !important;
+}
+
 //------------  Detail Window
 section {
   position: fixed;
