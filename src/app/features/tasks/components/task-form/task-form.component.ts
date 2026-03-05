@@ -117,6 +117,11 @@ export class TaskFormComponent implements OnInit {
     const savedTask = await this.tasksService.addTask(task);
     await this.saveSubtasks(savedTask.id);
     await this.saveAssignees(savedTask.id);
+    this.tasksService.handleInsertTask({
+      ...savedTask,
+      subtasks: this.subtasks(),
+      assignees: this.getSelectedAssignees(),
+    });
     this.taskCreated.emit(savedTask);
     this.clearTaskForm();
     this.router.navigate(['/board']);
