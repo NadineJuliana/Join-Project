@@ -1,4 +1,6 @@
 .task-form-assignees {
+  position: relative;
+
   &__trigger {
     width: 100%;
     min-height: 50px;
@@ -82,7 +84,11 @@
   }
 
   &__dropdown {
-    margin-top: 8px;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 20;
     max-height: 248px;
     overflow-y: auto;
     background: var(--white);

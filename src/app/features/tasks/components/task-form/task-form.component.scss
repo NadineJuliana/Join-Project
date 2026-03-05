@@ -5,8 +5,9 @@
   flex-wrap: wrap;
   width: 100%;
   max-width: calc($bp-xl - 232px);
-  gap: clamp(12px, calc(48px - ($bp-xl - 100vw) * 0.06), 48px);
-  padding: 0 clamp(16px, calc(88px - ($bp-xl - 100vw) * 0.12), 88px) 50px
+  column-gap: clamp(12px, calc(48px - ($bp-xl - 100vw) * 0.06), 48px);
+  row-gap: 16px;
+  padding: 0 clamp(16px, calc(88px - ($bp-xl - 100vw) * 0.12), 88px) 20px
     clamp(16px, calc(64px - ($bp-xl - 100vw) * 0.09), 64px);
 }
 
@@ -215,7 +216,7 @@
 
 @media (max-width: $bp-lg) {
   .task-form-layout {
-    gap: clamp(8px, calc(48px - ($bp-lg - 100vw) * 0.12), 48px);
+    column-gap: clamp(8px, calc(48px - ($bp-lg - 100vw) * 0.12), 48px);
     padding: 0 clamp(12px, calc(88px - ($bp-lg - 100vw) * 0.28), 88px) 50px
       clamp(12px, calc(64px - ($bp-lg - 100vw) * 0.2), 64px);
   }
@@ -232,7 +233,9 @@
   .task-form-block--separator {
     display: none;
   }
+}
 
+@media (max-width: $bp-md) {
   .task-form-footer {
     flex-direction: column;
     align-items: flex-start;
@@ -240,7 +243,7 @@
     &__actions {
       width: 100%;
       justify-content: flex-end;
-      gap: clamp(6px, calc(16px - ($bp-lg - 100vw) * 0.03), 16px);
+      gap: clamp(6px, calc(16px - ($bp-md - 100vw) * 0.03), 16px);
     }
   }
 }
