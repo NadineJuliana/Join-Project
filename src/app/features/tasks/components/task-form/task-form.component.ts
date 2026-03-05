@@ -20,6 +20,7 @@ import { TaskFormCategoryComponent } from './components/task-form-category/task-
 import { TaskFormSubtasksComponent } from './components/task-form-subtasks/task-form-subtasks.component';
 import { TasksService } from '../../services/tasks.service';
 import { Task } from '../../models/task.model';
+import { Router } from '@angular/router';
 
 type Priority = 'urgent' | 'medium' | 'low';
 type TaskCategory = 'technical-task' | 'user-story';
@@ -36,6 +37,7 @@ type TaskCategory = 'technical-task' | 'user-story';
   styleUrl: './task-form.component.scss',
 })
 export class TaskFormComponent implements OnInit {
+  private router = inject(Router);
   private formBuilder = inject(FormBuilder);
   private contactsService = inject(ContactsService, { optional: true });
   private tasksService = inject(TasksService);
@@ -115,6 +117,7 @@ export class TaskFormComponent implements OnInit {
     await this.saveAssignees(savedTask.id);
     this.taskCreated.emit(savedTask);
     this.clearTaskForm();
+    this.router.navigate(['/board']);
   }
 
   private markFormAsTouched(): void {
