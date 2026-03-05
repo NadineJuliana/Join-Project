@@ -11,6 +11,7 @@ import { CapitalizePipe } from '../../../../shared/pipes/capitalize.pipe';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DetailDialogComponent } from '../../components/detail-dialog/detail-dialog.component';
+import { Subtask } from '../../../tasks/models/subtask.model';
 
 // Interface - Definiert die Struktur einer Spalte
 export interface BoardColumn {
@@ -58,28 +59,26 @@ export class BoardPageComponent {
   doneTasksFiltered = computed(() => this.filterTasksByStatus('done'));
 
   async ngOnInit() {
-    await this.dbContactService.getAllContacts();
-    await this.dbTaskService.initialize();
     this.dbContactService.initRealtime();
     this.dbTaskService.initRealtime();
+    await this.dbContactService.getAllContacts();
+    await this.dbTaskService.initialize();
   }
 
-  get boardColumns(): BoardColumn[] {
-    return [
-      { id: 'to-do', title: 'To Do', tasks: this.toDoTasksFiltered() },
-      {
-        id: 'in-progress',
-        title: 'In Progress',
-        tasks: this.inProgressTasksFiltered(),
-      },
-      {
-        id: 'await-feedback',
-        title: 'Await Feedback',
-        tasks: this.awaitFeedbackTasksFiltered(),
-      },
-      { id: 'done', title: 'Done', tasks: this.doneTasksFiltered() },
-    ];
-  }
+  boardColumns = computed<BoardColumn[]>(() => [
+    { id: 'to-do', title: 'To Do', tasks: this.toDoTasksFiltered() },
+    {
+      id: 'in-progress',
+      title: 'In Progress',
+      tasks: this.inProgressTasksFiltered(),
+    },
+    {
+      id: 'await-feedback',
+      title: 'Await Feedback',
+      tasks: this.awaitFeedbackTasksFiltered(),
+    },
+    { id: 'done', title: 'Done', tasks: this.doneTasksFiltered() },
+  ]);
 
   drop(event: CdkDragDrop<Task[]>) {
     const task = event.item.data as Task;
@@ -146,14 +145,6 @@ export class BoardPageComponent {
     this.showAddTaskDialog.set(false);
   }
 
-  // async onTaskCreated(task: Task): Promise<void> {
-  //   this.closeAddTaskDialog();
-  //   await this.dbTaskService.addTask(task);
-  //   await Promise.all([
-  //     this.dbTaskService.loadSubtasks(),
-  //     this.dbTaskService.loadAssignees(),
-  //   ]);
-  // }
   onTaskCreated(task: Task): void {
     this.closeAddTaskDialog();
   }
