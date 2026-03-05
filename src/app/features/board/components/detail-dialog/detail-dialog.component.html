@@ -1,16 +1,20 @@
 <section (click)="onClose()">
     <div class="card-detail" (click)="$event.stopPropagation()">
-        @if (!isEditMode()) {
         <div class="card-detail__header">
+            @if (!isEditMode()) {
             <div [style.backgroundColor]="task().categoryColor" class="card-detail__category">
                 <p>{{ task().category | capitalize }}</p>
             </div>
+            }
             <button (click)="onClose()">
                 <span class="material-icons">close</span>
             </button>
         </div>
+        @if (!isEditMode()) {
         <h1>{{ task().title | ellipsis: 38 }}</h1>
+        }
         <div class="card-detail__container">
+            @if (!isEditMode()) {
             <h5>{{ task().description }}</h5>
             <div class="card-detail__due-date">
                 <h5><span>Due date:</span></h5>
@@ -51,16 +55,16 @@
                     </label>
                     }
                 </div>
-            </div>
+            </div>}
+            @if (isEditMode()) {
+            <app-task-form></app-task-form>
+            }
         </div>
-        <div class="card-detail__edits">
+        <div class="card-detail__footer">
             <button (click)="deleteTask()">
                 <span class="material-icons">delete</span>Delete
             </button>
             <button (click)="onEdit()"><span class="material-icons">edit</span>Edit</button>
         </div>
-        } @else {
-        <app-task-form></app-task-form>
-        }
     </div>
 </section>

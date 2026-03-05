@@ -6,6 +6,10 @@
   display: none !important;
 }
 
+::ng-deep .task-form-layout {
+  padding: 0 !important;
+}
+
 //------------  Detail Window
 section {
   position: fixed;
@@ -43,10 +47,18 @@ section {
     flex-direction: column;
     gap: 24px;
     overflow-y: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
   }
   &__header {
     display: flex;
     justify-content: space-between;
+    button {
+      margin-left: auto;
+    }
   }
   &__category {
     padding: 4px 16px;
@@ -93,7 +105,7 @@ section {
       gap: 10px;
     }
   }
-  &__edits {
+  &__footer {
     display: flex;
     justify-content: end;
     gap: 16px;
@@ -104,7 +116,7 @@ section {
       gap: 8px;
     }
   }
-  &__subtasks-container {
+  &__subtasks-innercontainer {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -132,7 +144,7 @@ section {
   &__subtasks-item-icon {
     color: var(--primary);
     user-select: none;
-    
+
     &--empty {
       display: inline;
     }
@@ -142,11 +154,13 @@ section {
   }
 }
 
-.card-detail__subtasks-item-checkbox:checked ~ .card-detail__subtasks-item-icon--empty {
+.card-detail__subtasks-item-checkbox:checked
+  ~ .card-detail__subtasks-item-icon--empty {
   display: none;
 }
 
-.card-detail__subtasks-item-checkbox:checked ~ .card-detail__subtasks-item-icon--checked {
+.card-detail__subtasks-item-checkbox:checked
+  ~ .card-detail__subtasks-item-icon--checked {
   display: inline;
 }
 
