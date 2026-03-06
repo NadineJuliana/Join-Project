@@ -36,7 +36,13 @@
       border: solid 1px var(--gray);
       padding: 8px 16px;
       border-radius: 10px;
-
+      &:focus-within {
+        outline: 1px solid var(--accent);
+        border-color: var(--accent);
+        .serch-icon span {
+          color: var(--accent);
+        }
+      }
       input {
         border: none;
         height: 100%;
@@ -53,6 +59,15 @@
       background-color: var(--lightgray);
       width: 1px;
       height: 32px;
+    }
+    .serch-icon {
+      span {
+        padding: 3px;
+      }
+      :hover {
+        background-color: var(--lightgray);
+        border-radius: 100%;
+      }
     }
   }
 
@@ -231,7 +246,6 @@
       max-height: 12px;
     }
   }
-
   .progress-container {
     height: 8px;
     width: 110px;
