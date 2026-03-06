@@ -12,6 +12,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DetailDialogComponent } from '../../components/detail-dialog/detail-dialog.component';
 import { Subtask } from '../../../tasks/models/subtask.model';
+import { Router } from '@angular/router';
 
 // Interface - Definiert die Struktur einer Spalte
 export interface BoardColumn {
@@ -38,9 +39,11 @@ export interface BoardColumn {
 export class BoardPageComponent {
   dbContactService = inject(ContactsService);
   dbTaskService = inject(TasksService);
+  router = inject(Router);
   activeDropListId: string | null = null;
   searchControl = new FormControl('');
 
+  isMobile = signal(false);
   showDetailDialog = signal(false);
   selectedTask = signal<Task | null>(null); // Default ist die Task auf null
   showAddTaskDialog = signal(false);
@@ -59,6 +62,7 @@ export class BoardPageComponent {
   doneTasksFiltered = computed(() => this.filterTasksByStatus('done'));
 
   async ngOnInit() {
+    this.setupMobileDetection();
     this.dbContactService.initRealtime();
     this.dbTaskService.initRealtime();
     await this.dbContactService.getAllContacts();
@@ -126,6 +130,16 @@ export class BoardPageComponent {
       );
   }
 
+  private setupMobileDetection() {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+
+    this.isMobile.set(mediaQuery.matches);
+
+    mediaQuery.addEventListener('change', (event) => {
+      this.isMobile.set(event.matches);
+    });
+  }
+
   openDetailDialog(task: Task) {
     this.selectedTask.set(task); // SelectedTask speichert die Task
     this.showDetailDialog.set(true); // Signal wird TRUE
@@ -137,6 +151,12 @@ export class BoardPageComponent {
   }
 
   openAddTaskDialog(status: TaskStatus = 'to-do'): void {
+    if (this.isMobile()) {
+      this.router.navigate(['/add-task'], {
+        queryParams: { status },
+      });
+      return;
+    }
     this.addTaskStatus.set(status);
     this.showAddTaskDialog.set(true);
   }
