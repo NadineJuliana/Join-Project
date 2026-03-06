@@ -236,7 +236,6 @@ export class TasksService {
       .select('*')
       .order('position', { ascending: true });
     if (error) throw error;
-    console.log('Tasks loaded', data);
     this.tasks.set((data || []).map((t) => new Task(t)));
     this.tasksLoaded = true;
   }
@@ -298,7 +297,6 @@ export class TasksService {
       .from('Subtasks')
       .select('*');
     if (error) throw error;
-    console.log('Subtasks loaded', data);
     (data || []).forEach((subtaskData) => {
       this.handleInsertSubtask(subtaskData);
     });
@@ -337,7 +335,6 @@ export class TasksService {
       .from('Assignees')
       .select('*');
     if (error) throw error;
-    console.log('Assignees loaded', data);
     (data || []).forEach((entry) => {
       this.handleInsertAssignee(entry);
     });
