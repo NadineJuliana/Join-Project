@@ -10,7 +10,7 @@
   padding: 0 !important;
 }
 
-::ng-deep .task-form-footer{
+::ng-deep .task-form-footer {
   position: sticky !important;
   bottom: 0 !important;
   background-color: white !important;
@@ -122,6 +122,9 @@ section {
     button {
       color: var(--primary);
       gap: 8px;
+      &:hover {
+        color: var(--accent);
+      }
     }
   }
   &__subtasks-innercontainer {
@@ -140,6 +143,10 @@ section {
     align-items: center;
     cursor: pointer;
     position: relative;
+    border-radius: 10px;
+    &:hover {
+      background-color: var(--blue-hover);
+    }
   }
   &__subtasks-item-checkbox {
     position: absolute;
@@ -159,6 +166,26 @@ section {
     &--checked {
       display: none;
     }
+    &:hover {
+      background-color: var(--gray);
+      border-radius: 8px;
+    }
+  }
+}
+
+.span-between{
+  width: 1px;
+  height: 20px;
+  background-color: var(--gray);
+}
+
+.close-detail {
+  span {
+    padding: 3px;
+  }
+  span:hover {
+    background-color: var(--blue-hover);
+    border-radius: 100%;
   }
 }
 

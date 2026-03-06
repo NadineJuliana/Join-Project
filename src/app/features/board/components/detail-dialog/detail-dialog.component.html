@@ -6,7 +6,7 @@
                 <p>{{ task().category | capitalize }}</p>
             </div>
             }
-            <button (click)="onClose()">
+            <button class="close-detail" (click)="onClose()">
                 <span class="material-icons">close</span>
             </button>
         </div>
@@ -65,6 +65,7 @@
             <button (click)="deleteTask()">
                 <span class="material-icons">delete</span>Delete
             </button>
+            <span class="span-between"></span>
             <button (click)="onEdit()"><span class="material-icons">edit</span>Edit</button>
         </div>}
     </div>
