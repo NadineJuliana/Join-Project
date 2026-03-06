@@ -110,6 +110,14 @@
         background: transparent;
         cursor: pointer;
         color: var(--primary);
+
+        .material-icons {
+          color: inherit;
+        }
+
+        &:hover {
+          color: var(--accent);
+        }
       }
     }
   }
