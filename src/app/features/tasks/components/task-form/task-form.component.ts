@@ -122,8 +122,9 @@ export class TaskFormComponent implements OnInit {
       return;
     }
     if (this.editTask()) {
-      await this.updateExistingTask(this.editTask()!);
-      this.taskUpdated.emit(this.editTask()!);
+       const task = this.editTask()!;
+      await this.updateExistingTask(task);
+      this.taskUpdated.emit(task);
     } else {
       const newTask = await this.createNewTask();
       this.taskCreated.emit(newTask);

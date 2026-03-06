@@ -191,6 +191,7 @@
     <div class="task-form-field">
       <h5><label for="task-subtasks">Subtasks</label></h5>
       <app-task-form-subtasks
+        [subtasksExisting]="subtasks()"
         [resetTrigger]="subtasksResetTrigger"
         (subtasksChange)="onSubtasksChange($event)"
       ></app-task-form-subtasks>

@@ -18,6 +18,7 @@ import { Subtask } from '../../../../models/subtask.model';
 export class TaskFormSubtasksComponent implements OnChanges {
   resetTrigger = input(0);
   subtasksChange = output<Subtask[]>();
+  subtasksExisting = input<Subtask[]>();
 
   subtaskDraft = signal('');
   subtasks = signal<Subtask[]>([]);
@@ -26,14 +27,16 @@ export class TaskFormSubtasksComponent implements OnChanges {
   editingSubtaskDraft = signal('');
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['subtasksExisting'] && changes['subtasksExisting'].currentValue) {
+      this.subtasks.set([...changes['subtasksExisting'].currentValue]);
+      this.emitSubtasks();
+    }
     if (!changes['resetTrigger']) {
       return;
     }
-
     if (changes['resetTrigger'].firstChange) {
       return;
     }
-
     this.subtasks.set([]);
     this.resetSubtaskInput();
     this.finishSubtaskEdit();
