@@ -57,7 +57,7 @@
                 </div>
             </div>}
             @if (isEditMode()) {
-            <app-task-form [editTask]="task()"></app-task-form>
+            <app-task-form [editTask]="task()" (taskUpdated)="onTaskUpdated($event)"></app-task-form>
             }
         </div>
         @if (!isEditMode()) {

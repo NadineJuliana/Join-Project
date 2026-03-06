@@ -9,7 +9,13 @@ import { TaskFormComponent } from '../../../tasks/components/task-form/task-form
 
 @Component({
   selector: 'app-detail-dialog',
-  imports: [CapitalizePipe, InitialsPipe, CapitalizePipe, EllipsisPipe, TaskFormComponent],
+  imports: [
+    CapitalizePipe,
+    InitialsPipe,
+    CapitalizePipe,
+    EllipsisPipe,
+    TaskFormComponent,
+  ],
   templateUrl: './detail-dialog.component.html',
   styleUrl: './detail-dialog.component.scss',
 })
@@ -39,6 +45,10 @@ export class DetailDialogComponent {
     } catch (error) {
       console.error('Fehler beim Löschen der Task:', error);
     }
+  }
+
+  onTaskUpdated(updatedTask: Task) {
+    this.isEditMode.set(false);
   }
 
   getPriorityIcon(priority: 'low' | 'medium' | 'urgent') {
