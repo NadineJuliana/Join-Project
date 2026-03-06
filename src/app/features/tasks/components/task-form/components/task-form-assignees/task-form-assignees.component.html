@@ -103,13 +103,21 @@
 
   @if (getSelectedAssigneeContacts().length > 0) {
     <div class="task-form-assignees__selected" aria-label="Selected contacts">
-      @for (contact of getSelectedAssigneeContacts(); track contact.id) {
+      @for (
+        contact of getSelectedAssigneeContacts().slice(0, 5);
+        track contact.id
+      ) {
         <div
           class="task-form-assignees__selected-avatar"
           [style.backgroundColor]="contact.color"
           [attr.title]="contact.name"
         >
           <p>{{ contact.name | initials }}</p>
+        </div>
+      }
+      @if (getSelectedAssigneeContacts().length > 5) {
+        <div class="task-form-assignees__selected-avatar-more">
+          <p>+{{ getSelectedAssigneeContacts().length - 5 }}</p>
         </div>
       }
     </div>

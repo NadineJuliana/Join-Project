@@ -177,5 +177,17 @@
     &:first-child {
       margin-left: 0;
     }
+    &-more {
+      background: var(--gray);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--white);
+      height: 32px;
+      width: 32px;
+      border-radius: 100%;
+      border: solid 1px var(--white);
+      margin-left: -10px;
+    }
   }
 }
