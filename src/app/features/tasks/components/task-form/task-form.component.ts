@@ -69,6 +69,7 @@ export class TaskFormComponent implements OnInit {
   subtasks = signal<Subtask[]>([]);
   isEditMode = signal(false);
   subtasksResetTrigger = 0;
+  isSubmitting = false;
 
   async ngOnInit(): Promise<void> {
     if (this.contactsService && !this.contactsService.contactsLoaded) {
@@ -122,6 +123,7 @@ export class TaskFormComponent implements OnInit {
       this.markFormAsTouched();
       return;
     }
+    this.isSubmitting = true;
     if (this.editTask()) {
       const task = this.editTask()!;
       await this.submitEditTask(this.editTask()!);
@@ -136,6 +138,7 @@ export class TaskFormComponent implements OnInit {
         this.router.navigate(['/board']);
       }, 500);
     }
+    this.isSubmitting = false;
   }
 
   private markFormAsTouched(): void {
