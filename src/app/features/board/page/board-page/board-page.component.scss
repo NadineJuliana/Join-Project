@@ -101,6 +101,12 @@
       button {
         border: solid 2px var(--primary);
         border-radius: 8px;
+        color: var(--primary);
+
+        &:hover {
+          border-color: var(--accent);
+          color: var(--accent);
+        }
       }
     }
     .kanban__container:last-of-type .kanban__headline button {
