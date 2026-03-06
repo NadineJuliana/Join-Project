@@ -141,6 +141,12 @@
     cursor: grab;
     max-width: 252px;
     width: 100%;
+    &.cdk-drag-preview {
+      rotate: 5grad;
+    }
+    &.cdk-drag-placeholder {
+      opacity: 0.5;
+    }
   }
   &__card-category {
     padding: 4px 12px;
