@@ -213,7 +213,7 @@ export class TasksService {
     this.updateTaskSignal(task);
   }
 
-  private updateTaskSignal(updatedTask: Task) {
+  updateTaskSignal(updatedTask: Task) {
     this.tasks.update((list) =>
       list.map((t) => (t.id === updatedTask.id ? updatedTask : t)),
     );

@@ -67,6 +67,7 @@ export class TaskFormComponent implements OnInit {
   ];
   contacts = computed(() => this.contactsService?.contacts() ?? []);
   subtasks = signal<Subtask[]>([]);
+  isEditMode = signal(false);
   subtasksResetTrigger = 0;
 
   async ngOnInit(): Promise<void> {
@@ -122,11 +123,12 @@ export class TaskFormComponent implements OnInit {
       return;
     }
     if (this.editTask()) {
-       const task = this.editTask()!;
-      await this.updateExistingTask(task);
-      this.taskUpdated.emit(task);
+      const task = this.editTask()!;
+      await this.submitEditTask(this.editTask()!);
+      this.isEditMode.set(false);
     } else {
       const newTask = await this.createNewTask();
+      this.refreshTaskOnBoard(newTask);
       this.taskCreated.emit(newTask);
       this.clearTaskForm();
       this.createToastMessage();
@@ -157,21 +159,8 @@ export class TaskFormComponent implements OnInit {
     const savedTask = await this.tasksService.addTask(task);
     await this.saveSubtasks(savedTask.id);
     await this.saveAssignees(savedTask.id);
-    this.insertTaskIntoBoard(savedTask);
+    this.tasksService.handleInsertTask(savedTask);
     return savedTask;
-  }
-
-  private async updateExistingTask(task: Task): Promise<void> {
-    task.title = this.form.value.title ?? '';
-    task.description = this.form.value.description ?? '';
-    task.due_date = this.form.value.dueDate ?? '';
-    task.priority = this.selectedPriority;
-    task.category = this.form.value.category as TaskCategory;
-    task.assignees = this.getSelectedAssignees();
-    task.subtasks = this.subtasks();
-    await this.tasksService.updateTask(task);
-    await this.saveSubtasks(task.id);
-    await this.saveAssignees(task.id);
   }
 
   private getSelectedAssignees() {
@@ -180,30 +169,82 @@ export class TaskFormComponent implements OnInit {
   }
 
   private async saveSubtasks(taskId: number) {
-    const subtasks = this.subtasks();
-    await Promise.all(
-      subtasks.map(async (subtask) => {
-        subtask.task_id = taskId;
+    for (const subtask of this.subtasks()) {
+      subtask.task_id = taskId;
+      if (!subtask.id) {
         await this.tasksService.addSubtask(subtask);
-      }),
-    );
+      } else {
+        await this.tasksService.updateSubtask(subtask);
+      }
+    }
   }
 
   private async saveAssignees(taskId: number) {
     const assignees = this.getSelectedAssignees();
-    await Promise.all(
-      assignees.map(async (assignee) => {
+    for (const assignee of assignees) {
+      const task = this.editTask();
+      const alreadyAssigned = task?.assignees?.some(
+        (a) => a.id === assignee.id,
+      );
+      if (!alreadyAssigned) {
         await this.tasksService.addAssignee(taskId, assignee.id);
-      }),
-    );
+      }
+    }
   }
 
-  private insertTaskIntoBoard(task: Task): void {
+  private async submitEditTask(task: Task): Promise<void> {
+    this.updateTaskBasicInfo(task);
+    await this.updateTaskAssignees(task);
+    await this.updateTaskSubtasks(task);
+    await this.tasksService.updateTask(task);
+    this.refreshTaskOnBoard(task);
+    this.taskUpdated.emit(task);
+    this.isEditMode.set(false);
+  }
+
+  private refreshTaskOnBoard(task: Task): void {
     this.tasksService.handleInsertTask({
       ...task,
       subtasks: this.subtasks(),
       assignees: this.getSelectedAssignees(),
     });
+  }
+
+  private updateTaskBasicInfo(task: Task): void {
+    task.title = this.form.value.title ?? '';
+    task.description = this.form.value.description ?? '';
+    task.due_date = this.form.value.dueDate ?? '';
+    task.priority = this.selectedPriority;
+    task.category = this.form.value.category as TaskCategory;
+  }
+
+  private async updateTaskAssignees(task: Task): Promise<void> {
+    const selectedAssignees = this.getSelectedAssignees();
+    const existingIds = task.assignees?.map((a) => a.id) ?? [];
+    for (const assignee of selectedAssignees) {
+      if (!existingIds.includes(assignee.id)) {
+        await this.tasksService.addAssignee(task.id, assignee.id);
+      }
+    }
+    for (const oldAssignee of task.assignees ?? []) {
+      if (!selectedAssignees.some((a) => a.id === oldAssignee.id)) {
+        await this.tasksService.removeAssignee(task.id, oldAssignee.id);
+      }
+    }
+    task.assignees = [...selectedAssignees];
+  }
+
+  private async updateTaskSubtasks(task: Task): Promise<void> {
+    const existingIds = task.subtasks?.map((s) => s.id) ?? [];
+    for (const subtask of this.subtasks()) {
+      if (!subtask.id) {
+        subtask.task_id = task.id;
+        await this.tasksService.addSubtask(subtask);
+      } else {
+        await this.tasksService.updateSubtask(subtask);
+      }
+    }
+    task.subtasks = [...this.subtasks()];
   }
 
   private getTodayMinDate(): string {
