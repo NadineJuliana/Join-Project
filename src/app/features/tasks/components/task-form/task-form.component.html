@@ -198,24 +198,34 @@
   </section>
 
   <section class="task-form-footer">
-    <p class="task-form-footer__required-note">
-      <span class="required">*</span>This field is required
-    </p>
+    @if (!editTask()) {
+      <p class="task-form-footer__required-note">
+        <span class="required">*</span>This field is required
+      </p>
 
-    <div class="task-form-footer__actions">
-      <button
-        type="button"
-        class="btn btn--secondary"
-        (click)="clearTaskForm()"
-      >
-        Clear
-        <span class="material-icons" aria-hidden="true">close</span>
-      </button>
+      <div class="task-form-footer__actions">
+        <button
+          type="button"
+          class="btn btn--secondary"
+          (click)="clearTaskForm()"
+        >
+          Clear
+          <span class="material-icons" aria-hidden="true">close</span>
+        </button>
 
-      <button type="button" class="btn btn--primary" (click)="submitTask()">
-        Create Task
-        <span class="material-icons" aria-hidden="true">check</span>
-      </button>
-    </div>
+        <button type="button" class="btn btn--primary" (click)="submitTask()">
+          Create Task
+          <span class="material-icons" aria-hidden="true">check</span>
+        </button>
+      </div>
+    }
+    @if (editTask()) {
+      <div class="task-form-footer__actions">
+        <button type="button" class="btn btn--primary" (click)="submitTask()">
+          Ok
+          <span class="material-icons">check</span>
+        </button>
+      </div>
+    }
   </section>
 </div>
