@@ -1,7 +1,13 @@
 import { TaskDialogComponent } from './../../../tasks/components/task-dialog/task-dialog.component';
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { TasksService } from '../../../tasks/services/tasks.service';
 import { ContactsService } from '../../../contacts/services/contacts.service';
 import { Task, TaskStatus } from '../../../tasks/models/task.model';
@@ -19,6 +25,11 @@ export interface BoardColumn {
   id: TaskStatus;
   title: string;
   tasks: Task[];
+}
+
+interface MoveTarget {
+  id: TaskStatus;
+  title: string;
 }
 
 @Component({
@@ -48,9 +59,15 @@ export class BoardPageComponent {
   selectedTask = signal<Task | null>(null); // Default ist die Task auf null
   showAddTaskDialog = signal(false);
   addTaskStatus = signal<TaskStatus>('to-do');
+  openCategoryMenuTaskId = signal<number | null>(null);
   searchResult = toSignal(this.searchControl.valueChanges, {
     initialValue: '',
   });
+
+  @HostListener('document:click')
+  onDocumentClick(): void {
+    this.openCategoryMenuTaskId.set(null);
+  }
 
   toDoTasksFiltered = computed(() => this.filterTasksByStatus('to-do'));
   inProgressTasksFiltered = computed(() =>
@@ -167,5 +184,55 @@ export class BoardPageComponent {
 
   onTaskCreated(task: Task): void {
     this.closeAddTaskDialog();
+  }
+
+  toggleTaskCategoryMenu(taskId: number, event: MouseEvent): void {
+    event.stopPropagation();
+    this.openCategoryMenuTaskId.update((currentTaskId) =>
+      currentTaskId === taskId ? null : taskId,
+    );
+  }
+
+  isTaskCategoryMenuOpen(taskId: number): boolean {
+    return this.openCategoryMenuTaskId() === taskId;
+  }
+
+  getMoveTargets(task: Task): MoveTarget[] {
+    return this.boardColumns()
+      .filter((column) => column.id !== task.status)
+      .map((column) => ({ id: column.id, title: column.title }));
+  }
+
+  async moveTaskToStatus(
+    task: Task,
+    targetStatus: TaskStatus,
+    event: MouseEvent,
+  ): Promise<void> {
+    event.stopPropagation();
+
+    if (task.status === targetStatus) {
+      this.openCategoryMenuTaskId.set(null);
+      return;
+    }
+
+    const targetColumn = this.boardColumns().find(
+      (column) => column.id === targetStatus,
+    );
+    if (!targetColumn) {
+      this.openCategoryMenuTaskId.set(null);
+      return;
+    }
+
+    const targetTasks = [
+      ...targetColumn.tasks.filter((t) => t.id !== task.id),
+      task,
+    ];
+    await this.dbTaskService.moveTaskAndReorder(
+      task,
+      targetTasks,
+      targetStatus,
+    );
+    this.dbTaskService.updateTaskSignal(task);
+    this.openCategoryMenuTaskId.set(null);
   }
 }

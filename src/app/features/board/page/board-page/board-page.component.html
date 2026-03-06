@@ -33,7 +33,9 @@
       <div class="kanban__container">
         <div class="kanban__headline">
           <h3>{{ column.title }}</h3>
-          <button (click)="openAddTaskDialog(column.id)"><span class="material-icons">add</span></button>
+          <button (click)="openAddTaskDialog(column.id)">
+            <span class="material-icons">add</span>
+          </button>
         </div>
 
         <!-- Das ist der Drop-Container für eine Spalte -->
@@ -66,11 +68,45 @@
               [cdkDragDisabled]="isMobile()"
               class="board__card-container"
             >
-              <div
-                [style.backgroundColor]="task.categoryColor"
-                class="board__card-category"
-              >
-                <p>{{ task.category | capitalize }}</p>
+              <div class="board__card-header">
+                <div
+                  [style.backgroundColor]="task.categoryColor"
+                  class="board__card-category"
+                >
+                  <p>{{ task.category | capitalize }}</p>
+                </div>
+                <button
+                  type="button"
+                  class="board__card-category-swap"
+                  aria-label="Swap task category"
+                  (click)="toggleTaskCategoryMenu(task.id, $event)"
+                >
+                  <svg
+                    class="board__card-category-swap-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M7 4v14m0 0l-4-4m4 4l4-4M17 20V6m0 0l-4 4m4-4l4 4"
+                    />
+                  </svg>
+                </button>
+                @if (isTaskCategoryMenuOpen(task.id)) {
+                  <div
+                    class="board__card-category-menu"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <h5>Move to</h5>
+                    @for (target of getMoveTargets(task); track target.id) {
+                      <button
+                        type="button"
+                        (click)="moveTaskToStatus(task, target.id, $event)"
+                      >
+                        {{ target.title }}
+                      </button>
+                    }
+                  </div>
+                }
               </div>
               <div class="board__card-content">
                 <p class="board__card-content__card-headline">
@@ -139,6 +175,10 @@
 }
 <!-- selectedTask übergibt die gespeicherte Task an die detail-dialog Komponenten-->
 
-@if (showAddTaskDialog()){
-  <app-task-dialog [status]="addTaskStatus()" (dialogClosed)=" closeAddTaskDialog()"  (taskCreated)="onTaskCreated($event)"></app-task-dialog>
+@if (showAddTaskDialog()) {
+  <app-task-dialog
+    [status]="addTaskStatus()"
+    (dialogClosed)="closeAddTaskDialog()"
+    (taskCreated)="onTaskCreated($event)"
+  ></app-task-dialog>
 }
