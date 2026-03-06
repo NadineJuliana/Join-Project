@@ -13,6 +13,12 @@ export class TaskDialogComponent {
   dialogClosed = output<void>();
   taskCreated = output<Task>();
 
+  onBackdropClick(event: MouseEvent): void {
+    if (event.target === event.currentTarget) {
+      this.closeDialog();
+    }
+  }
+
   closeDialog(): void {
     this.dialogClosed.emit();
   }

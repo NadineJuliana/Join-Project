@@ -1,11 +1,21 @@
 <section class="dialog">
-  <div class="dialog__backdrop" (click)="closeDialog()">
-    <div class="dialog__content" (click)="$event.stopPropagation()">
+  <div class="dialog__backdrop" (click)="onBackdropClick($event)">
+    <div class="dialog__content">
       <header class="dialog__header">
         <h2>Add Task</h2>
-        <button class="dialog__close" (click)="closeDialog()">✕</button>
+        <button
+          type="button"
+          class="dialog__close"
+          aria-label="Close dialog"
+          (click)="closeDialog()"
+        >
+          <span class="material-icons" aria-hidden="true">close</span>
+        </button>
       </header>
-      <app-task-form  [status]="status()" (taskCreated)="handleTaskCreated($event)"></app-task-form>
+      <app-task-form
+        [status]="status()"
+        (taskCreated)="handleTaskCreated($event)"
+      ></app-task-form>
     </div>
   </div>
 </section>

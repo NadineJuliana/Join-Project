@@ -25,8 +25,36 @@
   &__header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 40px;
   }
+
+  &__close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+
+    .material-icons {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    &:hover {
+      .material-icons {
+        background-color: var(--secondary);
+        border-radius: 100%;
+        padding: 2px;
+      }
+    }
+  }
+
   h2 {
     font-size: clamp(47px, 5vw, 61px);
     font-weight: 700;
