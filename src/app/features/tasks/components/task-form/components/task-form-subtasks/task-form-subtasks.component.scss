@@ -78,20 +78,23 @@
   &__list {
     padding-left: 0;
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    display: block;
     height: 70px;
     overflow-y: auto;
     overflow-x: hidden;
   }
 
   &__list-item {
+    display: block;
     position: relative;
     min-height: 32px;
     border-radius: 8px;
     padding: 6px 92px 6px 24px;
     cursor: pointer;
+
+    & + & {
+      margin-top: 4px;
+    }
 
     &::before {
       content: "•";
@@ -130,8 +133,10 @@
   }
 
   &__list-content {
-    display: inline-block;
-    padding-right: 8px;
+    display: block;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.3;
   }
 
   &__row-actions {
