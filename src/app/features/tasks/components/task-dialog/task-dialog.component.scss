@@ -15,6 +15,7 @@
     margin: 10px;
     width: min(1212px, calc(100vw - 48px));
     height: min(86dvh, calc(100dvh - 48px));
+    max-height: 760px;
     border-radius: 15px;
     background: white;
     display: flex;
@@ -46,6 +47,14 @@
       width: min(396px, calc(100vw - 20px));
       max-height: 760px;
       height: 100%;
+    }
+  }
+}
+
+@media (max-width: $bp-sm) {
+  .dialog {
+    &__header {
+      padding: 40px clamp(12px, calc(40px - ($bp-sm - 100vw) * 0.2), 40px);
     }
   }
 }

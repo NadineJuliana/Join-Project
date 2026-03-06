@@ -1,5 +1,7 @@
 .task-form-assignees {
-  position: relative;
+  &__control {
+    position: relative;
+  }
 
   &__trigger {
     width: 100%;

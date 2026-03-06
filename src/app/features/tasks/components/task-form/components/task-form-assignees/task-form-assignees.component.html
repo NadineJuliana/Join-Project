@@ -1,103 +1,105 @@
 <div class="task-form-assignees">
-  @if (!isAssigneeSearchActive()) {
-    <button
-      id="task-assignees"
-      type="button"
-      class="task-form-assignees__trigger"
-      [attr.aria-expanded]="isDropdownOpen()"
-      aria-haspopup="listbox"
-      (click)="activateSearch()"
-    >
-      <span
-        class="task-form-assignees__label"
-        [class.task-form-assignees__label--placeholder]="
-          selectedAssigneeIds().length === 0
-        "
-      >
-        {{ getAssigneesDisplayLabel() }}
-      </span>
-      <span
-        class="task-form-assignees__arrow"
-        [class.task-form-assignees__arrow--open]="isDropdownOpen()"
-        aria-hidden="true"
-      ></span>
-    </button>
-  } @else {
-    <div class="task-form-assignees__search-wrap">
-      <input
-        #assigneeSearchInput
+  <div class="task-form-assignees__control">
+    @if (!isAssigneeSearchActive()) {
+      <button
         id="task-assignees"
-        type="text"
-        class="task-form-assignees__trigger task-form-assignees__search-input"
-        placeholder="Search contacts"
-        [value]="assigneeSearchTerm()"
+        type="button"
+        class="task-form-assignees__trigger"
         [attr.aria-expanded]="isDropdownOpen()"
         aria-haspopup="listbox"
-        (focus)="isDropdownOpen.set(true)"
-        (click)="onSearchInputClick()"
-        (input)="onSearchInput($event)"
-      />
-      <button
-        type="button"
-        class="task-form-assignees__arrow-button"
-        [attr.aria-label]="
-          isDropdownOpen()
-            ? 'Close assignees dropdown'
-            : 'Open assignees dropdown'
-        "
-        (mousedown)="$event.preventDefault()"
-        (click)="toggleSearchDropdownFromArrow()"
+        (click)="activateSearch()"
       >
+        <span
+          class="task-form-assignees__label"
+          [class.task-form-assignees__label--placeholder]="
+            selectedAssigneeIds().length === 0
+          "
+        >
+          {{ getAssigneesDisplayLabel() }}
+        </span>
         <span
           class="task-form-assignees__arrow"
           [class.task-form-assignees__arrow--open]="isDropdownOpen()"
           aria-hidden="true"
         ></span>
       </button>
-    </div>
-  }
-
-  @if (isDropdownOpen()) {
-    <div
-      class="task-form-assignees__dropdown"
-      role="listbox"
-      aria-multiselectable="true"
-    >
-      @for (contact of filteredContacts(); track contact.id) {
+    } @else {
+      <div class="task-form-assignees__search-wrap">
+        <input
+          #assigneeSearchInput
+          id="task-assignees"
+          type="text"
+          class="task-form-assignees__trigger task-form-assignees__search-input"
+          placeholder="Search contacts"
+          [value]="assigneeSearchTerm()"
+          [attr.aria-expanded]="isDropdownOpen()"
+          aria-haspopup="listbox"
+          (focus)="isDropdownOpen.set(true)"
+          (click)="onSearchInputClick()"
+          (input)="onSearchInput($event)"
+        />
         <button
           type="button"
-          class="task-form-assignees__item"
-          [class.task-form-assignees__item--active]="
-            isAssigneeSelected(contact.id)
+          class="task-form-assignees__arrow-button"
+          [attr.aria-label]="
+            isDropdownOpen()
+              ? 'Close assignees dropdown'
+              : 'Open assignees dropdown'
           "
-          [attr.aria-selected]="isAssigneeSelected(contact.id)"
-          (click)="toggleAssignee(contact)"
+          (mousedown)="$event.preventDefault()"
+          (click)="toggleSearchDropdownFromArrow()"
         >
-          <div
-            class="task-form-assignees__initials"
-            [style.backgroundColor]="contact.color"
-          >
-            {{ contact.name | initials }}
-          </div>
-          <h5>{{ contact.name }}</h5>
           <span
-            class="task-form-assignees__checkbox material-icons"
+            class="task-form-assignees__arrow"
+            [class.task-form-assignees__arrow--open]="isDropdownOpen()"
             aria-hidden="true"
-          >
-            {{
-              isAssigneeSelected(contact.id)
-                ? "check_box"
-                : "check_box_outline_blank"
-            }}
-          </span>
+          ></span>
         </button>
-      }
+      </div>
+    }
 
-      @if (filteredContacts().length === 0) {
-        <p class="task-form-assignees__empty">No contacts found</p>
-      }
-    </div>
-  }
+    @if (isDropdownOpen()) {
+      <div
+        class="task-form-assignees__dropdown"
+        role="listbox"
+        aria-multiselectable="true"
+      >
+        @for (contact of filteredContacts(); track contact.id) {
+          <button
+            type="button"
+            class="task-form-assignees__item"
+            [class.task-form-assignees__item--active]="
+              isAssigneeSelected(contact.id)
+            "
+            [attr.aria-selected]="isAssigneeSelected(contact.id)"
+            (click)="toggleAssignee(contact)"
+          >
+            <div
+              class="task-form-assignees__initials"
+              [style.backgroundColor]="contact.color"
+            >
+              {{ contact.name | initials }}
+            </div>
+            <h5>{{ contact.name }}</h5>
+            <span
+              class="task-form-assignees__checkbox material-icons"
+              aria-hidden="true"
+            >
+              {{
+                isAssigneeSelected(contact.id)
+                  ? "check_box"
+                  : "check_box_outline_blank"
+              }}
+            </span>
+          </button>
+        }
+
+        @if (filteredContacts().length === 0) {
+          <p class="task-form-assignees__empty">No contacts found</p>
+        }
+      </div>
+    }
+  </div>
 
   @if (getSelectedAssigneeContacts().length > 0) {
     <div class="task-form-assignees__selected" aria-label="Selected contacts">
