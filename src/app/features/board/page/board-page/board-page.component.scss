@@ -190,6 +190,7 @@
   &__card-container-initials {
     display: flex;
     width: 100px;
+    // overflow: hidden;
   }
   &__card-initials {
     background: red;
@@ -256,6 +257,7 @@
     &__card-container {
       min-width: 252px;
       max-width: 252px;
+      cursor: pointer;
     }
 
     .header {

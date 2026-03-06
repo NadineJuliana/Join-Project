@@ -63,6 +63,7 @@
               (click)="openDetailDialog(task)"
               cdkDrag
               [cdkDragData]="task"
+              [cdkDragDisabled]="isMobile()"
               class="board__card-container"
             >
               <div
