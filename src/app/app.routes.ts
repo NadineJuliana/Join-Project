@@ -6,10 +6,15 @@ import { TasksPageComponent } from './features/tasks/page/tasks-page/tasks-page.
 import { BoardPageComponent } from './features/board/page/board-page/board-page.component';
 import { PrivacypolicyPageComponent } from './features/privacy/privacypolicy-page/privacypolicy-page.component';
 import { LegalnoticePageComponent } from './features/legalnotice/legalnotice-page/legalnotice-page.component';
+import { LandingPageComponent } from './features/auth/page/landing-page/landing-page.component';
 
 export const routes: Routes = [
   {
     path: '',
+    component: LandingPageComponent,
+  },
+  {
+    path: 'app',
     component: MainLayoutComponent,
     children: [
       {
@@ -35,6 +40,11 @@ export const routes: Routes = [
       {
         path: 'legal-notice',
         component: LegalnoticePageComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'summary',
+        pathMatch: 'full',
       },
     ],
   },
