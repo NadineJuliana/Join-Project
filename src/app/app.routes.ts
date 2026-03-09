@@ -11,10 +11,6 @@ import { LandingPageComponent } from './features/auth/page/landing-page/landing-
 export const routes: Routes = [
   {
     path: '',
-    component: LandingPageComponent,
-  },
-  {
-    path: 'app',
     component: MainLayoutComponent,
     children: [
       {
@@ -40,11 +36,6 @@ export const routes: Routes = [
       {
         path: 'legal-notice',
         component: LegalnoticePageComponent,
-      },
-      {
-        path: '',
-        redirectTo: 'summary',
-        pathMatch: 'full',
       },
     ],
   },
