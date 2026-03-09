@@ -1,0 +1,102 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.landing-page {
+  min-height: 100vh;
+  background: var(--secondary);
+}
+
+.landing-cta {
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  opacity: 0;
+  animation: show-landing-cta 300ms ease-out 420ms forwards;
+
+  span {
+    color: var(--primary);
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .btn {
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+}
+
+.landing-logo {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 280px;
+  aspect-ratio: 5 / 6;
+  transform: translate(-50%, -50%);
+  animation: move-logo-to-sidebar 620ms linear 150ms forwards;
+}
+
+@keyframes move-logo-to-sidebar {
+  from {
+    left: 50%;
+    top: 50%;
+    width: 280px;
+    transform: translate(-50%, -50%);
+  }
+
+  to {
+    left: calc((clamp(72px, 18vw, 232px) - 100px) / 2);
+    top: 64px;
+    width: 100px;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes show-landing-cta {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-cta {
+    top: auto;
+    right: 50%;
+    bottom: 40px;
+    transform: translateX(50%);
+    gap: 12px;
+    white-space: nowrap;
+
+    span {
+      font-size: 16px;
+    }
+
+    .btn {
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-logo {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+
+  .landing-cta {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}
