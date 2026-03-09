@@ -130,7 +130,7 @@ export class BoardPageComponent {
       case 'medium':
         return 'medium_icon.svg';
       case 'urgent':
-        return 'urgent_icon';
+        return 'urgent_icon.svg';
     }
   }
 
