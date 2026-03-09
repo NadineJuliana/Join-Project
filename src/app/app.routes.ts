@@ -10,6 +10,15 @@ import { LandingPageComponent } from './features/auth/page/landing-page/landing-
 
 export const routes: Routes = [
   {
+    path: 'login',
+    component: LandingPageComponent,
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
     path: '',
     component: MainLayoutComponent,
     children: [
