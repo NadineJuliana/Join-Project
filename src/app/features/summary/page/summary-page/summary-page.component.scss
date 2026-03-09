@@ -1,0 +1,33 @@
+.summary {
+  max-width: calc(1440px - 232px);
+  width: 100%;
+
+  .header {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 40px;
+    padding: clamp(48px, calc(48px + (100vw - 1024px)), 80px)
+      clamp(15px, calc(15px + (100vw - 1220px)), 64px)
+      clamp(24px, calc(24px + (100vw - 1024px)), 50px)
+      clamp(15px, calc(15px + (100vw - 1220px)), 64px);
+
+    &__headline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      position: relative;
+      column-gap: 30px;
+      row-gap: 16px;
+    }
+
+    &__separator {
+      background-color: var(--accent);
+      width: 3px;
+      height: 50px;
+    }
+  }
+}
