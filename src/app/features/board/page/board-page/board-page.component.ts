@@ -126,11 +126,11 @@ export class BoardPageComponent {
   getPriorityIcon(priority: 'low' | 'medium' | 'urgent') {
     switch (priority) {
       case 'low':
-        return 'icons/low_icon.svg';
+        return 'low_icon.svg';
       case 'medium':
-        return 'icons/medium_icon.svg';
+        return 'medium_icon.svg';
       case 'urgent':
-        return 'icons/urgent_icon.svg';
+        return 'urgent_icon';
     }
   }
 

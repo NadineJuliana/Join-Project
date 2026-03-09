@@ -300,7 +300,7 @@ export class TaskFormComponent implements OnInit {
     this.toastService.showToast({
       message: 'Task added to board',
       classname: 'toast__added',
-      icon: 'icons/board_icon_gray.svg',
+      icon: 'board_icon_gray.svg',
       position: 'center',
       duration: 1000,
     });
