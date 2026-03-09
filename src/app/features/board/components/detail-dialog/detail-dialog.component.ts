@@ -54,11 +54,11 @@ export class DetailDialogComponent {
   getPriorityIcon(priority: 'low' | 'medium' | 'urgent') {
     switch (priority) {
       case 'low':
-        return '/icons/prio-icons/low_icon.svg';
+        return 'icons/low_icon.svg';
       case 'medium':
-        return '/icons/prio-icons/medium_icon.svg';
+        return 'icons/medium_icon.svg';
       case 'urgent':
-        return '/icons/prio-icons/urgent_icon.svg';
+        return 'icons/urgent_icon.svg';
     }
   }
 
