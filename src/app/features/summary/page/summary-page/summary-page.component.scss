@@ -38,15 +38,16 @@
 
 .summary {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  width: 60%;
+  width: 50%;
   row-gap: 28px;
   column-gap: 32px;
   &__info {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     .number {
       font-size: clamp(47px, 5vw, 64px);
       font-weight: 600;
@@ -73,8 +74,14 @@
       align-items: center;
     }
   }
+  &__to-do {
+    grid-column: 1/4;
+  }
+  &__done {
+    grid-column: 4/7;
+  }
   &__deadline-container {
-    grid-column: 1/3;
+    grid-column: 1/7;
     display: flex;
     gap: 20px;
   }
@@ -103,5 +110,14 @@
     display: flex;
     flex-direction: column;
     row-gap: 8px;
+  }
+  &__board-card {
+    grid-column: 1/3;
+  }
+  &__progress-card {
+    grid-column: 3/5;
+  }
+  &__feedback-card {
+    grid-column: 5/7;
   }
 }
