@@ -1,33 +1,75 @@
-.summary {
+.summary-page {
   max-width: calc(1440px - 232px);
   width: 100%;
+}
 
-  .header {
-    width: 100%;
-    height: auto;
+.header {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 40px;
+  padding: clamp(48px, calc(48px + (100vw - 1024px)), 80px)
+    clamp(15px, calc(15px + (100vw - 1024px)), 64px)
+    clamp(24px, calc(24px + (100vw - 1024px)), 50px)
+    clamp(15px, calc(15px + (100vw - 1024px)), 64px);
+
+  &__headline {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
-    row-gap: 40px;
-    padding: clamp(48px, calc(48px + (100vw - 1024px)), 80px)
-      clamp(15px, calc(15px + (100vw - 1220px)), 64px)
-      clamp(24px, calc(24px + (100vw - 1024px)), 50px)
-      clamp(15px, calc(15px + (100vw - 1220px)), 64px);
+    position: relative;
+    column-gap: 30px;
+    row-gap: 16px;
+  }
 
-    &__headline {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      position: relative;
-      column-gap: 30px;
-      row-gap: 16px;
+  &__separator {
+    background-color: var(--accent);
+    width: 3px;
+    height: 50px;
+  }
+}
+
+.summary-container {
+  padding: 0px clamp(10px, calc(10px + (100vw - 1024px)), 64px);
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  width: 100%;
+  row-gap: 28px;
+  column-gap: 32px;
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    p {
+      font-size: clamp(47px, 5vw, 64px);
+      font-weight: 600;
     }
-
-    &__separator {
-      background-color: var(--accent);
-      width: 3px;
-      height: 50px;
+  }
+  &__card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    gap: 10px;
+    border-radius: 20px;
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.1));
+    span{
+        background: var(--primary);
+        font-size: 32px;
+        color: white;
+        border-radius: 100%;
+        width: 70px;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
   }
 }
