@@ -23,7 +23,7 @@ export class AuthService {
     });
     if (error) throw error;
     const userEmail = data.user?.email;
-    const contact = new Contact({ name, email: userEmail});
+    const contact = new Contact({ name, email: userEmail });
     await this.contactsService.addContact(contact);
     if (userEmail) {
       await this.contactsService.loadCurrentUserContact(userEmail);
@@ -45,21 +45,24 @@ export class AuthService {
   }
 
   async loginAsGuest() {
+    localStorage.setItem('guest', 'true');
     return this.login('guest@join-app.com', 'guest123456');
   }
 
   async logout() {
     await this.client.auth.signOut();
+    localStorage.removeItem('guest');
     this.contactsService.clearSelectedContact();
-  }
-
-  async getSession() {
-    const { data } = await this.client.auth.getSession();
-    return data.session;
   }
 
   async getUser() {
     const { data } = await this.client.auth.getUser();
     return data.user;
+  }
+
+  async isLoggedIn(): Promise<boolean> {
+    const user = await this.getUser();
+    const guestActive = !!localStorage.getItem('guest');
+    return Boolean(user) || Boolean(guestActive);
   }
 }
