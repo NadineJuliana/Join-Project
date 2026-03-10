@@ -1,0 +1,174 @@
+@use "../../../../../styles/abstracts/breakpoints" as *;
+
+:host {
+  display: block;
+  width: min(640px, calc(100vw - 32px));
+}
+
+.login-form {
+  width: 100%;
+  background: var(--white);
+  border-radius: 30px;
+  padding: 48px 48px 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  filter: drop-shadow(var(--drop-shadow));
+
+  h1 {
+    margin: 0;
+    text-align: center;
+  }
+
+  &__separator {
+    width: 124px;
+    height: 3px;
+    border-radius: 4px;
+    background: var(--accent);
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  &__input-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+
+    p {
+      position: absolute;
+      top: calc(100% + 2px);
+      left: 0;
+      margin: 0;
+      font-size: 14px;
+      color: var(--error);
+      z-index: 10;
+    }
+
+    .material-icons {
+      position: absolute;
+      right: 20px;
+      font-size: 24px;
+      color: var(--lightgray);
+      pointer-events: none;
+    }
+  }
+
+  &__password-toggle {
+    position: absolute;
+    right: 20px;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .material-icons {
+      position: static;
+      pointer-events: auto;
+    }
+  }
+
+  input {
+    width: 100%;
+    height: 50px;
+    border: 1px solid var(--lightgray);
+    border-radius: 10px;
+    padding: 13px 56px 13px 20px;
+    font-size: 20px;
+    color: var(--primary);
+    background: var(--white);
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: var(--lightgray);
+    }
+
+    &:focus {
+      outline: 1px solid var(--accent);
+      border-color: var(--accent);
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: var(--error);
+      outline-color: var(--error);
+    }
+  }
+
+  &__actions {
+    padding-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+  }
+
+  &__auth-error {
+    padding-top: 4px;
+    font-size: 14px;
+    color: var(--error);
+    text-align: center;
+  }
+
+  .btn {
+    min-width: 0;
+    max-height: 48px;
+    align-items: center;
+    padding-inline: clamp(12px, 2.2vw, 18px);
+    font-size: clamp(16px, 2vw, 21px);
+  }
+
+  .btn--secondary {
+    font-weight: 700;
+  }
+
+  .btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: $bp-md) {
+  .login-form {
+    border-radius: 20px;
+    padding: 32px 16px;
+    gap: 24px;
+
+    h1 {
+      font-size: 47px;
+    }
+
+    &__separator {
+      width: 100px;
+    }
+
+    input {
+      font-size: 18px;
+    }
+
+    &__actions {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      width: clamp(152px, 52vw, 190px);
+      max-width: none;
+      padding-inline: clamp(10px, 3.2vw, 14px);
+    }
+  }
+}

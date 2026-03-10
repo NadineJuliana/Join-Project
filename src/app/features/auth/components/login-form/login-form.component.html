@@ -1,1 +1,70 @@
-<p>login-form works!</p>
+<form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h1>Log in</h1>
+  <span class="login-form__separator" aria-hidden="true"></span>
+
+  <div class="login-form__fields">
+    <div class="login-form__input-wrap">
+      <input
+        type="email"
+        formControlName="email"
+        placeholder="Email"
+        aria-label="Email"
+        autocomplete="email"
+      />
+      <span class="material-icons">mail</span>
+
+      @if (
+        form.controls.email.touched &&
+        !form.controls.email.valid &&
+        !form.controls.email.disabled
+      ) {
+        <p>Please enter your email</p>
+      }
+    </div>
+
+    <div class="login-form__input-wrap">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        formControlName="password"
+        placeholder="Password"
+        aria-label="Password"
+        autocomplete="current-password"
+        (focus)="onPasswordFocus()"
+        (blur)="onPasswordBlur()"
+      />
+      @if (shouldShowPasswordToggle) {
+        <button
+          type="button"
+          class="login-form__password-toggle"
+          (click)="togglePasswordVisibility()"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+        >
+          <span class="material-icons">{{
+            showPassword ? "visibility_off" : "visibility"
+          }}</span>
+        </button>
+      } @else {
+        <span class="material-icons">lock</span>
+      }
+
+      @if (
+        form.controls.password.touched &&
+        !form.controls.password.valid &&
+        !form.controls.password.disabled
+      ) {
+        <p>Please enter your password</p>
+      }
+    </div>
+  </div>
+
+  @if (authErrorMessage) {
+    <p class="login-form__auth-error">{{ authErrorMessage }}</p>
+  }
+
+  <div class="login-form__actions">
+    <button [disabled]="!form.valid" class="btn btn--primary" type="submit">
+      Log in
+    </button>
+    <button class="btn btn--secondary" type="button">Guest Log in</button>
+  </div>
+</form>
