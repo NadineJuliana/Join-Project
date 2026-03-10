@@ -4,8 +4,16 @@
 }
 
 .landing-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
   background: var(--secondary);
+}
+
+.landing-login-form {
+  opacity: 0;
+  animation: landing-fade-in-down 300ms ease-out 420ms forwards;
 }
 
 .landing-cta {
@@ -16,7 +24,7 @@
   align-items: center;
   gap: 24px;
   opacity: 0;
-  animation: show-landing-cta 300ms ease-out 420ms forwards;
+  animation: landing-fade-in-down 300ms ease-out 420ms forwards;
 
   span {
     color: var(--primary);
@@ -57,7 +65,7 @@
   }
 }
 
-@keyframes show-landing-cta {
+@keyframes landing-fade-in-down {
   from {
     opacity: 0;
     transform: translateY(-10px);
@@ -87,6 +95,14 @@
       font-size: 14px;
     }
   }
+
+  .landing-login-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -96,6 +112,11 @@
   }
 
   .landing-cta {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+
+  .landing-login-form {
     animation-duration: 1ms;
     animation-delay: 0ms;
   }
