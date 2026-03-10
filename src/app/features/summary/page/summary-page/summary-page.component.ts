@@ -24,16 +24,22 @@ export class SummaryPageComponent {
     () => this.tasksService.awaitFeedbackTasks().length,
   );
 
+  private parseLocalDate(dateString: string): Date | null {
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
+    return isNaN(date.getTime()) ? null : date;
+  }
+
   upcomingDeadline = computed(() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     const nextDate = this.tasksService
-    .tasks()
-    .filter((task) => task.status ! == 'done' && !!task.due_date)
-    .map((task) => new Date(task.due_date))
-    .filter((date) => !isNaN(date.getTime()) && date >= today)
-    .sort((a, b) => a.getTime() - b.getTime())[0];
+      .tasks()
+      .filter((task) => task.status !== 'done' && !!task.due_date)
+      .map((task) => this.parseLocalDate(task.due_date))
+      .filter((date): date is Date => !!date && date >= today)
+      .sort((a, b) => a.getTime() - b.getTime())[0];
 
     return nextDate ?? null;
   });
