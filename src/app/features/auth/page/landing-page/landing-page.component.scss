@@ -1,3 +1,5 @@
+@use "../../../../../styles/abstracts/breakpoints" as *;
+
 :host {
   display: block;
   min-height: 100vh;
@@ -40,27 +42,31 @@
 }
 
 .landing-logo {
+  --logo-start-size: clamp(180px, 52vw, 280px);
+  --logo-end-size: clamp(64px, 10vw, 100px);
+  --logo-end-left: calc((clamp(72px, 18vw, 232px) - var(--logo-end-size)) / 2);
+
   position: fixed;
   left: 50%;
   top: 50%;
-  width: 280px;
-  aspect-ratio: 5 / 6;
+  width: var(--logo-start-size);
+  aspect-ratio: 64 / 78.03;
   transform: translate(-50%, -50%);
-  animation: move-logo-to-sidebar 620ms linear 150ms forwards;
+  animation: move-logo-to-sidebar 460ms linear 150ms forwards;
 }
 
 @keyframes move-logo-to-sidebar {
   from {
     left: 50%;
     top: 50%;
-    width: 280px;
+    width: var(--logo-start-size);
     transform: translate(-50%, -50%);
   }
 
   to {
-    left: calc((clamp(72px, 18vw, 232px) - 100px) / 2);
+    left: var(--logo-end-left);
     top: 64px;
-    width: 100px;
+    width: var(--logo-end-size);
     transform: translate(0, 0);
   }
 }
@@ -77,23 +83,20 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $bp-md) {
+  .landing-logo {
+    --logo-end-left: 31px;
+  }
+
   .landing-cta {
     top: auto;
-    right: 50%;
+    left: 0;
+    right: 0;
     bottom: 40px;
-    transform: translateX(50%);
+    width: 100%;
+    justify-content: center;
     gap: 12px;
     white-space: nowrap;
-
-    span {
-      font-size: 16px;
-    }
-
-    .btn {
-      padding: 10px 14px;
-      font-size: 14px;
-    }
   }
 
   .landing-login-form {
