@@ -1,4 +1,6 @@
-<section class="landing-page">
+<section class="landing-page" [class.landing-page--no-intro]="showSignupForm">
+  <div class="landing-intro-bg" aria-hidden="true"></div>
+
   @if (!showSignupForm) {
     <div class="landing-cta" aria-label="Sign up call to action">
       <span>Not a Join user?</span>
@@ -16,5 +18,15 @@
     }
   </div>
 
-  <img class="landing-logo" src="Join Logo.svg" alt="Join Logo" />
+  <img
+    class="landing-logo landing-logo--white"
+    src="Join Logo white.svg"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="landing-logo landing-logo--default"
+    src="Join Logo.svg"
+    alt="Join Logo"
+  />
 </section>

@@ -6,6 +6,7 @@
 }
 
 .landing-page {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,7 +14,13 @@
   background: var(--secondary);
 }
 
+.landing-intro-bg {
+  display: none;
+}
+
 .landing-login-form {
+  position: relative;
+  z-index: 2;
   opacity: 0;
   animation: landing-fade-in-down 300ms ease-out 420ms forwards;
 }
@@ -25,6 +32,7 @@
   display: flex;
   align-items: center;
   gap: 24px;
+  z-index: 3;
   opacity: 0;
   animation: landing-fade-in-down 300ms ease-out 420ms forwards;
 
@@ -47,12 +55,48 @@
   --logo-end-left: calc((clamp(72px, 18vw, 232px) - var(--logo-end-size)) / 2);
 
   position: fixed;
+  z-index: 4;
   left: 50%;
   top: 50%;
   width: var(--logo-start-size);
   aspect-ratio: 64 / 78.03;
   transform: translate(-50%, -50%);
   animation: move-logo-to-sidebar 460ms linear 150ms forwards;
+}
+
+.landing-logo--white {
+  display: none;
+}
+
+.landing-logo--default {
+  opacity: 1;
+}
+
+.landing-page--no-intro {
+  .landing-intro-bg {
+    opacity: 0;
+    animation: none;
+  }
+
+  .landing-login-form {
+    opacity: 1;
+    transform: translateY(0);
+    animation: none;
+  }
+
+  .landing-logo--white {
+    opacity: 0;
+    animation: none;
+  }
+
+  .landing-logo--default {
+    left: var(--logo-end-left);
+    top: 64px;
+    width: var(--logo-end-size);
+    transform: translate(0, 0);
+    opacity: 1;
+    animation: none;
+  }
 }
 
 @keyframes move-logo-to-sidebar {
@@ -83,9 +127,67 @@
   }
 }
 
+@keyframes landing-intro-bg-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes landing-logo-white-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes landing-logo-default-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 @media (max-width: $bp-md) {
+  .landing-intro-bg {
+    position: fixed;
+    inset: 0;
+    display: block;
+    z-index: 3;
+    background: var(--primary);
+    opacity: 1;
+    pointer-events: none;
+    animation: landing-intro-bg-fade-out 260ms ease 320ms forwards;
+  }
+
   .landing-logo {
     --logo-end-left: 31px;
+
+    z-index: 4;
+  }
+
+  .landing-logo--white {
+    display: block;
+    opacity: 1;
+    animation:
+      move-logo-to-sidebar 460ms linear 150ms forwards,
+      landing-logo-white-fade-out 600ms ease 300ms forwards;
+  }
+
+  .landing-logo--default {
+    opacity: 0;
+    animation:
+      move-logo-to-sidebar 460ms linear 150ms forwards,
+      landing-logo-default-fade-in 600ms ease 300ms forwards;
   }
 
   .landing-cta {
@@ -109,7 +211,18 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .landing-intro-bg {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+
   .landing-logo {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+
+  .landing-logo--white,
+  .landing-logo--default {
     animation-duration: 1ms;
     animation-delay: 0ms;
   }
