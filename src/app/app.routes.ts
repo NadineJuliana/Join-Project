@@ -14,6 +14,10 @@ export const routes: Routes = [
     component: LandingPageComponent,
   },
   {
+    path: 'signup',
+    component: LandingPageComponent,
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',

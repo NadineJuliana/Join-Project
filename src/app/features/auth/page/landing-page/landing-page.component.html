@@ -1,11 +1,19 @@
 <section class="landing-page">
-  <div class="landing-cta" aria-label="Sign up call to action">
-    <span>Not a Join user?</span>
-    <button type="button" class="btn btn--primary">Sign up</button>
-  </div>
+  @if (!showSignupForm) {
+    <div class="landing-cta" aria-label="Sign up call to action">
+      <span>Not a Join user?</span>
+      <button type="button" class="btn btn--primary" (click)="openSignupForm()">
+        Sign up
+      </button>
+    </div>
+  }
 
   <div class="landing-login-form">
-    <app-login-form></app-login-form>
+    @if (showSignupForm) {
+      <app-signup-form></app-signup-form>
+    } @else {
+      <app-login-form></app-login-form>
+    }
   </div>
 
   <img class="landing-logo" src="Join Logo.svg" alt="Join Logo" />
