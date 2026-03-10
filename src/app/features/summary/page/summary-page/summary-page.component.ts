@@ -37,4 +37,14 @@ export class SummaryPageComponent {
 
     return nextDate ?? null;
   });
+
+  upcomingDeadlineLabel = computed(() => {
+    const date = this.upcomingDeadline();
+    if (!date) return 'No upcoming deadline';
+    return new Intl.DateTimeFormat('de-DE', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    }).format(date)
+  })
 }
