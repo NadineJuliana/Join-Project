@@ -17,6 +17,7 @@ export class ContactsService {
 
   contacts = signal<Contact[]>([]);
   selectedContact = signal<Contact | null>(null);
+  currentUserContact = signal<Contact | null>(null);
   groupedContacts = computed(() => {
     const sorted = [...this.contacts()].sort((a, b) =>
       a.name.localeCompare(b.name),
@@ -163,5 +164,17 @@ export class ContactsService {
 
   clearSelectedContact() {
     this.selectedContact.set(null);
+  }
+
+  async loadCurrentUserContact(email: string) {
+    const { data, error } = await this.supabaseService
+      .getSupabaseClient()
+      .from('Contacts')
+      .select('*')
+      .eq('email', email)
+      .single();
+    if (error) throw error;
+    const contact = new Contact(data);
+    this.currentUserContact.set(contact);
   }
 }
