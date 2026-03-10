@@ -1,9 +1,65 @@
 import { Injectable } from '@angular/core';
+import { SupabaseService } from '../../../core/services/supabase.service';
+import { ContactsService } from '../../contacts/services/contacts.service';
+import { Contact } from '../../contacts/models/contact.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  constructor(
+    private supabaseService: SupabaseService,
+    private contactsService: ContactsService,
+  ) {}
 
-  constructor() { }
+  private get client() {
+    return this.supabaseService.getSupabaseClient();
+  }
+
+  async signUp(name: string, email: string, password: string) {
+    const { data, error } = await this.client.auth.signUp({
+      email,
+      password,
+    });
+    if (error) throw error;
+    const userEmail = data.user?.email;
+    const contact = new Contact({ name, email: userEmail});
+    await this.contactsService.addContact(contact);
+    if (userEmail) {
+      await this.contactsService.loadCurrentUserContact(userEmail);
+    }
+    return data;
+  }
+
+  async login(email: string, password: string) {
+    const { data, error } = await this.client.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) throw error;
+    const userEmail = data.user?.email;
+    if (userEmail) {
+      await this.contactsService.loadCurrentUserContact(userEmail);
+    }
+    return data;
+  }
+
+  async loginAsGuest() {
+    return this.login('guest@join-app.com', 'guest123456');
+  }
+
+  async logout() {
+    await this.client.auth.signOut();
+    this.contactsService.clearSelectedContact();
+  }
+
+  async getSession() {
+    const { data } = await this.client.auth.getSession();
+    return data.session;
+  }
+
+  async getUser() {
+    const { data } = await this.client.auth.getUser();
+    return data.user;
+  }
 }
