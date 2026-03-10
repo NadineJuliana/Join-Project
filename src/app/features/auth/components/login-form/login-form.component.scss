@@ -146,6 +146,20 @@
   }
 }
 
+@media (max-width: $bp-lg) {
+  :host {
+    width: min(560px, calc(100vw - 40px));
+  }
+
+  .login-form {
+    padding: 40px 32px 34px;
+
+    &__fields {
+      max-width: 460px;
+    }
+  }
+}
+
 @media (max-width: $bp-md) {
   .login-form {
     border-radius: 20px;
