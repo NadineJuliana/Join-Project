@@ -1,11 +1,111 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
+
+function passwordMatchValidator(
+  control: AbstractControl,
+): ValidationErrors | null {
+  const password = control.get('password')?.value;
+  const confirmPassword = control.get('confirmPassword')?.value;
+
+  if (!password || !confirmPassword) {
+    return null;
+  }
+
+  return password === confirmPassword ? null : { passwordMismatch: true };
+}
 
 @Component({
   selector: 'app-signup-form',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './signup-form.component.html',
-  styleUrl: './signup-form.component.scss'
+  styleUrl: './signup-form.component.scss',
 })
 export class SignupFormComponent {
+  private formBuilder = inject(FormBuilder);
+  authErrorMessage = '';
+  showPassword = false;
+  showConfirmPassword = false;
+  isPasswordFocused = false;
+  isConfirmPasswordFocused = false;
 
+  form = this.formBuilder.nonNullable.group(
+    {
+      name: this.formBuilder.nonNullable.control('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-ZäöüÄÖÜß\s]+\s+[a-zA-ZäöüÄÖÜß\s]+$/),
+        Validators.maxLength(40),
+      ]),
+      email: this.formBuilder.nonNullable.control('', [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[^\s@]+@[^\s@]+\.[a-z]{2,6}$/i),
+      ]),
+      password: this.formBuilder.nonNullable.control('', [Validators.required]),
+      confirmPassword: this.formBuilder.nonNullable.control('', [
+        Validators.required,
+      ]),
+    },
+    { validators: [passwordMatchValidator] },
+  );
+
+  get shouldShowPasswordToggle() {
+    return (
+      this.isPasswordFocused || this.form.controls.password.value.length > 0
+    );
+  }
+
+  get shouldShowConfirmPasswordToggle() {
+    return (
+      this.isConfirmPasswordFocused ||
+      this.form.controls.confirmPassword.value.length > 0
+    );
+  }
+
+  get shouldShowPasswordMismatchError() {
+    return (
+      this.form.controls.confirmPassword.touched &&
+      !this.form.controls.confirmPassword.disabled &&
+      this.form.hasError('passwordMismatch')
+    );
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
+
+  onPasswordFocus() {
+    this.isPasswordFocused = true;
+  }
+
+  onPasswordBlur() {
+    this.isPasswordFocused = false;
+  }
+
+  onConfirmPasswordFocus() {
+    this.isConfirmPasswordFocused = true;
+  }
+
+  onConfirmPasswordBlur() {
+    this.isConfirmPasswordFocused = false;
+  }
+
+  onSubmit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.authErrorMessage = '';
+    // Signup submission folgt nach Implementierung des AuthService
+  }
 }
