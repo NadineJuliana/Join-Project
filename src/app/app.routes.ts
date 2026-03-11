@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layout/main-layout/main-layout/main-layout.component';
 import { SummaryPageComponent } from './features/summary/page/summary-page/summary-page.component';
@@ -8,6 +9,7 @@ import { PrivacypolicyPageComponent } from './features/privacy/privacypolicy-pag
 import { LegalnoticePageComponent } from './features/legalnotice/legalnotice-page/legalnotice-page.component';
 import { LandingPageComponent } from './features/auth/page/landing-page/landing-page.component';
 import { authGuard } from './core/guards/auth.guard';
+import { HelpPageComponent } from './features/help/help-page/help-page.component';
 
 export const routes: Routes = [
   {
@@ -52,6 +54,10 @@ export const routes: Routes = [
         path: 'legal-notice',
         component: LegalnoticePageComponent,
       },
+      {
+        path: 'help',
+        component: HelpPageComponent,
+      }
     ],
   },
 ];
