@@ -1,1 +1,128 @@
-<p>signup-form works!</p>
+<form class="signup-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h1>Sign up</h1>
+  <span class="signup-form__separator" aria-hidden="true"></span>
+
+  <div class="signup-form__fields">
+    <div class="signup-form__input-wrap">
+      <input
+        type="text"
+        formControlName="name"
+        placeholder="Name"
+        aria-label="Name"
+        autocomplete="name"
+      />
+      <span class="material-icons">person</span>
+
+      @if (
+        form.controls.name.touched &&
+        !form.controls.name.valid &&
+        !form.controls.name.disabled
+      ) {
+        <p>Please enter first and last name</p>
+      }
+    </div>
+
+    <div class="signup-form__input-wrap">
+      <input
+        type="email"
+        formControlName="email"
+        placeholder="Email"
+        aria-label="Email"
+        autocomplete="email"
+      />
+      <span class="material-icons">mail</span>
+
+      @if (
+        form.controls.email.touched &&
+        !form.controls.email.valid &&
+        !form.controls.email.disabled
+      ) {
+        <p>Please enter a valid email</p>
+      }
+    </div>
+
+    <div class="signup-form__input-wrap">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        formControlName="password"
+        placeholder="Password"
+        aria-label="Password"
+        autocomplete="new-password"
+        (focus)="onPasswordFocus()"
+        (blur)="onPasswordBlur()"
+      />
+      @if (shouldShowPasswordToggle) {
+        <button
+          type="button"
+          class="signup-form__password-toggle"
+          (click)="togglePasswordVisibility()"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+        >
+          <span class="material-icons">{{
+            showPassword ? "visibility_off" : "visibility"
+          }}</span>
+        </button>
+      } @else {
+        <span class="material-icons">lock</span>
+      }
+
+      @if (
+        form.controls.password.touched &&
+        !form.controls.password.valid &&
+        !form.controls.password.disabled
+      ) {
+        <p>Please enter a password</p>
+      }
+    </div>
+
+    <div class="signup-form__input-wrap">
+      <input
+        [type]="showConfirmPassword ? 'text' : 'password'"
+        formControlName="confirmPassword"
+        placeholder="Confirm Password"
+        aria-label="Confirm Password"
+        autocomplete="new-password"
+        (focus)="onConfirmPasswordFocus()"
+        (blur)="onConfirmPasswordBlur()"
+      />
+      @if (shouldShowConfirmPasswordToggle) {
+        <button
+          type="button"
+          class="signup-form__password-toggle"
+          (click)="toggleConfirmPasswordVisibility()"
+          [attr.aria-label]="
+            showConfirmPassword ? 'Hide password' : 'Show password'
+          "
+        >
+          <span class="material-icons">{{
+            showConfirmPassword ? "visibility_off" : "visibility"
+          }}</span>
+        </button>
+      } @else {
+        <span class="material-icons">lock</span>
+      }
+
+      @if (
+        form.controls.confirmPassword.touched &&
+        !form.controls.confirmPassword.valid &&
+        !form.controls.confirmPassword.disabled
+      ) {
+        <p>Please confirm your password</p>
+      }
+
+      @if (shouldShowPasswordMismatchError) {
+        <p>Your passwords don't match. Please try again.</p>
+      }
+    </div>
+  </div>
+
+  @if (authErrorMessage) {
+    <p class="signup-form__auth-error">{{ authErrorMessage }}</p>
+  }
+
+  <div class="signup-form__actions">
+    <button [disabled]="!form.valid" class="btn btn--primary" type="submit">
+      Sign up
+    </button>
+  </div>
+</form>

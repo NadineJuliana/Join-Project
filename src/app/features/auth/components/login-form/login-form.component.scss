@@ -136,8 +136,27 @@
   }
 
   .btn:disabled {
-    opacity: 0.7;
+    background-color: var(--primary);
     cursor: not-allowed;
+    filter: none;
+  }
+
+  .btn:disabled:hover {
+    filter: none;
+  }
+}
+
+@media (max-width: $bp-lg) {
+  :host {
+    width: min(560px, calc(100vw - 40px));
+  }
+
+  .login-form {
+    padding: 40px 32px 34px;
+
+    &__fields {
+      max-width: 460px;
+    }
   }
 }
 

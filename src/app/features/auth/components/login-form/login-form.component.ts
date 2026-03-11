@@ -18,7 +18,14 @@ export class LoginFormComponent {
   isPasswordFocused = false;
 
   form = this.formBuilder.nonNullable.group({
-    email: ['', [Validators.required]],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[^\s@]+@[^\s@]+\.[a-z]{2,6}$/i),
+      ],
+    ],
     password: ['', [Validators.required]],
   });
 
