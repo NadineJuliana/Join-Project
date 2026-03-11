@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { AuthService } from '../../../features/auth/services/auth.service';
@@ -15,15 +15,25 @@ import { ContactsService } from '../../../features/contacts/services/contacts.se
 export class MainLayoutComponent {
   private authService = inject(AuthService);
   private contactsService = inject(ContactsService);
+  private router = inject(Router);
 
-  constructor(){
+  constructor() {
     this.loadCurrentUser();
+    this.autoLogoutIfLoggedIn();
   }
 
-  private async loadCurrentUser(){
+  private async loadCurrentUser() {
     const user = await this.authService.getUser();
-    if (user?.email && !localStorage.getItem('guest')){
+    if (user?.email && !localStorage.getItem('guest')) {
       await this.contactsService.loadCurrentUserContact(user.email);
+    }
+  }
+
+  private async autoLogoutIfLoggedIn() {
+    const user = await this.authService.getUser();
+    const isGuest = !!localStorage.getItem('guest');
+    if (user || isGuest) {
+      await this.authService.logout();
     }
   }
 }
