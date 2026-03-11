@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { ContactsService } from '../../../contacts/services/contacts.service';
 
 @Component({
   selector: 'app-login-form',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 export class LoginFormComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private contactsService = inject(ContactsService);
   private formBuilder = inject(FormBuilder);
   authErrorMessage = '';
   showPassword = false;
@@ -55,8 +57,8 @@ export class LoginFormComponent {
     this.authErrorMessage = '';
     const { email, password } = this.form.getRawValue();
     await this.authService.login(email, password);
+    await this.contactsService.loadCurrentUserContact(email);
     this.router.navigate(['/summary']);
-    // Auth submission folgt nach Implementierung des AuthService bzw. Erstellung des Signup-Forms
   }
 
   async loginAsGuest() {
