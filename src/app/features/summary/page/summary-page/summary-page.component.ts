@@ -1,5 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { TasksService } from '../../../tasks/services/tasks.service';
+import { ContactsService } from '../../../contacts/services/contacts.service';
 
 @Component({
   selector: 'app-summary-page',
@@ -9,6 +10,7 @@ import { TasksService } from '../../../tasks/services/tasks.service';
 })
 export class SummaryPageComponent {
   tasksService = inject(TasksService);
+  contactsService = inject(ContactsService);
 
   async ngOnInit() {
     this.tasksService.initRealtime();
@@ -50,7 +52,15 @@ export class SummaryPageComponent {
     return new Intl.DateTimeFormat('de-DE', {
       month: 'long',
       day: 'numeric',
-      year: 'numeric'
-    }).format(date)
-  })
+      year: 'numeric',
+    }).format(date);
+  });
+
+  get isGuest() {
+    return !!localStorage.getItem('guest');
+  }
+
+  get currentUserName() {
+    return this.contactsService.currentUserContact?.name;
+  }
 }
