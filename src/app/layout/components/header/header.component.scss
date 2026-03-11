@@ -91,6 +91,12 @@ section {
   }
 }
 
+.initials{
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 20px;
+}
+
 @media (min-width: $bp-lg) {
   .logo {
     display: none;
