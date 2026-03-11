@@ -7,6 +7,7 @@ import { BoardPageComponent } from './features/board/page/board-page/board-page.
 import { PrivacypolicyPageComponent } from './features/privacy/privacypolicy-page/privacypolicy-page.component';
 import { LegalnoticePageComponent } from './features/legalnotice/legalnotice-page/legalnotice-page.component';
 import { LandingPageComponent } from './features/auth/page/landing-page/landing-page.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: 'summary',
