@@ -46,7 +46,7 @@ export class HeaderComponent {
   }
 
   get currentUser() {
-    return this.contactsService.currentUserContact;
+    return this.contactsService.currentUserContact()?.name;
   }
 
   get isGuest() {

@@ -61,10 +61,11 @@
       </div>
     </div>
     <div class="welcome">
-      <h2>Good morning!</h2>
       @if (!isGuest && currentUserName) {
         <h2>Good morning,</h2>
-        <p class="welcome__initial">{{currentUserName}}</p>
+        <p class="welcome__initial">{{ currentUserName }}</p>
+      } @else {
+        <h2>Good morning!</h2>
       }
     </div>
   </div>

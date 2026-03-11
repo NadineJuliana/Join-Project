@@ -61,6 +61,6 @@ export class SummaryPageComponent {
   }
 
   get currentUserName() {
-    return this.contactsService.currentUserContact?.name;
+    return this.contactsService.currentUserContact()?.name;
   }
 }
