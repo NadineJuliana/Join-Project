@@ -1,1 +1,35 @@
-<p>help-page works!</p>
+<div class="help_page">
+  <div class="help_page-header">
+    <h1 [innerHTML]="highlightJoin(content.title)"></h1>
+    <button (click)="goBack()">
+      <img src="Vector (2).svg" alt="Arrow Back" />
+    </button>
+  </div>
+  <p [innerHTML]="highlightJoin(content.description)"></p>
+
+  @if (content.sections.length) {
+    @for (section of content.sections; track section) {
+      <h4>{{ section.heading }}</h4>
+
+      @for (paragraph of section.paragraphs; track paragraph) {
+        <p [innerHTML]="highlightJoin(paragraph)"></p>
+      }
+
+      @if (section.steps && section.steps.length) {
+        <ol>
+          @for (step of section.steps; track step) {
+            <li>
+              <h5 [innerHTML]="highlightJoin(step.title)"></h5>
+              <p [innerHTML]="highlightJoin(step.text)"></p>
+            </li>
+          }
+        </ol>
+      }
+    }
+  }
+  <div class="help_page-close">
+    <p [innerHTML]="highlightJoin(content.remember)"></p>
+    <p [innerHTML]="highlightJoin(content.contact)"></p>
+  </div>
+  <h4>{{ content.close }}</h4>
+</div>
