@@ -32,6 +32,7 @@
   &__fields {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 24px;
     width: 100%;
     max-width: 500px;
@@ -108,6 +109,68 @@
     }
   }
 
+  //   &__privacy-wrap {
+  //     width: 100%;
+  //     display: flex;
+  //     justify-content: center;
+  //   }
+
+  &__privacy {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    position: relative;
+
+    // &:hover {
+    //   background-color: var(--blue-hover);
+    //   border-radius: 8px;
+    // }
+  }
+
+  &__privacy-checkbox {
+    position: absolute;
+    opacity: 0;
+    // cursor: pointer;
+    width: 24px;
+    height: 24px;
+  }
+
+  &__privacy-icon {
+    color: var(--primary);
+    user-select: none;
+    border-radius: 50%;
+    padding: 4px;
+    transition: background-color 120ms ease;
+
+    &--empty {
+      display: inline;
+    }
+
+    &--checked {
+      display: none;
+    }
+  }
+
+  &__privacy:hover &__privacy-icon {
+    background-color: var(--blue-hover);
+    cursor: pointer;
+  }
+
+  &__privacy-text {
+    font-size: 16px;
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+
   &__actions {
     padding-top: 8px;
     display: flex;
@@ -139,6 +202,14 @@
   .btn:disabled:hover {
     filter: none;
   }
+}
+
+.signup-form__privacy-checkbox:checked ~ .signup-form__privacy-icon--empty {
+  display: none;
+}
+
+.signup-form__privacy-checkbox:checked ~ .signup-form__privacy-icon--checked {
+  display: inline;
 }
 
 @media (max-width: $bp-lg) {

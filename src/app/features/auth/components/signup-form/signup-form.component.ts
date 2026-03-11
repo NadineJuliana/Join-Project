@@ -54,6 +54,9 @@ export class SignupFormComponent {
       confirmPassword: this.formBuilder.nonNullable.control('', [
         Validators.required,
       ]),
+      acceptPrivacy: this.formBuilder.nonNullable.control(false, [
+        Validators.requiredTrue,
+      ]),
     },
     { validators: [passwordMatchValidator] },
   );

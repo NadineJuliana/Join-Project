@@ -114,7 +114,30 @@
         <p>Your passwords don't match. Please try again.</p>
       }
     </div>
+
+    <!-- <div class="signup-form__privacy-wrap"> -->
+    <label class="signup-form__privacy">
+      <input
+        type="checkbox"
+        formControlName="acceptPrivacy"
+        class="signup-form__privacy-checkbox"
+      />
+
+      <span
+        class="material-icons signup-form__privacy-icon signup-form__privacy-icon--empty"
+        >check_box_outline_blank</span
+      >
+      <span
+        class="material-icons signup-form__privacy-icon signup-form__privacy-icon--checked"
+        >check_box</span
+      >
+
+      <span class="signup-form__privacy-text">
+        I accept the <a href="#">Privacy policy</a>
+      </span>
+    </label>
   </div>
+  <!-- </div> -->
 
   @if (authErrorMessage) {
     <p class="signup-form__auth-error">{{ authErrorMessage }}</p>
