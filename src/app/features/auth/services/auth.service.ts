@@ -46,7 +46,12 @@ export class AuthService {
 
   async loginAsGuest() {
     localStorage.setItem('guest', 'true');
-    return this.login('guest@join-app.com', 'guest123456');
+    const { data, error } = await this.client.auth.signInWithPassword({
+      email: 'guest@join-app.com',
+      password: 'guest123456',
+    });
+    if (error) throw error;
+    return data;
   }
 
   async logout() {
