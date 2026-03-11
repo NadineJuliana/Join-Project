@@ -65,6 +65,6 @@
     <button [disabled]="!form.valid" class="btn btn--primary" type="submit">
       Log in
     </button>
-    <button class="btn btn--secondary" type="button">Guest Log in</button>
+    <button (click)="loginAsGuest()" class="btn btn--secondary" type="button">Guest Log in</button>
   </div>
 </form>
