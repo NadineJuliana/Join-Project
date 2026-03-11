@@ -16,7 +16,8 @@
           <button class="logout-btn" (click)="logout()">Logout</button>
         </div>
       }
-      <p>SM</p>
+      <p>{{isGuest ? 'G' : (currentUser.name | initials)}}
+      </p>
     </div>
   </div>
 </section>
