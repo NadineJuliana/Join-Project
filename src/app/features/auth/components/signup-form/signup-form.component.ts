@@ -6,6 +6,8 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 function passwordMatchValidator(
   control: AbstractControl,
@@ -27,6 +29,8 @@ function passwordMatchValidator(
   styleUrl: './signup-form.component.scss',
 })
 export class SignupFormComponent {
+  private authService = inject(AuthService);
+  private router = inject(Router);
   private formBuilder = inject(FormBuilder);
   authErrorMessage = '';
   showPassword = false;
@@ -99,13 +103,15 @@ export class SignupFormComponent {
     this.isConfirmPasswordFocused = false;
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
     this.authErrorMessage = '';
-    // Signup submission folgt nach Implementierung des AuthService
+    const { name, email, password } = this.form.getRawValue();
+    await this.authService.signUp(name, email, password);
+    this.router.navigate(['/login']);
   }
 }
