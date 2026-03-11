@@ -67,6 +67,12 @@ section {
   }
 }
 
+.logout-btn {
+  color: var(--lightgray);
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
 .logo {
   width: 32px;
 
@@ -80,7 +86,7 @@ section {
   width: 20px;
   height: 20px;
   color: var(--gray);
-  :hover{
+  :hover {
     transform: scale(1.2);
   }
 }

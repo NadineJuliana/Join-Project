@@ -1,5 +1,12 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  ViewChild,
+} from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../features/auth/services/auth.service';
 
 @Component({
   standalone: true,
@@ -9,6 +16,8 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  private authService = inject(AuthService);
+  private router = inject(Router);
   isProfileMenuOpen = false;
 
   @ViewChild('profileArea') profileArea!: ElementRef;
@@ -26,5 +35,10 @@ export class HeaderComponent {
     ) {
       this.isProfileMenuOpen = false;
     }
+  }
+
+  async logout() {
+    await this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
