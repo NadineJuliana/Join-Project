@@ -59,13 +59,14 @@ section {
 }
 
 .legal {
+  width: 100%;
   display: flex;
   flex-direction: column;
 
   a {
     width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     padding: 8px 15px;
     color: var(--gray);
     font-variation-settings: "wght" 400;

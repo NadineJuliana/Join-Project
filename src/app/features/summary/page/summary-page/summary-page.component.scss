@@ -193,6 +193,14 @@
         width: 40px;
       }
     }
+    &__urgent {
+      .urgent-icon {
+        width: 40px;
+        svg {
+          width: 30px;
+        }
+      }
+    }
   }
   .header {
     &__headline {
