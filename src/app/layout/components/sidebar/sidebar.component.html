@@ -3,21 +3,31 @@
     <img src="Join Logo white.svg" alt="" />
   </div>
   <div class="links">
-  <app-navbar></app-navbar>
-  <div class="legal">
-    <a
-      routerLink="/privacy-policy"
-      routerLinkActive="is-active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      >Privacy policy</a
-    >
+    @if (isLoggedIn) {
+      <app-navbar></app-navbar>
+    } @else {
+      <div class="btn-login">
+        <button routerLink="/login">
+          <span class="material-icons">login</span>Log In
+        </button>
+      </div>
+    }
+    <div [class.logged-out]="!isLoggedIn">
+      <div class="legal">
+        <a
+          routerLink="/privacy-policy"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Privacy Policy</a
+        >
 
-    <a
-      routerLink="/legal-notice"
-      routerLinkActive="is-active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      >Legal notice</a
-    >
-  </div>
+        <a
+          routerLink="/legal-notice"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Legal Notice</a
+        >
+      </div>
+    </div>
   </div>
 </section>
