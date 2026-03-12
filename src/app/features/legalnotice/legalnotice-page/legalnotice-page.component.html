@@ -1,1 +1,28 @@
-<p>legalnotice-page works!</p>
+<div class="legalnotice">
+  <div class="legalnotice_header">
+    <h1>{{ content.headline }}</h1>
+    <button (click)="goBack()">
+      <img src="Vector (2).svg" alt="Arrow Back" />
+    </button>
+  </div>
+  @if (content.sections.length) {
+    @for (section of content.sections; track section) {
+      <h4>{{ section.title }}</h4>
+      @if (section.address?.length) {
+        @for (address of section.address; track address) {
+          <li>
+            <p>{{ address }}</p>
+          </li>
+        }
+      }
+      @if (section.steps?.length) {
+        @for (step of section.steps; track step) {
+          <h5>{{ step.title }}</h5>
+          <p [innerHTML]="highlightJoin(step.text)"></p>
+        }
+      }
+    }
+  }
+  <p [innerHTML]="highlightJoin(content.close)"></p>
+  <p>{{content.date}}</p>
+</div>
