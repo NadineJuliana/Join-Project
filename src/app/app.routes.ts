@@ -10,6 +10,7 @@ import { LegalnoticePageComponent } from './features/legalnotice/legalnotice-pag
 import { LandingPageComponent } from './features/auth/page/landing-page/landing-page.component';
 import { authGuard } from './core/guards/auth.guard';
 import { HelpPageComponent } from './features/help/help-page/help-page.component';
+import { PublicLayoutComponent } from './layout/public-layout/public-layout.component';
 
 export const routes: Routes = [
   {
@@ -22,8 +23,11 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
+    component: PublicLayoutComponent,
+    children: [
+      { path: 'privacy-policy', component: PrivacypolicyPageComponent },
+      { path: 'legal-notice', component: LegalnoticePageComponent },
+    ],
   },
   {
     path: '',
@@ -47,17 +51,14 @@ export const routes: Routes = [
         component: ContactsPageComponent,
       },
       {
-        path: 'privacy-policy',
-        component: PrivacypolicyPageComponent,
-      },
-      {
-        path: 'legal-notice',
-        component: LegalnoticePageComponent,
-      },
-      {
         path: 'help',
         component: HelpPageComponent,
-      }
+      },
     ],
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
 ];
