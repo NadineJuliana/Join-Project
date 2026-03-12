@@ -19,7 +19,7 @@
         <ol>
           @for (step of section.steps; track step) {
             <li>
-              <h5 [innerHTML]="highlightJoin(step.title)"></h5>
+              <h5>{{step.title}}</h5>
               <p [innerHTML]="highlightJoin(step.text)"></p>
             </li>
           }
