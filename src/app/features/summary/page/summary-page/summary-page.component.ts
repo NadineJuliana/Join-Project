@@ -63,4 +63,13 @@ export class SummaryPageComponent {
   get currentUserName() {
     return this.contactsService.currentUserContact()?.name;
   }
+
+  get greetingByTime() {
+    const hour = new Date().getHours();
+
+    if (hour < 12) return 'Good morning';
+    if (hour < 15) return 'Good afternoon';
+    if (hour < 18) return 'Good day';
+    return 'Good evening';
+  }
 }

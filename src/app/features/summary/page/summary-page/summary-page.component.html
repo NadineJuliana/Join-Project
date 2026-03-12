@@ -71,10 +71,10 @@
         </div>
         <div class="welcome">
             @if (!isGuest && currentUserName) {
-            <h2>Good morning,</h2>
+            <h2>{{ greetingByTime }},</h2>
             <p class="welcome__initial">{{ currentUserName }}</p>
             } @else {
-            <h2>Good morning!</h2>
+            <h2>{{ greetingByTime }}!</h2>
             }
         </div>
     </div>
