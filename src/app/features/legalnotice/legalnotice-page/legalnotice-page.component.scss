@@ -23,6 +23,9 @@
     justify-content: space-between;
     align-items: flex-start;
     padding-bottom: 40px;
+    & button{
+      display: none;
+    }
   }
   h4 {
     padding: 20px 0 20px 0;
@@ -39,6 +42,14 @@
     margin-left: 20px;
     p {
       padding: 0;
+    }
+  }
+}
+
+@media(max-width: $bp-lg){
+  .legalnotice_header{
+    button{
+      display: block;
     }
   }
 }
