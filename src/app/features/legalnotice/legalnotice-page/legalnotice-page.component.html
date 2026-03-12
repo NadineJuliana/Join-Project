@@ -1,9 +1,11 @@
 <div class="legalnotice">
   <div class="legalnotice_header">
     <h1>{{ content.headline }}</h1>
-    <button (click)="goBack()">
-      <img src="Vector (2).svg" alt="Arrow Back" />
-    </button>
+    @if (isLoggedIn) {
+      <button (click)="goBack()">
+        <img src="Vector (2).svg" alt="Arrow Back" />
+      </button>
+    }
   </div>
   @if (content.sections.length) {
     @for (section of content.sections; track section) {
@@ -24,5 +26,5 @@
     }
   }
   <p [innerHTML]="highlightJoin(content.close)"></p>
-  <p>{{content.date}}</p>
+  <p>{{ content.date }}</p>
 </div>

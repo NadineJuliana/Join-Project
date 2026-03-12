@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { LEGALNOTICE_CONTENT } from '../components/legalnotice-content';
+import { AuthService } from '../../auth/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-legalnotice-page',
@@ -9,13 +11,20 @@ import { LEGALNOTICE_CONTENT } from '../components/legalnotice-content';
   templateUrl: './legalnotice-page.component.html',
   styleUrl: './legalnotice-page.component.scss',
 })
-export class LegalnoticePageComponent {
+export class LegalnoticePageComponent implements OnInit {
   content = LEGALNOTICE_CONTENT;
+  isLoggedIn = false;
 
   constructor(
+    private authService: AuthService,
+    private router: Router,
     private sanitizer: DomSanitizer,
     private location: Location,
   ) {}
+
+  async ngOnInit() {
+    this.isLoggedIn = await this.authService.isLoggedIn();
+  }
 
   highlightJoin(text: string): SafeHtml {
     if (!text) return '';
@@ -29,6 +38,10 @@ export class LegalnoticePageComponent {
   }
 
   goBack() {
-    this.location.back();
+    if (window.history.length > 1) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/summary']);
+    }
   }
 }
