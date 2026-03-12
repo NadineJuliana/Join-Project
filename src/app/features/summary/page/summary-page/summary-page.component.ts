@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, OnDestroy } from '@angular/core';
 import { TasksService } from '../../../tasks/services/tasks.service';
 import { ContactsService } from '../../../contacts/services/contacts.service';
 
@@ -8,13 +8,42 @@ import { ContactsService } from '../../../contacts/services/contacts.service';
   templateUrl: './summary-page.component.html',
   styleUrl: './summary-page.component.scss',
 })
-export class SummaryPageComponent {
+export class SummaryPageComponent implements OnDestroy {
   tasksService = inject(TasksService);
   contactsService = inject(ContactsService);
 
+  showMobileWelcomeIntro = false;
+  private hideIntroTimeoutId?: ReturnType<typeof setTimeout>;
+  private readonly mobileSummaryLoaderKey = 'showMobileSummaryLoader';
+  private readonly introDurationMs = 900;
+
   async ngOnInit() {
     this.tasksService.initRealtime();
+    this.startMobileIntro();
     await this.tasksService.initialize();
+  }
+
+  ngOnDestroy() {
+    if (this.hideIntroTimeoutId) clearTimeout(this.hideIntroTimeoutId);
+  }
+
+  private startMobileIntro() {
+    const shouldShow =
+      this.isMobileViewport() &&
+      sessionStorage.getItem(this.mobileSummaryLoaderKey) === '1';
+
+    if (!shouldShow) return;
+
+    this.showMobileWelcomeIntro = true;
+    sessionStorage.removeItem(this.mobileSummaryLoaderKey);
+
+    this.hideIntroTimeoutId = setTimeout(() => {
+      this.showMobileWelcomeIntro = false;
+    }, this.introDurationMs);
+  }
+
+  private isMobileViewport(): boolean {
+    return window.matchMedia('(max-width: 768px)').matches;
   }
 
   toDoCount = computed(() => this.tasksService.toDoTasks().length);

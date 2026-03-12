@@ -15,6 +15,7 @@ export class LoginFormComponent {
   private router = inject(Router);
   private contactsService = inject(ContactsService);
   private formBuilder = inject(FormBuilder);
+  private readonly mobileSummaryLoaderKey = 'showMobileSummaryLoader';
   authErrorMessage = '';
   showPassword = false;
   isPasswordFocused = false;
@@ -58,12 +59,16 @@ export class LoginFormComponent {
     const { email, password } = this.form.getRawValue();
     await this.authService.login(email, password);
     await this.contactsService.loadCurrentUserContact(email);
+
+    sessionStorage.setItem('showMobileSummaryLoader', '1');
     this.router.navigate(['/summary']);
   }
 
   async loginAsGuest() {
     this.authErrorMessage = '';
     await this.authService.loginAsGuest();
+
+    sessionStorage.setItem('showMobileSummaryLoader', '1');
     this.router.navigate(['/summary']);
   }
 }
