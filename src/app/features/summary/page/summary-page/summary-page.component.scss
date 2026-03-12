@@ -76,6 +76,15 @@
       justify-content: center;
       align-items: center;
     }
+    &:hover {
+      cursor: pointer;
+      background: var(--primary);
+      color: white;
+      span {
+        background: white;
+        color: var(--primary);
+      }
+    }
   }
   &__to-do {
     grid-column: 1/4;
@@ -93,11 +102,17 @@
     align-items: center;
     justify-content: center;
     gap: clamp(5px, calc(5px + (100vw - 375px)), 20px);
-    span {
+    .urgent-icon {
       background: var(--urgent);
-      img {
-        filter: brightness(100);
-        width: 40%;
+      border-radius: 100%;
+      width: 70px;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      svg {
+        width: 30px;
       }
     }
   }
