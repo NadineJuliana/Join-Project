@@ -1,0 +1,32 @@
+@use "../../../../styles/abstracts/breakpoints" as *;
+
+.privatepolicy {
+  max-width: calc(1440px - 232px);
+  height: calc(100dvh - 96px);
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding: clamp(32px, calc(32px + (100vw - 768px)), 40px)
+    clamp(24px, calc(24px + (100vw - 768px)), 48px);
+  h1 {
+    margin-bottom: 20px;
+  }
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 20px 0px;
+  }
+  h3 {
+    margin: 20px 0px;
+  }
+  h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0px;
+  }
+}
+
+@media (max-width: $bp-md) {
+  .privatepolicy {
+    height: calc(100dvh - 160px);
+  }
+}
