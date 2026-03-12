@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../auth/services/auth.service';
-import { Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { LEGALNOTICE_CONTENT } from '../components/legalnotice-content';
@@ -11,23 +9,13 @@ import { LEGALNOTICE_CONTENT } from '../components/legalnotice-content';
   templateUrl: './legalnotice-page.component.html',
   styleUrl: './legalnotice-page.component.scss',
 })
-export class LegalnoticePageComponent implements OnInit {
-  isLoggedIn = false;
+export class LegalnoticePageComponent {
   content = LEGALNOTICE_CONTENT;
 
   constructor(
-    private auth: AuthService,
-    private router: Router,
     private sanitizer: DomSanitizer,
     private location: Location,
   ) {}
-
-  async ngOnInit() {
-    this.isLoggedIn = await this.auth.isLoggedIn();
-    if (!this.isLoggedIn) {
-      this.router.navigate(['/login']);
-    }
-  }
 
   highlightJoin(text: string): SafeHtml {
     if (!text) return '';
