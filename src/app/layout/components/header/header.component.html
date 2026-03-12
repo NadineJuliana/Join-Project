@@ -3,21 +3,23 @@
     <img src="Join Logo.svg" alt="" />
   </div>
   <h5>Kanban Project Management Tool</h5>
-  <div class="profile-section">
-    <button routerLink="/help" class="help-btn">
-      <span class="material-icons">help_outline</span>
-    </button>
+  <div [class.logged-out]="!isLoggedIn">
+    <div class="profile-section">
+      <button routerLink="/help" class="help-btn">
+        <span class="material-icons">help_outline</span>
+      </button>
 
-    <div class="profile-icon" #profileArea (click)="toggleProfileMenu()">
-      @if (isProfileMenuOpen) {
-        <div class="profile-menu">
-          <a routerLink="/help" class="help-mobile">Help</a>
-          <a routerLink="/privacy-policy">Privacy policy</a>
-          <a routerLink="/legal-notice">Legal notice</a>
-          <button class="logout-btn" (click)="logout()">Logout</button>
-        </div>
-      }
-      <p class="initials">{{ isGuest ? "G" : (currentUser | initials) }}</p>
+      <div class="profile-icon" #profileArea (click)="toggleProfileMenu()">
+        @if (isProfileMenuOpen) {
+          <div class="profile-menu">
+            <a routerLink="/help" class="help-mobile">Help</a>
+            <a routerLink="/privacy-policy">Privacy policy</a>
+            <a routerLink="/legal-notice">Legal notice</a>
+            <button class="logout-btn" (click)="logout()">Logout</button>
+          </div>
+        }
+        <p class="initials">{{ isGuest ? "G" : (currentUser | initials) }}</p>
+      </div>
     </div>
   </div>
 </section>

@@ -3,6 +3,7 @@ import {
   ElementRef,
   HostListener,
   inject,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
@@ -17,13 +18,18 @@ import { InitialsPipe } from '../../../shared/pipes/initials.pipe';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   private contactsService = inject(ContactsService);
   private authService = inject(AuthService);
   private router = inject(Router);
   isProfileMenuOpen = false;
+  isLoggedIn = false;
 
   @ViewChild('profileArea') profileArea!: ElementRef;
+
+  async ngOnInit() {
+    this.isLoggedIn = await this.authService.isLoggedIn();
+  }
 
   toggleProfileMenu(): void {
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
