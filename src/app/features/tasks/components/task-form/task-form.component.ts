@@ -23,6 +23,7 @@ import { TasksService } from '../../services/tasks.service';
 import { Task, TaskStatus } from '../../models/task.model';
 import { Router } from '@angular/router';
 import { ToastsService } from '../../../../core/services/toasts.service';
+import { Contact } from '../../../contacts/models/contact.model';
 
 type Priority = 'urgent' | 'medium' | 'low';
 type TaskCategory = 'technical-task' | 'user-story';
@@ -65,7 +66,8 @@ export class TaskFormComponent implements OnInit {
     { value: 'technical-task', label: 'Technical Task' },
     { value: 'user-story', label: 'User Story' },
   ];
-  contacts = computed(() => this.contactsService?.contacts() ?? []);
+  // contacts = computed(() => this.contactsService?.contacts() ?? []);
+  contacts = signal<Contact[]>([]);
   subtasks = signal<Subtask[]>([]);
   isEditMode = signal(false);
   subtasksResetTrigger = 0;
@@ -75,6 +77,7 @@ export class TaskFormComponent implements OnInit {
     if (this.contactsService && !this.contactsService.contactsLoaded) {
       await this.contactsService.getAllContacts();
     }
+    this.contacts.set(this.contactsService?.contacts() ?? []);
     if (this.editTask()) {
       this.formForEdit(this.editTask()!);
     }

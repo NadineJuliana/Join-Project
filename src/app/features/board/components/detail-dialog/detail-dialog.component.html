@@ -43,7 +43,7 @@
             <div class="card-detail__subtasks-container">
                 <h5><span>Subtasks</span></h5>
                 <div class="card-detail__subtasks">
-                    @for (subtask of task().subtasks ?? []; track subtask.id) {
+                    @for (subtask of task().subtasks ?? []; track subtask.id > 0 ? subtask.id: $index) {
                     <label class="card-detail__subtasks-item">
                         <input [checked]="subtask.completed" (change)="toggleSubtask(subtask, $event)" type="checkbox"
                             class="card-detail__subtasks-item-checkbox" />

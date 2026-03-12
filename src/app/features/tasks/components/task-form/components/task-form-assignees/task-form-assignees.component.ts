@@ -26,15 +26,33 @@ export class TaskFormAssigneesComponent {
   assigneeSearchTerm = signal('');
   isAssigneeSearchActive = signal(false);
 
-  filteredContacts = computed(() => {
-    const normalizedSearchTerm = this.assigneeSearchTerm().trim().toLowerCase();
-    if (!normalizedSearchTerm) {
-      return this.contacts();
+  selectedAssigneeContacts = computed(() => {
+    const selectedIds = new Set(this.selectedAssigneeIds());
+    return this.contacts().filter((contact) =>
+      selectedIds.has(String(contact.id)),
+    );
+  });
+
+  assigneesDisplayLabel = computed(() => {
+    const selectedIds = this.selectedAssigneeIds();
+    const selectedCount = selectedIds.length;
+    if (selectedCount === 0) {
+      return 'Select contacts to assign';
+    }
+    if (selectedCount === 1) {
+      const selectedContact = this.contacts().find(
+        (contact) => String(contact.id) === selectedIds[0],
+      );
+      return selectedContact?.name ?? '1 contact selected';
     }
 
-    return this.contacts().filter((contact) =>
-      contact.name.toLowerCase().includes(normalizedSearchTerm),
-    );
+    return `${selectedCount} contacts selected`;
+  });
+
+  filteredContacts = computed(() => {
+    const term = this.assigneeSearchTerm().toLowerCase().trim();
+    if (!term) return this.contacts();
+    return this.contacts().filter((c) => c.name.toLowerCase().includes(term));
   });
 
   @ViewChild('assigneeSearchInput')
@@ -99,31 +117,6 @@ export class TaskFormAssigneesComponent {
 
   isAssigneeSelected(contactId: number): boolean {
     return this.selectedAssigneeIds().includes(String(contactId));
-  }
-
-  getAssigneesDisplayLabel(): string {
-    const selectedIds = this.selectedAssigneeIds();
-    const selectedCount = selectedIds.length;
-    if (selectedCount === 0) {
-      return 'Select contacts to assign';
-    }
-
-    if (selectedCount === 1) {
-      const selectedId = selectedIds[0];
-      const selectedContact = this.contacts().find(
-        (contact) => String(contact.id) === selectedId,
-      );
-      return selectedContact?.name ?? '1 contact selected';
-    }
-
-    return `${selectedCount} contacts selected`;
-  }
-
-  getSelectedAssigneeContacts(): Contact[] {
-    const selectedIds = new Set(this.selectedAssigneeIds());
-    return this.contacts().filter((contact) =>
-      selectedIds.has(String(contact.id)),
-    );
   }
 
   private closeDropdown(): void {

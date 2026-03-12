@@ -27,20 +27,20 @@ export class TaskFormSubtasksComponent implements OnChanges {
   editingSubtaskDraft = signal('');
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['subtasksExisting'] && changes['subtasksExisting'].currentValue) {
-      this.subtasks.set([...changes['subtasksExisting'].currentValue]);
-      this.emitSubtasks();
+    if (
+      changes['subtasksExisting'] &&
+      changes['subtasksExisting'].currentValue
+    ) {
+      const incoming = changes['subtasksExisting'].currentValue;
+      if (JSON.stringify(incoming) !== JSON.stringify(this.subtasks())) {
+        this.subtasks.set([...incoming]);
+      }
     }
-    if (!changes['resetTrigger']) {
-      return;
+    if (changes['resetTrigger'] && !changes['resetTrigger'].firstChange) {
+      this.subtasks.set([]);
+      this.resetSubtaskInput();
+      this.finishSubtaskEdit();
     }
-    if (changes['resetTrigger'].firstChange) {
-      return;
-    }
-    this.subtasks.set([]);
-    this.resetSubtaskInput();
-    this.finishSubtaskEdit();
-    this.emitSubtasks();
   }
 
   onSubtaskInput(event: Event): void {

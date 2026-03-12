@@ -15,7 +15,7 @@
             selectedAssigneeIds().length === 0
           "
         >
-          {{ getAssigneesDisplayLabel() }}
+          {{ assigneesDisplayLabel() }}
         </span>
         <span
           class="task-form-assignees__arrow"
@@ -101,10 +101,10 @@
     }
   </div>
 
-  @if (getSelectedAssigneeContacts().length > 0) {
+  @if (selectedAssigneeContacts().length > 0) {
     <div class="task-form-assignees__selected" aria-label="Selected contacts">
       @for (
-        contact of getSelectedAssigneeContacts().slice(0, 5);
+        contact of selectedAssigneeContacts().slice(0, 5);
         track contact.id
       ) {
         <div
@@ -115,9 +115,9 @@
           <p>{{ contact.name | initials }}</p>
         </div>
       }
-      @if (getSelectedAssigneeContacts().length > 5) {
+      @if (selectedAssigneeContacts().length > 5) {
         <div class="task-form-assignees__selected-avatar-more">
-          <p>+{{ getSelectedAssigneeContacts().length - 5 }}</p>
+          <p>+{{ selectedAssigneeContacts().length - 5 }}</p>
         </div>
       }
     </div>
