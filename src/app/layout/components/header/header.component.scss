@@ -91,7 +91,11 @@ section {
   }
 }
 
-.initials{
+.help-mobile {
+  display: none;
+}
+
+.initials {
   color: var(--accent);
   font-weight: bold;
   font-size: 20px;
@@ -136,11 +140,16 @@ section {
     display: none;
   }
 
+  .profile-menu {
+    top: 80px;
+  }
+}
+
+@media (max-width: $bp-md) {
   .help-btn {
     display: none;
   }
-
-  .profile-menu {
-    top: 80px;
+  .help-mobile {
+    display: block;
   }
 }

@@ -11,6 +11,7 @@
     <div class="profile-icon" #profileArea (click)="toggleProfileMenu()">
       @if (isProfileMenuOpen) {
         <div class="profile-menu">
+          <a routerLink="/help" class="help-mobile">Help</a>
           <a routerLink="/privacy-policy">Privacy policy</a>
           <a routerLink="/legal-notice">Legal notice</a>
           <button class="logout-btn" (click)="logout()">Logout</button>
