@@ -213,4 +213,32 @@
       height: 3px;
     }
   }
+  .summary-page.mobile-intro-active {
+    height: 100vh;
+    overflow: hidden;
+
+    .header,
+    .summary {
+      display: none;
+    }
+
+    .summary-container {
+      height: 100%;
+    }
+
+    .welcome.welcome--intro {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: white;
+      z-index: 1000;
+    }
+
+    .welcome.welcome--intro .welcome__initial {
+      font-size: clamp(40px, 8vw, 56px);
+    }
+  }
 }
