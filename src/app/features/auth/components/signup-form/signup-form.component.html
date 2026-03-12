@@ -1,4 +1,11 @@
 <form class="signup-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <a
+    class="signup-form__back-link"
+    aria-label="Back to Login"
+    routerLink="/login"
+  >
+    <span class="material-icons">arrow_back</span>
+  </a>
   <h1>Sign up</h1>
   <span class="signup-form__separator" aria-hidden="true"></span>
 
@@ -133,7 +140,7 @@
       >
 
       <span class="signup-form__privacy-text">
-        I accept the <a href="#">Privacy policy</a>
+        I accept the <a routerLink="/privacy-policy">Privacy policy</a>
       </span>
     </label>
   </div>

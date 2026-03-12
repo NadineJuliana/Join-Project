@@ -17,6 +17,25 @@
   gap: 32px;
   filter: drop-shadow(var(--drop-shadow));
 
+  &__back-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 40px;
+    top: 60px;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    padding: 6px;
+    color: var(--accent);
+    cursor: pointer;
+
+    span {
+      font-size: clamp(24px, 5vw, 40px);
+    }
+  }
+
   h1 {
     margin: 0;
     text-align: center;

@@ -98,13 +98,19 @@
     opacity: 1;
     animation: none;
   }
+
+  .legal {
+    opacity: 1;
+    transform: translateY(0);
+    animation: none;
+  }
 }
 
 .legal {
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding: 80px;
+  padding: 40px;
   display: flex;
   justify-content: center;
   gap: 24px;
@@ -112,11 +118,8 @@
   animation: fade-in-down 300ms ease-out 420ms forwards;
 
   > a {
-    // height: 24px;
-    // width: 120px;
     position: relative;
     color: var(--gray);
-    // font-variation-settings: "wght" 400;
   }
 
   ::before {
@@ -171,7 +174,7 @@
     top: auto;
     left: 0;
     right: 0;
-    bottom: 40px;
+    bottom: 120px;
     width: 100%;
     justify-content: center;
     gap: 12px;

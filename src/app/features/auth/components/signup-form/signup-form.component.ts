@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 function passwordMatchValidator(
   control: AbstractControl,
@@ -24,7 +24,7 @@ function passwordMatchValidator(
 
 @Component({
   selector: 'app-signup-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './signup-form.component.html',
   styleUrl: './signup-form.component.scss',
 })
@@ -32,6 +32,7 @@ export class SignupFormComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
+
   authErrorMessage = '';
   showPassword = false;
   showConfirmPassword = false;
