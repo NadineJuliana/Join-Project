@@ -20,6 +20,7 @@ import { Contact } from '../../../../../contacts/models/contact.model';
 export class TaskFormAssigneesComponent {
   contacts = input.required<Contact[]>();
   selectedAssigneeIds = input<string[]>([]);
+  currentUserId = input<number | null>(null);
   selectedAssigneeIdsChange = output<string[]>();
 
   isDropdownOpen = signal(false);
@@ -117,6 +118,10 @@ export class TaskFormAssigneesComponent {
 
   isAssigneeSelected(contactId: number): boolean {
     return this.selectedAssigneeIds().includes(String(contactId));
+  }
+
+  isCurrentUser(contact: Contact): boolean {
+    return contact.id === this.currentUserId();
   }
 
   private closeDropdown(): void {

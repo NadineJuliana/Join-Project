@@ -42,7 +42,7 @@ type TaskCategory = 'technical-task' | 'user-story';
 export class TaskFormComponent implements OnInit {
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
-  private contactsService = inject(ContactsService, { optional: true });
+  contactsService = inject(ContactsService, { optional: true });
   private tasksService = inject(TasksService);
   private toastService = inject(ToastsService);
 
@@ -66,10 +66,16 @@ export class TaskFormComponent implements OnInit {
     { value: 'technical-task', label: 'Technical Task' },
     { value: 'user-story', label: 'User Story' },
   ];
-  // contacts = computed(() => this.contactsService?.contacts() ?? []);
-  contacts = signal<Contact[]>([]);
+
+  contacts = computed(() => {
+    const all = this.contactsService?.contacts() ?? [];
+    const current = this.contactsService?.currentUserContact();
+    if (!current) return all;
+    return [current, ...all.filter((c) => c.id !== current.id)];
+  });
   subtasks = signal<Subtask[]>([]);
   isEditMode = signal(false);
+
   subtasksResetTrigger = 0;
   isSubmitting = false;
 
@@ -77,7 +83,6 @@ export class TaskFormComponent implements OnInit {
     if (this.contactsService && !this.contactsService.contactsLoaded) {
       await this.contactsService.getAllContacts();
     }
-    this.contacts.set(this.contactsService?.contacts() ?? []);
     if (this.editTask()) {
       this.formForEdit(this.editTask()!);
     }

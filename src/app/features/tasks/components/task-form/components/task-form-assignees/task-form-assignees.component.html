@@ -81,6 +81,9 @@
               {{ contact.name | initials }}
             </div>
             <h5>{{ contact.name }}</h5>
+            @if (isCurrentUser(contact)) {
+              <h5 class="task-form-assignees__you">(You)</h5>
+            }
             <span
               class="task-form-assignees__checkbox material-icons"
               aria-hidden="true"

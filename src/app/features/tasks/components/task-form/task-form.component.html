@@ -157,6 +157,7 @@
       <app-task-form-assignees
         [contacts]="contacts()"
         [selectedAssigneeIds]="form.controls.assigneeIds.value"
+        [currentUserId]="contactsService?.currentUserContact()?.id ?? null"
         (selectedAssigneeIdsChange)="onAssigneesChange($event)"
       ></app-task-form-assignees>
     </div>
