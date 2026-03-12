@@ -100,6 +100,40 @@
   }
 }
 
+.legal {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 80px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  opacity: 0;
+  animation: fade-in-down 300ms ease-out 420ms forwards;
+
+  > a {
+    // height: 24px;
+    // width: 120px;
+    position: relative;
+    color: var(--gray);
+    // font-variation-settings: "wght" 400;
+  }
+
+  ::before {
+    content: attr(data-text);
+    font-weight: 700;
+    visibility: hidden;
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+
+  :hover {
+    color: var(--accent);
+    font-weight: 700;
+  }
+}
+
 @media (max-width: $bp-md) {
   .landing-intro-bg {
     position: fixed;
