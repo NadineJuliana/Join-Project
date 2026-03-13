@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
+import { ToastsService } from '../../../../core/services/toasts.service';
 
 function passwordMatchValidator(
   control: AbstractControl,
@@ -32,6 +33,7 @@ export class SignupFormComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
+  private toastService = inject(ToastsService);
 
   authErrorMessage = '';
   showPassword = false;
@@ -116,6 +118,18 @@ export class SignupFormComponent {
     this.authErrorMessage = '';
     const { name, email, password } = this.form.getRawValue();
     await this.authService.signUp(name, email, password);
-    this.router.navigate(['/login']);
+    this.createToastMessage();
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 500);
+  }
+
+  private createToastMessage() {
+    this.toastService.showToast({
+      message: 'You Signed Up successfully',
+      classname: 'toast__success',
+      position: 'center',
+      duration: 1000,
+    });
   }
 }
