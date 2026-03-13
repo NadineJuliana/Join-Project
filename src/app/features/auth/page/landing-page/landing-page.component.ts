@@ -11,13 +11,19 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent implements OnInit {
+  skipIntro = false;
+
   constructor(
     private readonly router: Router,
-    private authService: AuthService,
+    private readonly authService: AuthService,
   ) {}
 
   async ngOnInit() {
     await this.authService.logout();
+
+    this.skipIntro = this.authService.landingIntroPlayed;
+    this.authService.landingIntroPlayed = true;
+
     history.pushState(null, '', location.href);
     window.onpopstate = () => {
       history.go(1);

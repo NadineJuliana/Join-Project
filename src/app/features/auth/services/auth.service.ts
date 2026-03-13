@@ -7,6 +7,8 @@ import { Contact } from '../../contacts/models/contact.model';
   providedIn: 'root',
 })
 export class AuthService {
+  landingIntroPlayed = false;
+
   constructor(
     private supabaseService: SupabaseService,
     private contactsService: ContactsService,
@@ -58,6 +60,7 @@ export class AuthService {
     await this.client.auth.signOut();
     localStorage.removeItem('guest');
     this.contactsService.clearSelectedContact();
+    this.landingIntroPlayed = false;
   }
 
   async getUser() {

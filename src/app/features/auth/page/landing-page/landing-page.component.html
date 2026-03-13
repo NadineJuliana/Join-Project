@@ -1,4 +1,7 @@
-<section class="landing-page" [class.landing-page--no-intro]="showSignupForm">
+<section
+  class="landing-page"
+  [class.landing-page--no-intro]="showSignupForm || skipIntro"
+>
   <div class="landing-intro-bg" aria-hidden="true"></div>
 
   @if (!showSignupForm) {

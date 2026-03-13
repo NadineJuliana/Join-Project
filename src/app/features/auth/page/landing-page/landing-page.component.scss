@@ -64,7 +64,6 @@
   transform: translate(-50%, -50%);
   animation: move-center-to-sidebar 460ms linear 150ms forwards;
 }
-
 .landing-logo--white {
   display: none;
 }
@@ -102,6 +101,11 @@
   .legal {
     opacity: 1;
     transform: translateY(0);
+    animation: none;
+  }
+
+  .landing-cta {
+    opacity: 1;
     animation: none;
   }
 }
