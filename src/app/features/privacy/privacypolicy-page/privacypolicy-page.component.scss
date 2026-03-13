@@ -5,8 +5,8 @@
   height: calc(100dvh - 96px);
   overflow-y: auto;
   scrollbar-width: none;
-  padding: clamp(32px, calc(32px + (100vw - 768px)), 40px)
-    clamp(24px, calc(24px + (100vw - 768px)), 48px);
+  padding: clamp(32px, calc(32px + (100vw - 768px)), 80px)
+    clamp(24px, calc(24px + (100vw - 768px)), 80px);
   h1 {
     margin-bottom: 20px;
   }
@@ -45,5 +45,12 @@
 @media (max-width: $bp-md) {
   .privacypolicy {
     height: calc(100dvh - 160px);
+    padding: 80px 40px 40px 40px;
+  }
+}
+
+@media (max-width: $bp-sm) {
+  .privacypolicy {
+    padding: 32px 16px 16px 16px;
   }
 }
