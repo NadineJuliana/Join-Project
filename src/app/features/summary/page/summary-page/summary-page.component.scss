@@ -44,7 +44,7 @@
 .summary {
   display: grid;
   padding: 0px clamp(10px, calc(10px + (100vw - 1024px)), 64px);
-  padding-bottom: 50px;
+  padding-bottom: 20px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   width: 100%;
@@ -68,7 +68,7 @@
     gap: 10px;
     border-radius: 20px;
     filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.1));
-    padding: clamp(5px, calc(5px + (100vw - 768px)), 20px);
+    padding: clamp(5px, calc(5px + (100vw - 768px)), 10px);
     span {
       background: var(--primary);
       font-size: 32px;
