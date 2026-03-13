@@ -1,6 +1,6 @@
 @use "../../../../styles/abstracts/breakpoints" as *;
 
-.privatepolicy {
+.privacypolicy {
   max-width: calc(1440px - 232px);
   height: calc(100dvh - 96px);
   overflow-y: auto;
@@ -23,10 +23,27 @@
     font-weight: 600;
     margin: 10px 0px;
   }
+  &_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 40px;
+    & button {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: $bp-lg) {
+  .privacypolicy_header {
+    button {
+      display: block;
+    }
+  }
 }
 
 @media (max-width: $bp-md) {
-  .privatepolicy {
+  .privacypolicy {
     height: calc(100dvh - 160px);
   }
 }
