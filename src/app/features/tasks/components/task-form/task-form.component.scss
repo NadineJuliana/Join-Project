@@ -197,6 +197,9 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
+  position: sticky;
+  bottom: 0;
+  background-color: var(--secondary);
 
   &__required-note {
     margin: 0;
@@ -244,6 +247,7 @@
     &__actions {
       width: 100%;
       justify-content: flex-end;
+      padding-bottom: 8px;
       gap: clamp(6px, calc(16px - ($bp-md - 100vw) * 0.03), 16px);
     }
   }
