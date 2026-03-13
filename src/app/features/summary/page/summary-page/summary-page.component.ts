@@ -1,10 +1,12 @@
 import { Component, computed, inject, OnDestroy } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TasksService } from '../../../tasks/services/tasks.service';
 import { ContactsService } from '../../../contacts/services/contacts.service';
 
 @Component({
+  standalone: true,
   selector: 'app-summary-page',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './summary-page.component.html',
   styleUrl: './summary-page.component.scss',
 })
