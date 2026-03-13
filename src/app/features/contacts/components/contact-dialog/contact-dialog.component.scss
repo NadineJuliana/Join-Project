@@ -19,11 +19,12 @@
   align-items: center;
   justify-content: center;
   animation: fadeIn 0.3s ease-out;
+  padding: 15px;
 
   &__window {
-    margin: 10px;
     width: min(1212px, calc(100dvw - 48px));
-    min-height: 592px;
+    max-height: 592px;
+    height: 100%;
     background: var(--white);
     border-radius: 30px;
     overflow: hidden;
