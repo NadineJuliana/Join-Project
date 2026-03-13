@@ -53,6 +53,7 @@
 .landing-logo {
   --logo-start-size: clamp(180px, 52vw, 280px);
   --logo-end-size: clamp(64px, 10vw, 100px);
+  --logo-end-top: clamp(16px, 4vh, 64px);
   --logo-end-left: calc((clamp(72px, 18vw, 232px) - var(--logo-end-size)) / 2);
 
   position: fixed;
@@ -91,7 +92,7 @@
 
   .landing-logo--default {
     left: var(--logo-end-left);
-    top: 64px;
+    top: var(--logo-end-top);
     width: var(--logo-end-size);
     transform: translate(0, 0);
     opacity: 1;
@@ -114,7 +115,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding: 40px;
+  padding: clamp(16px, 4vh, 40px) 40px;
   display: flex;
   justify-content: center;
   gap: 24px;
@@ -178,7 +179,7 @@
     top: auto;
     left: 0;
     right: 0;
-    bottom: 120px;
+    bottom: clamp(50px, 10vh, 120px);
     width: 100%;
     justify-content: center;
     gap: 12px;
