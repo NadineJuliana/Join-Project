@@ -68,7 +68,7 @@
     gap: 10px;
     border-radius: 20px;
     filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.1));
-    padding: 20px clamp(5px, calc(5px + (100vw - 768px)), 20px);
+    padding: clamp(5px, calc(5px + (100vw - 768px)), 20px);
     span {
       background: var(--primary);
       font-size: 32px;
@@ -184,6 +184,9 @@
 }
 
 @media (max-width: $bp-md) {
+  .summary-page{
+    height: calc(100dvh - 160px);
+  }
   .welcome {
     display: none;
   }
