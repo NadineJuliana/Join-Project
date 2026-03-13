@@ -56,11 +56,13 @@ export class AuthService {
     return data;
   }
 
-  async logout() {
+  async logout(options?: { resetLandingIntro?: boolean }) {
     await this.client.auth.signOut();
     localStorage.removeItem('guest');
     this.contactsService.clearSelectedContact();
-    this.landingIntroPlayed = false;
+    if (options?.resetLandingIntro !== false) {
+      this.landingIntroPlayed = false;
+    }
   }
 
   async getUser() {

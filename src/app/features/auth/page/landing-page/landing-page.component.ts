@@ -16,13 +16,13 @@ export class LandingPageComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly authService: AuthService,
-  ) {}
-
-  async ngOnInit() {
-    await this.authService.logout();
-
+  ) {
     this.skipIntro = this.authService.landingIntroPlayed;
     this.authService.landingIntroPlayed = true;
+  }
+
+  async ngOnInit() {
+    await this.authService.logout({ resetLandingIntro: false });
 
     history.pushState(null, '', location.href);
     window.onpopstate = () => {
