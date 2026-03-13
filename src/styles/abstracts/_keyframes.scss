@@ -30,7 +30,7 @@
 
   to {
     left: var(--logo-end-left);
-    top: 64px;
+    top: var(--logo-end-top);
     width: var(--logo-end-size);
     transform: translate(0, 0);
   }
