@@ -140,29 +140,24 @@
     }
   }
 
-  //   &__privacy-wrap {
-  //     width: 100%;
-  //     display: flex;
-  //     justify-content: center;
-  //   }
-
   &__privacy {
     display: flex;
     align-items: center;
     gap: 8px;
-    cursor: pointer;
-    position: relative;
+  }
 
-    // &:hover {
-    //   background-color: var(--blue-hover);
-    //   border-radius: 8px;
-    // }
+  &__privacy-consent {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: default;
+    position: relative;
   }
 
   &__privacy-checkbox {
     position: absolute;
     opacity: 0;
-    // cursor: pointer;
+    cursor: pointer;
     width: 24px;
     height: 24px;
   }
@@ -183,22 +178,28 @@
     }
   }
 
-  &__privacy:hover &__privacy-icon {
+  &__privacy-consent:has(.signup-form__privacy-checkbox:hover) &__privacy-icon,
+  &__privacy-consent:has(.signup-form__privacy-icon:hover) &__privacy-icon,
+  &__privacy-consent:has(.signup-form__privacy-text-prefix:hover)
+    &__privacy-icon {
     background-color: var(--blue-hover);
+  }
+
+  &__privacy-icon:hover {
     cursor: pointer;
   }
 
-  &__privacy-text {
+  &__privacy-text-prefix {
     font-size: 16px;
+  }
 
-    a {
-      color: var(--accent);
-      text-decoration: none;
+  &__privacy-link {
+    color: var(--accent);
+    text-decoration: none;
+    cursor: pointer;
 
-      &:hover {
-        text-decoration: underline;
-        cursor: pointer;
-      }
+    &:hover {
+      text-decoration: underline;
     }
   }
 
