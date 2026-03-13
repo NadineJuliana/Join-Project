@@ -23,6 +23,11 @@ export const routes: Routes = [
   },
   {
     path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: PublicLayoutComponent,
     children: [
       { path: 'privacy-policy', component: PrivacypolicyPageComponent },
@@ -55,10 +60,5 @@ export const routes: Routes = [
         component: HelpPageComponent,
       },
     ],
-  },
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
   },
 ];
