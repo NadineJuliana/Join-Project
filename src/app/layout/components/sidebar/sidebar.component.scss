@@ -33,7 +33,6 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
 }
 
 .btn-login {
@@ -86,6 +85,7 @@ section {
   :host {
     z-index: 3;
   }
+
   section {
     display: flex;
     flex-direction: row;
