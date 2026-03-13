@@ -195,6 +195,18 @@
   }
 }
 
+@media (max-height: 810px) {
+  .landing-page--signup-open {
+    .landing-logo--white,
+    .landing-logo--default {
+      opacity: 0;
+      animation: none;
+      pointer-events: none;
+      display: none;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .landing-intro-bg {
     animation-duration: 1ms;
