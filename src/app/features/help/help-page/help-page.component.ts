@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HELP_CONTENT } from '../components/help-content';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-help-page',
@@ -15,6 +16,7 @@ export class HelpPageComponent {
   constructor(
     private sanitizer: DomSanitizer,
     private location: Location,
+    private router: Router,
   ) {}
 
   highlightJoin(text: string): SafeHtml {
@@ -27,6 +29,10 @@ export class HelpPageComponent {
   }
 
   goBack() {
-    this.location.back();
+    if (window.history.length > 1) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/summary']);
+    }
   }
 }
