@@ -8,21 +8,21 @@
     </div>
     <div class="summary-container">
         <div class="summary">
-            <div class="summary__card summary__to-do">
+            <div class="summary__card summary__to-do" [routerLink]="['/board']">
                 <span class="material-icons">edit</span>
                 <div class="summary__info">
                     <p class="number">{{ toDoCount() }}</p>
                     <h5>To-do</h5>
                 </div>
             </div>
-            <div class="summary__card summary__done">
+            <div class="summary__card summary__done" [routerLink]="['/board']">
                 <span class="material-icons">check</span>
                 <div class="summary__info">
                     <p class="number">{{ doneCount() }}</p>
                     <h5>Done</h5>
                 </div>
             </div>
-            <div class="summary__deadline-container summary__card">
+            <div class="summary__deadline-container summary__card" [routerLink]="['/board']">
                 <div class="summary__urgent">
                     <div class="urgent-icon">
                         <svg class="task-form-priority__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15"
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="summary__board-card summary__card">
+            <div class="summary__board-card summary__card" [routerLink]="['/board']">
                 <div class="summary__info">
                     <p class="number">{{ boardCount() }}</p>
                     <h5>
@@ -57,13 +57,13 @@
                     </h5>
                 </div>
             </div>
-            <div class="summary__progress-card summary__card">
+            <div class="summary__progress-card summary__card" [routerLink]="['/board']">
                 <div class="summary__info">
                     <p class="number">{{ inProgressCount() }}</p>
                     <h5>Tasks In Progress</h5>
                 </div>
             </div>
-            <div class="summary__feedback-card summary__card">
+            <div class="summary__feedback-card summary__card" [routerLink]="['/board']">
                 <div class="summary__info">
                     <p class="number">{{ awaitFeedbackCount() }}</p>
                     <h5>Awaiting feedback</h5>
