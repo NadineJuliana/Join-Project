@@ -19,6 +19,7 @@
         placeholder="Name"
         aria-label="Name"
         autocomplete="name"
+        (blur)="formatNameField()"
       />
       <span class="material-icons">person</span>
 
@@ -38,6 +39,7 @@
         placeholder="Email"
         aria-label="Email"
         autocomplete="email"
+        (blur)="formatEmailField()"
       />
       <span class="material-icons">mail</span>
 
@@ -77,10 +79,18 @@
 
       @if (
         form.controls.password.touched &&
-        !form.controls.password.valid &&
-        !form.controls.password.disabled
+        !form.controls.password.disabled &&
+        form.controls.password.hasError('required')
       ) {
         <p>Please enter a password</p>
+      }
+
+      @if (
+        form.controls.password.touched &&
+        !form.controls.password.disabled &&
+        form.controls.password.hasError('minlength')
+      ) {
+        <p>Password must be at least 6 characters</p>
       }
     </div>
 

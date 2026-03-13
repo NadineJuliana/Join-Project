@@ -57,11 +57,17 @@ export class LoginFormComponent {
     }
     this.authErrorMessage = '';
     const { email, password } = this.form.getRawValue();
-    await this.authService.login(email, password);
-    await this.contactsService.loadCurrentUserContact(email);
 
-    sessionStorage.setItem('showMobileSummaryLoader', '1');
-    this.router.navigate(['/summary']);
+    try {
+      await this.authService.login(email, password);
+      await this.contactsService.loadCurrentUserContact(email);
+
+      sessionStorage.setItem(this.mobileSummaryLoaderKey, '1');
+      this.router.navigate(['/summary']);
+    } catch {
+      this.authErrorMessage =
+        'Check your email and password. Please try again.';
+    }
   }
 
   async loginAsGuest() {

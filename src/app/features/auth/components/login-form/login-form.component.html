@@ -10,15 +10,25 @@
         placeholder="Email"
         aria-label="Email"
         autocomplete="email"
+        (input)="authErrorMessage = ''"
       />
       <span class="material-icons">mail</span>
 
       @if (
         form.controls.email.touched &&
-        !form.controls.email.valid &&
-        !form.controls.email.disabled
+        !form.controls.email.disabled &&
+        form.controls.email.hasError("required")
       ) {
         <p>Please enter your email</p>
+      }
+
+      @if (
+        form.controls.email.touched &&
+        !form.controls.email.disabled &&
+        (form.controls.email.hasError("email") ||
+          form.controls.email.hasError("pattern"))
+      ) {
+        <p>Please enter a valid email</p>
       }
     </div>
 
@@ -31,6 +41,7 @@
         autocomplete="current-password"
         (focus)="onPasswordFocus()"
         (blur)="onPasswordBlur()"
+        (input)="authErrorMessage = ''"
       />
       @if (shouldShowPasswordToggle) {
         <button
@@ -54,17 +65,19 @@
       ) {
         <p>Please enter your password</p>
       }
+
+      @if (authErrorMessage) {
+        <p>{{ authErrorMessage }}</p>
+      }
     </div>
   </div>
-
-  @if (authErrorMessage) {
-    <p class="login-form__auth-error">{{ authErrorMessage }}</p>
-  }
 
   <div class="login-form__actions">
     <button [disabled]="!form.valid" class="btn btn--primary" type="submit">
       Log in
     </button>
-    <button (click)="loginAsGuest()" class="btn btn--secondary" type="button">Guest Log in</button>
+    <button (click)="loginAsGuest()" class="btn btn--secondary" type="button">
+      Guest Log in
+    </button>
   </div>
 </form>

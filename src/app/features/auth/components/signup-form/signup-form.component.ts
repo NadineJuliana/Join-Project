@@ -9,6 +9,7 @@ import {
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { ToastsService } from '../../../../core/services/toasts.service';
+import { Contact } from '../../../contacts/models/contact.model';
 
 function passwordMatchValidator(
   control: AbstractControl,
@@ -53,7 +54,10 @@ export class SignupFormComponent {
         Validators.email,
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[a-z]{2,6}$/i),
       ]),
-      password: this.formBuilder.nonNullable.control('', [Validators.required]),
+      password: this.formBuilder.nonNullable.control('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
       confirmPassword: this.formBuilder.nonNullable.control('', [
         Validators.required,
       ]),
@@ -107,6 +111,20 @@ export class SignupFormComponent {
 
   onConfirmPasswordBlur() {
     this.isConfirmPasswordFocused = false;
+  }
+
+  formatNameField() {
+    const control = this.form.controls.name;
+    control.setValue(new Contact({ name: control.value }).name, {
+      emitEvent: false,
+    });
+  }
+
+  formatEmailField() {
+    const control = this.form.controls.email;
+    control.setValue(control.value.trim().toLowerCase(), {
+      emitEvent: false,
+    });
   }
 
   async onSubmit() {
