@@ -1,12 +1,14 @@
 <form class="signup-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <a
-    class="signup-form__back-link"
-    aria-label="Back to Login"
-    routerLink="/login"
-  >
-    <span class="material-icons">arrow_back</span>
-  </a>
-  <h1>Sign up</h1>
+  <div class="signup-form__header">
+    <a
+      class="signup-form__back-link"
+      aria-label="Back to Login"
+      routerLink="/login"
+    >
+      <span class="material-icons">arrow_back</span>
+    </a>
+    <h1>Sign up</h1>
+  </div>
   <span class="signup-form__separator" aria-hidden="true"></span>
 
   <div class="signup-form__fields">
