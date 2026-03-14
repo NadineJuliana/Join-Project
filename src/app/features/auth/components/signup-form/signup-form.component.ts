@@ -136,6 +136,7 @@ export class SignupFormComponent {
     this.authErrorMessage = '';
     const { name, email, password } = this.form.getRawValue();
     await this.authService.signUp(name, email, password);
+    await this.authService.logout();
     this.createToastMessage();
     setTimeout(() => {
       this.router.navigate(['/login']);

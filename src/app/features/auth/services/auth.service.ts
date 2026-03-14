@@ -69,8 +69,8 @@ export class AuthService {
   }
 
   async isLoggedIn(): Promise<boolean> {
-    const user = await this.getUser();
+    const { data } = await this.client.auth.getSession();
     const guestActive = !!localStorage.getItem('guest');
-    return Boolean(user) || Boolean(guestActive);
+    return !!data.session || guestActive;
   }
 }
