@@ -7,6 +7,10 @@ import { TasksService } from '../../../tasks/services/tasks.service';
 import { Subtask } from '../../../tasks/models/subtask.model';
 import { TaskFormComponent } from '../../../tasks/components/task-form/task-form.component';
 
+/**
+ * @category Pages
+ * @description Detail dialog component to display and edit a single Task.
+ */
 @Component({
   selector: 'app-detail-dialog',
   imports: [
@@ -20,24 +24,34 @@ import { TaskFormComponent } from '../../../tasks/components/task-form/task-form
   styleUrl: './detail-dialog.component.scss',
 })
 export class DetailDialogComponent {
-  task = input.required<Task>(); // Eingabe von Parent - die Komponente wird Task von außen erhalten
+  /** Task input from parent component */
+  task = input.required<Task>();
+
+  /** Emits when the dialog is closed */
   closeDialog = output<void>();
+
+  /** Toggles edit mode */
   isEditMode = signal(false);
 
+  /** Inject TasksService */
   constructor(private tasksService: TasksService) {}
 
+  /** Close dialog and emit event */
   onClose() {
-    this.closeDialog.emit(); // Sendet das Signal an die Parent
+    this.closeDialog.emit();
   }
 
+  /** Enter edit mode */
   onEdit(): void {
     this.isEditMode.set(true);
   }
 
+  /** Cancel edit mode */
   onCancelEdit(): void {
     this.isEditMode.set(false);
   }
 
+  /** Delete the current task */
   async deleteTask() {
     try {
       await this.tasksService.deleteTask(this.task().id);
@@ -47,10 +61,12 @@ export class DetailDialogComponent {
     }
   }
 
+  /** Called when a task is updated */
   onTaskUpdated(updatedTask: Task) {
     this.isEditMode.set(false);
   }
 
+  /** Returns icon filename for task priority */
   getPriorityIcon(priority: 'low' | 'medium' | 'urgent') {
     switch (priority) {
       case 'low':
@@ -62,6 +78,7 @@ export class DetailDialogComponent {
     }
   }
 
+  /** Toggle a subtask's completion */
   toggleSubtask(subtask: Subtask, event: Event) {
     const checked = (event.target as HTMLInputElement).checked;
     subtask.completed = checked;

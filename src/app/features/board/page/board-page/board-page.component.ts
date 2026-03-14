@@ -17,16 +17,21 @@ import { CapitalizePipe } from '../../../../shared/pipes/capitalize.pipe';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DetailDialogComponent } from '../../components/detail-dialog/detail-dialog.component';
-import { Subtask } from '../../../tasks/models/subtask.model';
 import { Router } from '@angular/router';
 
-// Interface - Definiert die Struktur einer Spalte
+/**
+ * @category Pages
+ * @description Board page component displaying tasks in a Kanban-style board with drag-and-drop, filtering, and task dialogs.
+ */
+
+/** Interface defining a board column */
 export interface BoardColumn {
   id: TaskStatus;
   title: string;
   tasks: Task[];
 }
 
+/** Internal interface for task move targets */
 interface MoveTarget {
   id: TaskStatus;
   title: string;
@@ -48,27 +53,51 @@ interface MoveTarget {
   styleUrl: './board-page.component.scss',
 })
 export class BoardPageComponent {
+  /** Injected ContactsService for accessing contacts */
   dbContactService = inject(ContactsService);
+
+  /** Injected TasksService for accessing tasks */
   dbTaskService = inject(TasksService);
+
+  /** Injected Router */
   router = inject(Router);
+
+  /** Currently active drop list id during drag-and-drop */
   activeDropListId: string | null = null;
+
+  /** Search form control for filtering tasks */
   searchControl = new FormControl('');
 
+  /** Flag for mobile view */
   isMobile = signal(false);
+
+  /** Flag to show/hide task detail dialog */
   showDetailDialog = signal(false);
-  selectedTask = signal<Task | null>(null); // Default ist die Task auf null
+
+  /** Currently selected task for detail dialog */
+  selectedTask = signal<Task | null>(null);
+
+  /** Flag to show/hide add-task dialog */
   showAddTaskDialog = signal(false);
+
+  /** Status for the task to be added */
   addTaskStatus = signal<TaskStatus>('to-do');
+
+  /** Task id for which category menu is open */
   openCategoryMenuTaskId = signal<number | null>(null);
+
+  /** Signal to track search results */
   searchResult = toSignal(this.searchControl.valueChanges, {
     initialValue: '',
   });
 
+  /** Close category menu on any document click */
   @HostListener('document:click')
   onDocumentClick(): void {
     this.openCategoryMenuTaskId.set(null);
   }
 
+  /** Computed filtered tasks per status */
   toDoTasksFiltered = computed(() => this.filterTasksByStatus('to-do'));
   inProgressTasksFiltered = computed(() =>
     this.filterTasksByStatus('in-progress'),
@@ -78,6 +107,7 @@ export class BoardPageComponent {
   );
   doneTasksFiltered = computed(() => this.filterTasksByStatus('done'));
 
+  /** Initialize component: setup mobile detection, realtime, and load tasks/contacts */
   async ngOnInit() {
     this.setupMobileDetection();
     this.dbContactService.initRealtime();
@@ -86,6 +116,7 @@ export class BoardPageComponent {
     await this.dbTaskService.initialize();
   }
 
+  /** Computed board columns for Kanban display */
   boardColumns = computed<BoardColumn[]>(() => [
     { id: 'to-do', title: 'To Do', tasks: this.toDoTasksFiltered() },
     {
@@ -101,6 +132,7 @@ export class BoardPageComponent {
     { id: 'done', title: 'Done', tasks: this.doneTasksFiltered() },
   ]);
 
+  /** Handle task drag-and-drop event */
   drop(event: CdkDragDrop<Task[]>) {
     const task = event.item.data as Task;
     const newStatus = event.container.id as TaskStatus;
@@ -115,14 +147,17 @@ export class BoardPageComponent {
     this.activeDropListId = null;
   }
 
+  /** Called when a drag enters a column */
   onDropListEntered(columnId: string): void {
     this.activeDropListId = columnId;
   }
 
+  /** Called when a drag exits a column */
   onDropListExited(columnId: string): void {
     this.activeDropListId = null;
   }
 
+  /** Get icon name for task priority */
   getPriorityIcon(priority: 'low' | 'medium' | 'urgent') {
     switch (priority) {
       case 'low':
@@ -134,6 +169,7 @@ export class BoardPageComponent {
     }
   }
 
+  /** Filter tasks by status and search result */
   private filterTasksByStatus(status: TaskStatus): Task[] {
     const result = (this.searchResult() ?? '').toLowerCase() || '';
     return this.dbTaskService
@@ -147,26 +183,28 @@ export class BoardPageComponent {
       );
   }
 
+  /** Setup mobile detection using window.matchMedia */
   private setupMobileDetection() {
     const mediaQuery = window.matchMedia('(max-width: 768px)');
-
     this.isMobile.set(mediaQuery.matches);
-
     mediaQuery.addEventListener('change', (event) => {
       this.isMobile.set(event.matches);
     });
   }
 
+  /** Open task detail dialog for a selected task */
   openDetailDialog(task: Task) {
-    this.selectedTask.set(task); // SelectedTask speichert die Task
-    this.showDetailDialog.set(true); // Signal wird TRUE
+    this.selectedTask.set(task);
+    this.showDetailDialog.set(true);
   }
 
+  /** Close task detail dialog */
   closeDetailDialog() {
-    this.showDetailDialog.set(false); // Signal wird FALSE
-    this.selectedTask.set(null); // SelectedTask wird auf null zurückgesetzt
+    this.showDetailDialog.set(false);
+    this.selectedTask.set(null);
   }
 
+  /** Open add-task dialog, navigate to separate page on mobile */
   openAddTaskDialog(status: TaskStatus = 'to-do'): void {
     if (this.isMobile()) {
       this.router.navigate(['/add-task'], {
@@ -178,14 +216,17 @@ export class BoardPageComponent {
     this.showAddTaskDialog.set(true);
   }
 
+  /** Close add-task dialog */
   closeAddTaskDialog(): void {
     this.showAddTaskDialog.set(false);
   }
 
+  /** Called when a task is created */
   onTaskCreated(task: Task): void {
     this.closeAddTaskDialog();
   }
 
+  /** Toggle category menu for a task */
   toggleTaskCategoryMenu(taskId: number, event: MouseEvent): void {
     event.stopPropagation();
     this.openCategoryMenuTaskId.update((currentTaskId) =>
@@ -193,28 +234,29 @@ export class BoardPageComponent {
     );
   }
 
+  /** Check if category menu is open for a task */
   isTaskCategoryMenuOpen(taskId: number): boolean {
     return this.openCategoryMenuTaskId() === taskId;
   }
 
+  /** Get valid move targets for a task (other columns) */
   getMoveTargets(task: Task): MoveTarget[] {
     return this.boardColumns()
       .filter((column) => column.id !== task.status)
       .map((column) => ({ id: column.id, title: column.title }));
   }
 
+  /** Move a task to a new status column */
   async moveTaskToStatus(
     task: Task,
     targetStatus: TaskStatus,
     event: MouseEvent,
   ): Promise<void> {
     event.stopPropagation();
-
     if (task.status === targetStatus) {
       this.openCategoryMenuTaskId.set(null);
       return;
     }
-
     const targetColumn = this.boardColumns().find(
       (column) => column.id === targetStatus,
     );
@@ -222,7 +264,6 @@ export class BoardPageComponent {
       this.openCategoryMenuTaskId.set(null);
       return;
     }
-
     const targetTasks = [
       ...targetColumn.tasks.filter((t) => t.id !== task.id),
       task,
