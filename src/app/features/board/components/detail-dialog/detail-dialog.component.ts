@@ -8,7 +8,7 @@ import { Subtask } from '../../../tasks/models/subtask.model';
 import { TaskFormComponent } from '../../../tasks/components/task-form/task-form.component';
 
 /**
- * @category Pages
+ * @category Board
  * @description Detail dialog component to display and edit a single Task.
  */
 @Component({
