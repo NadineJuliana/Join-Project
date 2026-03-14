@@ -30,9 +30,9 @@
 }
 
 .landing-cta {
-  position: fixed;
+  position: absolute;
   top: 40px;
-  left: 1100px;
+  right: 40px;
   display: flex;
   align-items: center;
   gap: 24px;
