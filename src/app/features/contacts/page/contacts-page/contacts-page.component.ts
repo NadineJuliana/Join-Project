@@ -8,7 +8,7 @@ import { Contact } from '../../models/contact.model';
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 
 /**
- * @category Contacts
+ * @category Pages
  * @description Main page component for displaying, adding, editing, and deleting contacts.
  */
 @Component({

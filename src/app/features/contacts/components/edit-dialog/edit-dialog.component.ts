@@ -5,7 +5,7 @@ import { ContactFormComponent } from '../contact-form/contact-form.component';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 
 /**
- * @category Contacts
+ * @category Dialogs
  * @description Dialog component used to edit or delete an existing contact.
  * Displays the contact form with initial values and handles update/delete operations.
  */

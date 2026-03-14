@@ -3,7 +3,7 @@ import { Contact } from '../../models/contact.model';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 
 /**
- * @category Contacts
+ * @category Contact Page Components
  * @description Displays details of a single contact with actions (edit/delete/back).
  */
 @Component({

@@ -5,7 +5,7 @@ import { SignupFormComponent } from '../../components/signup-form/signup-form.co
 import { AuthService } from '../../services/auth.service';
 
 /**
- * @category Auth
+ * @category Pages
  * @description Landing page component showing login or signup forms and controlling intro playback.
  */
 @Component({

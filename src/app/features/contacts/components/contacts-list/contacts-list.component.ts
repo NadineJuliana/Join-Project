@@ -4,7 +4,7 @@ import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import { EllipsisPipe } from '../../../../shared/pipes/ellipsis.pipe';
 
 /**
- * @category Contacts
+ * @category Contact Page Components
  * @description Displays a list of contacts, grouped alphabetically, with select/add events.
  */
 @Component({

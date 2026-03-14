@@ -1,5 +1,5 @@
 /**
- * @category Contacts
+ * @category Models
  * @description Model representing a contact with name, email, phone, and color.
  */
 export class Contact {

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ContactsService } from '../../../contacts/services/contacts.service';
 
 /**
- * @category Auth
+ * @category Auth Form
  * @description Login form component handling user login and guest login.
  */
 @Component({

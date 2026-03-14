@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Contact } from '../../models/contact.model';
 
 /**
- * @category Contacts
+ * @category Contact Form
  * @description Reusable form component for creating and editing contacts.
  * Handles validation, formatting, and emits events for save, cancel, or delete actions.
  */

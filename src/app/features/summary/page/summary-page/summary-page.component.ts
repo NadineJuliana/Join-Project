@@ -4,7 +4,7 @@ import { TasksService } from '../../../tasks/services/tasks.service';
 import { ContactsService } from '../../../contacts/services/contacts.service';
 
 /**
- * @category Summary
+ * @category Pages
  * @description Dashboard summary page displaying task statistics, greeting message,
  * and upcoming deadlines. Includes a mobile welcome intro animation.
  */

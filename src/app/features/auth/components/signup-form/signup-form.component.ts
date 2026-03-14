@@ -12,7 +12,7 @@ import { ToastsService } from '../../../../core/services/toasts.service';
 import { Contact } from '../../../contacts/models/contact.model';
 
 /**
- * @category Auth
+ * @category Auth Form
  * @description Signup form component handling user registration and validation.
  */
 

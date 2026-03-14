@@ -4,7 +4,7 @@ import { Subtask } from './subtask.model';
 export type TaskStatus = 'to-do' | 'in-progress' | 'await-feedback' | 'done';
 
 /**
- * @category Task
+ * @category Models
  * @description Model representing a task with subtasks and assignees.
  */
 export class Task {

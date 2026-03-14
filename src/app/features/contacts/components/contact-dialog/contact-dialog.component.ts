@@ -5,7 +5,7 @@ import { ContactsService } from '../../services/contacts.service';
 import { ToastsService } from '../../../../core/services/toasts.service';
 
 /**
- * @category Contacts
+ * @category Dialogs
  * @description Dialog component used to create a new contact.
  * Uses ContactFormComponent and handles persistence and toast notifications.
  */

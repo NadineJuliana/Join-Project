@@ -20,7 +20,7 @@ import { DetailDialogComponent } from '../../components/detail-dialog/detail-dia
 import { Router } from '@angular/router';
 
 /**
- * @category Board
+ * @category Pages
  * @description Board page component displaying tasks in a Kanban-style board with drag-and-drop, filtering, and task dialogs.
  */
 

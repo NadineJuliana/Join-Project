@@ -1,5 +1,5 @@
 /**
- * @category Task
+ * @category Models
  * @description Model representing a subtask.
  */
 export class Subtask {
