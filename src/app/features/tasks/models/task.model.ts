@@ -3,6 +3,10 @@ import { Subtask } from './subtask.model';
 
 export type TaskStatus = 'to-do' | 'in-progress' | 'await-feedback' | 'done';
 
+/**
+ * @category Task
+ * @description Model representing a task with subtasks and assignees.
+ */
 export class Task {
   id: number;
   title: string;
@@ -15,6 +19,7 @@ export class Task {
   subtasks?: Subtask[];
   assignees?: Contact[];
 
+  /** Create a task instance from partial data */
   constructor(data: Partial<Task>) {
     this.id = data.id ?? 0;
     this.title = data.title ?? '';
@@ -28,6 +33,7 @@ export class Task {
     this.assignees = data.assignees ?? [];
   }
 
+  /** Return clean JSON for database insertion */
   getCleanAddJson() {
     return {
       title: this.title,
@@ -40,6 +46,7 @@ export class Task {
     };
   }
 
+  /** Calculate subtask completion progress */
   get subtaskProgress(): { percent: number; done: number; total: number } {
     const total = this.subtasks?.length ?? 0;
     if (total === 0) return { percent: 0, done: 0, total: 0 };
@@ -48,7 +55,8 @@ export class Task {
     return { percent, done, total };
   }
 
-  get categoryColor(): string{
+  /** Get color code based on category */
+  get categoryColor(): string {
     return this.category === 'technical-task' ? '#1FD7C1' : '#0038FF';
   }
 }

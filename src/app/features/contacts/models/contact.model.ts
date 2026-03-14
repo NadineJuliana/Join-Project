@@ -1,3 +1,7 @@
+/**
+ * @category Contacts
+ * @description Model representing a contact with name, email, phone, and color.
+ */
 export class Contact {
   id: number;
   name: string;
@@ -5,6 +9,7 @@ export class Contact {
   phone: string;
   color: string;
 
+  /** Create a contact instance from partial data */
   constructor(data: Partial<Contact>) {
     this.id = data.id ?? 0;
     this.name = this.getFormattedName(data.name ?? '');
@@ -13,6 +18,7 @@ export class Contact {
     this.color = data.color ?? this.getRandomColor();
   }
 
+  /** Return a random color from predefined palette */
   getRandomColor(): string {
     const colors = [
       '#FF7A00',
@@ -29,6 +35,7 @@ export class Contact {
     return colors[randomColor];
   }
 
+  /** Return clean JSON for database insertion */
   getCleanAddJson() {
     return {
       name: this.getFormattedName(this.name),
@@ -38,6 +45,7 @@ export class Contact {
     };
   }
 
+  /** Format name with capitalized first letters */
   getFormattedName(name: string): string {
     return name
       .trim()
@@ -48,12 +56,14 @@ export class Contact {
       .join(' ');
   }
 
+  /** Format phone to human-readable string */
   getPrettyPhone(phone: string): string {
     const match = phone.match(/^(\+\d{2})(\d{3})(\d+)$/);
     if (!match) return phone;
     return `${match[1]} ${match[2]} ${match[3].replace(/(\d{3})(?=\d)/g, '$1 ')}`;
   }
 
+  /** Format phone and ensure proper international format */
   getFormattedPhone(phone?: string | null): string {
     if (!phone) return '';
     phone = phone.replace(/[^\d+]/g, '');
