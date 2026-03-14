@@ -7,6 +7,11 @@ import { Contact } from '../../contacts/models/contact.model';
  * @category Auth
  * @description Service to handle authentication, login, signup, logout, and guest sessions.
  */
+interface SignUpResult {
+  data?: { user: any; session: any };
+  error?: { message: string };
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,19 +31,25 @@ export class AuthService {
   }
 
   /** Sign up a new user and create contact */
-  async signUp(name: string, email: string, password: string) {
-    const { data, error } = await this.client.auth.signUp({
-      email,
-      password,
-    });
-    if (error) throw error;
-    const userEmail = data.user?.email;
-    const contact = new Contact({ name, email: userEmail });
-    await this.contactsService.addContact(contact);
-    if (userEmail) {
-      await this.contactsService.loadCurrentUserContact(userEmail);
+  async signUp(name: string, email: string, password: string): Promise<SignUpResult> {
+    try {
+      const response = await this.client.auth.signUp({
+        email,
+        password,
+      });
+      if (response.error) {
+        return { error: { message: response.error.message }};
+      }
+      const userEmail = response.data.user?.email;
+      const contact = new Contact({ name, email: userEmail });
+      await this.contactsService.addContact(contact);
+      if (userEmail) {
+        await this.contactsService.loadCurrentUserContact(userEmail);
+      }
+      return {data: response.data};
+    } catch (err: unknown) {
+      return { error: { message: 'Unknown error during signup' } };
     }
-    return data;
   }
 
   /** Login an existing user */

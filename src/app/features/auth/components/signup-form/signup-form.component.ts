@@ -163,7 +163,16 @@ export class SignupFormComponent {
     }
     this.authErrorMessage = '';
     const { name, email, password } = this.form.getRawValue();
-    await this.authService.signUp(name, email, password);
+    const result = await this.authService.signUp(name, email, password);
+    if (result.error) {
+      const message = result.error.message;
+      if (message.includes('already registered') || message.includes('422')) {
+        this.authErrorMessage = 'This user is already registered';
+      } else {
+        this.authErrorMessage = 'Please try again.';
+      }
+      return;
+    }
     await this.authService.logout();
     this.createToastMessage();
     setTimeout(() => {
