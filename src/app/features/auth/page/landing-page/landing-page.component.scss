@@ -5,6 +5,7 @@
   display: flex;
   justify-content: flex-start;
   min-height: 100vh;
+  background: var(--secondary);
 }
 
 .landing-page {
@@ -15,7 +16,6 @@
   max-width: 1440px;
   width: 100%;
   min-height: 100dvh;
-  background: var(--secondary);
 }
 
 .landing-intro-bg {
@@ -58,7 +58,6 @@
   --logo-end-size: clamp(64px, 10vw, 100px);
   --logo-end-top: clamp(16px, 4vh, 64px);
   --logo-end-left: calc((clamp(72px, 18vw, 232px) - var(--logo-end-size)) / 2);
-
 
   position: absolute;
   z-index: 4;
