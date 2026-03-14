@@ -11,16 +11,23 @@ import { Router, RouterLink } from '@angular/router';
 import { ToastsService } from '../../../../core/services/toasts.service';
 import { Contact } from '../../../contacts/models/contact.model';
 
+/**
+ * @category Auth
+ * @description Signup form component handling user registration and validation.
+ */
+
+/**
+ * Validates that password and confirmPassword fields match.
+ * Returns a ValidationErrors object if they don't match.
+ */
 function passwordMatchValidator(
   control: AbstractControl,
 ): ValidationErrors | null {
   const password = control.get('password')?.value;
   const confirmPassword = control.get('confirmPassword')?.value;
-
   if (!password || !confirmPassword) {
     return null;
   }
-
   return password === confirmPassword ? null : { passwordMismatch: true };
 }
 
@@ -31,17 +38,30 @@ function passwordMatchValidator(
   styleUrl: './signup-form.component.scss',
 })
 export class SignupFormComponent {
+  /** Injected AuthService */
   private authService = inject(AuthService);
+
+  /** Injected Router */
   private router = inject(Router);
+
+  /** Injected FormBuilder */
   private formBuilder = inject(FormBuilder);
+
+  /** Injected ToastsService */
   private toastService = inject(ToastsService);
 
+  /** Authentication error message */
   authErrorMessage = '';
+
+  /** Flags for showing/hiding passwords */
   showPassword = false;
   showConfirmPassword = false;
+
+  /** Flags for password input focus */
   isPasswordFocused = false;
   isConfirmPasswordFocused = false;
 
+  /** Reactive signup form */
   form = this.formBuilder.nonNullable.group(
     {
       name: this.formBuilder.nonNullable.control('', [
@@ -68,12 +88,14 @@ export class SignupFormComponent {
     { validators: [passwordMatchValidator] },
   );
 
+  /** Show password toggle for main password */
   get shouldShowPasswordToggle() {
     return (
       this.isPasswordFocused || this.form.controls.password.value.length > 0
     );
   }
 
+  /** Show password toggle for confirm password */
   get shouldShowConfirmPasswordToggle() {
     return (
       this.isConfirmPasswordFocused ||
@@ -81,6 +103,7 @@ export class SignupFormComponent {
     );
   }
 
+  /** Show password mismatch error */
   get shouldShowPasswordMismatchError() {
     return (
       this.form.controls.confirmPassword.touched &&
@@ -89,14 +112,17 @@ export class SignupFormComponent {
     );
   }
 
+  /** Toggle password visibility */
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
+  /** Toggle confirm password visibility */
   toggleConfirmPasswordVisibility() {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
 
+  /** Focus/blur handlers */
   onPasswordFocus() {
     this.isPasswordFocused = true;
   }
@@ -113,6 +139,7 @@ export class SignupFormComponent {
     this.isConfirmPasswordFocused = false;
   }
 
+  /** Format name input value */
   formatNameField() {
     const control = this.form.controls.name;
     control.setValue(new Contact({ name: control.value }).name, {
@@ -120,6 +147,7 @@ export class SignupFormComponent {
     });
   }
 
+  /** Format email input value */
   formatEmailField() {
     const control = this.form.controls.email;
     control.setValue(control.value.trim().toLowerCase(), {
@@ -127,12 +155,12 @@ export class SignupFormComponent {
     });
   }
 
+  /** Handle form submission for signup */
   async onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-
     this.authErrorMessage = '';
     const { name, email, password } = this.form.getRawValue();
     await this.authService.signUp(name, email, password);
@@ -143,6 +171,7 @@ export class SignupFormComponent {
     }, 500);
   }
 
+  /** Show signup success toast */
   private createToastMessage() {
     this.toastService.showToast({
       message: 'You Signed Up successfully',
