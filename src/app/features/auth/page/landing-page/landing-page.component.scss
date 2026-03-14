@@ -3,7 +3,9 @@
 
 :host {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+   flex-direction: column;
   min-height: 100vh;
   background: var(--secondary);
 }
@@ -13,6 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   max-width: 1440px;
   width: 100%;
   min-height: 100dvh;
@@ -115,7 +118,7 @@
 }
 
 .legal {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   width: 100%;
   padding: clamp(16px, 4vh, 40px) 40px;
