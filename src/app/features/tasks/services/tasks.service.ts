@@ -28,20 +28,8 @@ export class TasksService {
     this.tasks().filter((t) => t.status === 'await-feedback'),
   );
   doneTasks = computed(() => this.tasks().filter((t) => t.status === 'done'));
-
-  lowTasks = computed(() => this.tasks().filter((t) => t.priority === 'low'));
-  mediumTasks = computed(() =>
-    this.tasks().filter((t) => t.priority === 'medium'),
-  );
   urgentTasks = computed(() =>
     this.tasks().filter((t) => t.priority === 'urgent'),
-  );
-
-  technicalTasks = computed(() =>
-    this.tasks().filter((t) => t.category === 'technical-task'),
-  );
-  userStoryTasks = computed(() =>
-    this.tasks().filter((t) => t.category === 'user-story'),
   );
 
   async initialize() {
