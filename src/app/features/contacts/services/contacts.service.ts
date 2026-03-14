@@ -4,6 +4,11 @@ import { Contact } from '../models/contact.model';
 import { SupabaseRealtimeService } from '../../../core/services/supabase-realtime.service';
 import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 
+/**
+ * @category Contact Management
+ * @description Service to manage contacts with realtime updates.
+ * Provides signals for all contacts, selected contact, and current user.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -12,12 +17,22 @@ export class ContactsService {
     private supabaseService: SupabaseService,
     private realtimeService: SupabaseRealtimeService,
   ) {}
+  /** Flag if contacts are loaded */
   contactsLoaded = false;
+
+  /** Flag to prevent multiple realtime initializations */
   initialized = false;
 
+  /** All contacts signal */
   contacts = signal<Contact[]>([]);
+
+  /** Currently selected contact */
   selectedContact = signal<Contact | null>(null);
+
+  /** Current user contact */
   currentUserContact = signal<Contact | null>(null);
+
+  /** Contacts grouped alphabetically by first letter */
   groupedContacts = computed(() => {
     const sorted = [...this.contacts()].sort((a, b) =>
       a.name.localeCompare(b.name),
@@ -35,6 +50,7 @@ export class ContactsService {
       .map((letter) => ({ letter, contacts: grouped[letter] }));
   });
 
+  /** Initialize realtime subscription */
   initRealtime() {
     if (this.initialized) return;
     this.initialized = true;
@@ -47,6 +63,7 @@ export class ContactsService {
     );
   }
 
+  /** Handle realtime events for contacts */
   handleRealtimeEvent(payload: RealtimePostgresChangesPayload<Contact>) {
     switch (payload.eventType) {
       case 'INSERT':
@@ -63,6 +80,7 @@ export class ContactsService {
     }
   }
 
+  /** Insert a contact into the signal */
   handleInsert(newData: Partial<Contact>) {
     const newContact = new Contact(newData);
     this.contacts.update((list) => {
@@ -75,6 +93,7 @@ export class ContactsService {
     });
   }
 
+  /** Update a contact in the signal */
   handleUpdate(updatedData: Partial<Contact>) {
     const updatedContact = new Contact(updatedData);
     this.contacts.update((list) =>
@@ -86,6 +105,7 @@ export class ContactsService {
     }
   }
 
+  /** Remove a contact from the signal */
   handleDelete(oldData: Partial<Contact>) {
     const deletedId = oldData.id;
     this.contacts.update((list) => list.filter((c) => c.id !== deletedId));
@@ -95,10 +115,12 @@ export class ContactsService {
     }
   }
 
+  /** Remove realtime channel */
   ngOnDestroy() {
     this.realtimeService.removeChannel('contacts-realtime-channel');
   }
 
+  /** Fetch all contacts from Supabase */
   async getAllContacts() {
     const { data, error } = await this.supabaseService
       .getSupabaseClient()
@@ -113,6 +135,7 @@ export class ContactsService {
     this.contactsLoaded = true;
   }
 
+  /** Add a new contact to Supabase */
   async addContact(contact: Contact) {
     const { data, error } = await this.supabaseService
       .getSupabaseClient()
@@ -126,6 +149,7 @@ export class ContactsService {
     return newContact;
   }
 
+  /** Update a contact in Supabase */
   async updateContact(contact: Contact) {
     const { data, error } = await this.supabaseService
       .getSupabaseClient()
@@ -144,6 +168,7 @@ export class ContactsService {
     return updatedContact;
   }
 
+  /** Delete a contact in Supabase */
   async deleteContact(id: number) {
     const { error } = await this.supabaseService
       .getSupabaseClient()
@@ -158,14 +183,17 @@ export class ContactsService {
     }
   }
 
+  /** Set selected contact */
   selectContact(contact: Contact | null) {
     this.selectedContact.set(contact);
   }
 
+  /** Clear selected contact */
   clearSelectedContact() {
     this.selectedContact.set(null);
   }
 
+  /** Load current user contact by email */
   async loadCurrentUserContact(email: string) {
     const { data, error } = await this.supabaseService
       .getSupabaseClient()

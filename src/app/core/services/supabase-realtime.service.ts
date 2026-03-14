@@ -3,14 +3,21 @@ import { SupabaseService } from './supabase.service';
 import { RealtimeChannel } from '@supabase/supabase-js';
 import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 
+/**
+ * @category Supabase
+ * @description Handles realtime channels for Supabase database changes.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class SupabaseRealtimeService implements OnDestroy {
+  /** Map of active Supabase realtime channels */
   private channels: Map<string, RealtimeChannel> = new Map();
 
+  /** Supabase service injected for database access */
   constructor(private supabaseService: SupabaseService) {}
 
+  /** Create a new realtime channel for a table */
   createChannel<T extends object>(
     table: string,
     channelName: string,
@@ -31,6 +38,7 @@ export class SupabaseRealtimeService implements OnDestroy {
     this.channels.set(channelName, channel);
   }
 
+  /** Remove a specific channel */
   removeChannel(channelName: string): void {
     const channel = this.channels.get(channelName);
     if (!channel) return;
@@ -38,6 +46,7 @@ export class SupabaseRealtimeService implements OnDestroy {
     this.channels.delete(channelName);
   }
 
+  /** Remove all channels */
   removeAllChannels(): void {
     this.channels.forEach((channel) => {
       this.supabaseService.getSupabaseClient().removeChannel(channel);
@@ -45,6 +54,7 @@ export class SupabaseRealtimeService implements OnDestroy {
     this.channels.clear();
   }
 
+  /** Angular destroy hook to clean up channels */
   ngOnDestroy(): void {
     this.removeAllChannels();
   }
