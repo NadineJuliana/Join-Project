@@ -7,7 +7,7 @@ import { Contact } from '../../contacts/models/contact.model';
  * @category Auth
  * @description Service to handle authentication, login, signup, logout, and guest sessions.
  */
-interface SignUpResult {
+interface AuthResult {
   data?: { user: any; session: any };
   error?: { message: string };
 }
@@ -31,14 +31,18 @@ export class AuthService {
   }
 
   /** Sign up a new user and create contact */
-  async signUp(name: string, email: string, password: string): Promise<SignUpResult> {
+  async signUp(
+    name: string,
+    email: string,
+    password: string,
+  ): Promise<AuthResult> {
     try {
       const response = await this.client.auth.signUp({
         email,
         password,
       });
       if (response.error) {
-        return { error: { message: response.error.message }};
+        return { error: { message: response.error.message } };
       }
       const userEmail = response.data.user?.email;
       const contact = new Contact({ name, email: userEmail });
@@ -46,35 +50,69 @@ export class AuthService {
       if (userEmail) {
         await this.contactsService.loadCurrentUserContact(userEmail);
       }
-      return {data: response.data};
+      return { data: response.data };
     } catch (err: unknown) {
       return { error: { message: 'Unknown error during signup' } };
     }
   }
 
   /** Login an existing user */
-  async login(email: string, password: string) {
-    const { data, error } = await this.client.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) throw error;
-    const userEmail = data.user?.email;
-    if (userEmail) {
-      await this.contactsService.loadCurrentUserContact(userEmail);
+  // async login(email: string, password: string) {
+  //   const { data, error } = await this.client.auth.signInWithPassword({
+  //     email,
+  //     password,
+  //   });
+  //   if (error) return;
+  //   const userEmail = data.user?.email;
+  //   if (userEmail) {
+  //     await this.contactsService.loadCurrentUserContact(userEmail);
+  //   }
+  //   return data;
+  // }
+
+  async login(email: string, password: string): Promise<AuthResult> {
+    try {
+      const { data, error } = await this.client.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) {
+        return { error: { message: error.message } };
+      }
+      const userEmail = data.user?.email;
+      if (userEmail) {
+        await this.contactsService.loadCurrentUserContact(userEmail);
+      }
+      return { data };
+    } catch (err: unknown) {
+      return { error: { message: 'Unknown error during login' } };
     }
-    return data;
   }
 
   /** Login as guest user */
-  async loginAsGuest() {
-    localStorage.setItem('guest', 'true');
-    const { data, error } = await this.client.auth.signInWithPassword({
-      email: 'guest@join-app.com',
-      password: 'guest123456',
-    });
-    if (error) throw error;
-    return data;
+  // async loginAsGuest() {
+  //   localStorage.setItem('guest', 'true');
+  //   const { data, error } = await this.client.auth.signInWithPassword({
+  //     email: 'guest@join-app.com',
+  //     password: 'guest123456',
+  //   });
+  //   if (error) throw error;
+  //   return data;
+  // }
+   async loginAsGuest(): Promise<AuthResult> {
+    try {
+      localStorage.setItem('guest', 'true');
+      const { data, error } = await this.client.auth.signInWithPassword({
+        email: 'guest@join-app.com',
+        password: 'guest123456',
+      });
+      if (error) {
+        return { error: { message: error.message } };
+      }
+      return { data };
+    } catch (err: unknown) {
+      return { error: { message: 'Unknown error during guest login' } };
+    }
   }
 
   /** Logout current user and reset state */

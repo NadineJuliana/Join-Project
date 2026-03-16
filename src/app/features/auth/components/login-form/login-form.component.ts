@@ -75,6 +75,24 @@ export class LoginFormComponent {
   }
 
   /** Handle form submission for login */
+  // async onSubmit() {
+  //   if (this.form.invalid) {
+  //     this.form.markAllAsTouched();
+  //     return;
+  //   }
+  //   this.authErrorMessage = '';
+  //   const { email, password } = this.form.getRawValue();
+  //   try {
+  //     await this.authService.login(email, password);
+  //     await this.contactsService.loadCurrentUserContact(email);
+  //     sessionStorage.setItem(this.mobileSummaryLoaderKey, '1');
+  //     this.router.navigate(['/summary']);
+  //   } catch {
+  //     this.authErrorMessage =
+  //       'Check your email and password. Please try again.';
+  //   }
+  // }
+
   async onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -82,21 +100,39 @@ export class LoginFormComponent {
     }
     this.authErrorMessage = '';
     const { email, password } = this.form.getRawValue();
-    try {
-      await this.authService.login(email, password);
-      await this.contactsService.loadCurrentUserContact(email);
-      sessionStorage.setItem(this.mobileSummaryLoaderKey, '1');
-      this.router.navigate(['/summary']);
-    } catch {
-      this.authErrorMessage =
-        'Check your email and password. Please try again.';
+    const result = await this.authService.login(email, password);
+    if (result.error) {
+      const message = result.error.message.toLowerCase();
+      if (
+        message.includes('invalid login credentials') ||
+        message.includes('400') ||
+        message.includes('401')
+      ) {
+        this.authErrorMessage =
+          'Check your email and password. Please try again.';
+      } else {
+        this.authErrorMessage = message;
+      }
+      return;
     }
+    sessionStorage.setItem(this.mobileSummaryLoaderKey, '1');
+    this.router.navigate(['/summary']);
   }
 
   /** Login as guest user */
+  // async loginAsGuest() {
+  //   this.authErrorMessage = '';
+  //   await this.authService.loginAsGuest();
+  //   sessionStorage.setItem('showMobileSummaryLoader', '1');
+  //   this.router.navigate(['/summary']);
+  // }
   async loginAsGuest() {
     this.authErrorMessage = '';
-    await this.authService.loginAsGuest();
+    const result = await this.authService.loginAsGuest();
+    if (result.error) {
+      this.authErrorMessage = 'Guest login failed. Please try again.';
+      return;
+    }
     sessionStorage.setItem('showMobileSummaryLoader', '1');
     this.router.navigate(['/summary']);
   }

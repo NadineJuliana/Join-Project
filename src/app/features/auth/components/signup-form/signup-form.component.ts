@@ -165,7 +165,7 @@ export class SignupFormComponent {
     const { name, email, password } = this.form.getRawValue();
     const result = await this.authService.signUp(name, email, password);
     if (result.error) {
-      const message = result.error.message;
+      const message = result.error.message.toLowerCase();
       if (message.includes('already registered') || message.includes('422')) {
         this.authErrorMessage = 'This user is already registered';
       } else {
