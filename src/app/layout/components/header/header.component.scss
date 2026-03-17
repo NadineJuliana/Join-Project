@@ -88,6 +88,7 @@ section {
   width: 20px;
   height: 20px;
   color: var(--gray);
+
   :hover {
     transform: scale(1.2);
   }
@@ -103,7 +104,7 @@ section {
   font-size: 20px;
 }
 
-.logged-out .profile-section{
+.logged-out .profile-section {
   display: none;
 }
 
@@ -118,6 +119,7 @@ section {
     width: 100%;
     background: var(--white);
     display: fixed;
+
     filter: drop-shadow(var(--drop-shadow));
     top: 0;
     left: 0;
@@ -155,6 +157,7 @@ section {
   .help-btn {
     display: none;
   }
+
   .help-mobile {
     display: block;
   }

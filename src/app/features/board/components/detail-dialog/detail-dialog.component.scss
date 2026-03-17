@@ -46,9 +46,17 @@ section {
   display: flex;
   flex-direction: column;
   h5 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
     span {
       color: var(--primary);
     }
+  }
+  h1 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
   &__container {
     display: flex;
@@ -173,7 +181,7 @@ section {
   }
 }
 
-.span-between{
+.span-between {
   width: 1px;
   height: 20px;
   background-color: var(--gray);

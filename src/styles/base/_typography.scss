@@ -22,8 +22,6 @@ h2 {
   line-height: 1.2;
 }
 
-// Board columns
-
 h3 {
   font-size: 20px;
   font-weight: 700;
@@ -35,16 +33,12 @@ h3 {
   }
 }
 
-// Header Subline
-
 h4 {
   font-size: clamp(20px, 2.5vw, 27px);
   font-weight: 400;
   line-height: 1.2;
   color: var(--primary);
 }
-
-// Kontaktnamen
 
 h5 {
   font-size: 20px;
@@ -54,8 +48,6 @@ h5 {
     font-size: 16px;
   }
 }
-
-// Summary Datum
 
 h6 {
   font-size: clamp(16px, 2.5vw, 21px);
@@ -72,9 +64,3 @@ h6 {
   font-weight: 400;
   color: var(--primary);
 }
-
-// @media (max-width: $bp-sm) {
-//   h2 {
-//     font-weight: 700;
-//   }
-// }

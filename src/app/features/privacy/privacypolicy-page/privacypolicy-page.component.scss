@@ -7,22 +7,27 @@
   scrollbar-width: none;
   padding: clamp(32px, calc(32px + (100vw - 768px)), 80px)
     clamp(24px, calc(24px + (100vw - 768px)), 80px);
+
   h1 {
     margin-bottom: 20px;
   }
+
   h2 {
     font-size: 24px;
     font-weight: 700;
     margin: 20px 0px;
   }
+
   h3 {
     margin: 20px 0px;
   }
+
   h4 {
     font-size: 18px;
     font-weight: 600;
     margin: 10px 0px;
   }
+
   &_header {
     display: flex;
     justify-content: space-between;

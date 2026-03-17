@@ -20,14 +20,17 @@
     &__headline {
       display: flex;
       justify-content: space-between;
+
       button {
         display: none;
       }
     }
+
     &__search-container {
       display: flex;
       gap: 32px;
     }
+
     &__search-field {
       display: flex;
       gap: 16px;
@@ -36,34 +39,42 @@
       border: solid 1px var(--gray);
       padding: 8px 16px;
       border-radius: 10px;
+
       &:focus-within {
         outline: 1px solid var(--accent);
         border-color: var(--accent);
+
         .serch-icon span {
           color: var(--accent);
         }
       }
+
       input {
         border: none;
         height: 100%;
         font-size: 20px;
+
         &:focus {
           outline: none;
         }
+
         ::placeholder {
           font-size: 20px;
         }
       }
     }
+
     &__separator {
       background-color: var(--lightgray);
       width: 1px;
       height: 32px;
     }
+
     .serch-icon {
       span {
         padding: 3px;
       }
+
       :hover {
         background-color: var(--lightgray);
         border-radius: 100%;
@@ -85,6 +96,7 @@
       flex-direction: column;
       gap: 16px;
     }
+
     &__headline {
       display: flex;
       justify-content: space-between;
@@ -109,6 +121,7 @@
         }
       }
     }
+
     .kanban__container:last-of-type .kanban__headline button {
       display: none;
     }
@@ -122,6 +135,7 @@
       border: dashed 3px var(--gray);
       color: var(--gray);
     }
+
     &__container-cards {
       display: flex;
       flex-direction: column;
@@ -162,9 +176,11 @@
     cursor: grab;
     max-width: 252px;
     width: 100%;
+
     &.cdk-drag-preview {
       rotate: 5grad;
     }
+
     &.cdk-drag-placeholder {
       opacity: 0.5;
     }
@@ -247,6 +263,7 @@
       }
     }
   }
+
   &__card-content {
     display: flex;
     flex-direction: column;
@@ -255,36 +272,48 @@
     &__card-headline {
       color: var(--primary);
       font-weight: 700;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
+
     &__card-description {
       color: var(--gray);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
   }
+
   &__card-tools {
     display: flex;
     flex-direction: column;
     gap: 24px;
   }
+
   &__card-tools-first {
     display: flex;
     gap: 10px;
     justify-content: space-between;
   }
+
   &__card-taskbar {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
   &__card-tools-second {
     display: flex;
     justify-content: space-between;
   }
+
   &__card-container-initials {
     display: flex;
     width: 100px;
-    // overflow: hidden;
   }
+
   &__card-initials {
     background: red;
     display: flex;
@@ -297,9 +326,11 @@
     border-radius: 100%;
     border: solid 2px var(--white);
     margin-left: -10px;
+
     &:first-child {
       margin-left: 0;
     }
+
     &-more {
       background: var(--gray);
       display: flex;
@@ -314,6 +345,7 @@
       margin-left: -10px;
     }
   }
+
   &__card-priority {
     height: 32px;
     width: 32px;
@@ -325,6 +357,7 @@
       max-height: 12px;
     }
   }
+
   .progress-container {
     height: 8px;
     width: 110px;
@@ -332,6 +365,7 @@
     border-radius: 5px;
     overflow: hidden;
   }
+
   .progress-bar {
     height: 100%;
     background: var(--progressbar);
@@ -370,6 +404,7 @@
           padding: 10px 16px;
         }
       }
+
       &__search-container {
         display: flex;
         gap: 32px;
@@ -378,6 +413,7 @@
           display: none;
         }
       }
+
       &__search-field {
         display: flex;
         width: 100%;
@@ -387,6 +423,7 @@
         border: solid 1px var(--gray);
         padding: 8px 16px;
         border-radius: 10px;
+
         button {
           display: flex;
         }
@@ -396,15 +433,18 @@
           height: 100%;
           width: 100%;
           font-size: 20px;
+
           &:focus {
             outline: none;
           }
+
           ::placeholder {
             font-size: 20px;
           }
         }
       }
     }
+
     .kanban {
       width: 100%;
       flex: 1;
@@ -416,6 +456,7 @@
         width: 100%;
         height: auto;
       }
+
       &__container-cards {
         flex-direction: row;
         overflow-x: auto;

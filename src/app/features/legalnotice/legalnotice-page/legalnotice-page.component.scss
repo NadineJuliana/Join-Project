@@ -3,10 +3,12 @@
 :host ::ng-deep .join-highlight {
   color: var(--accent);
 }
+
 :host ::ng-deep .legalnotice a {
   color: var(--accent);
   font-weight: 500;
 }
+
 :host ::ng-deep .developer-highlight {
   color: var(--accent);
   font-weight: 500;
@@ -18,37 +20,44 @@
   overflow-y: auto;
   scrollbar-width: none;
   padding: 80px;
+
   &_header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     padding-bottom: 40px;
-    & button{
+
+    & button {
       display: none;
     }
   }
+
   h4 {
     padding: 20px 0 20px 0;
     font-weight: bold;
   }
+
   h5 {
     font-weight: bold;
     line-height: 1;
   }
+
   p {
     padding: 0px 0 20px 0;
   }
+
   li {
     margin-left: 20px;
+
     p {
       padding: 0;
     }
   }
 }
 
-@media(max-width: $bp-lg){
-  .legalnotice_header{
-    button{
+@media (max-width: $bp-lg) {
+  .legalnotice_header {
+    button {
       display: block;
     }
   }
