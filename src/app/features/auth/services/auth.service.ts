@@ -57,19 +57,6 @@ export class AuthService {
   }
 
   /** Login an existing user */
-  // async login(email: string, password: string) {
-  //   const { data, error } = await this.client.auth.signInWithPassword({
-  //     email,
-  //     password,
-  //   });
-  //   if (error) return;
-  //   const userEmail = data.user?.email;
-  //   if (userEmail) {
-  //     await this.contactsService.loadCurrentUserContact(userEmail);
-  //   }
-  //   return data;
-  // }
-
   async login(email: string, password: string): Promise<AuthResult> {
     try {
       const { data, error } = await this.client.auth.signInWithPassword({
@@ -90,16 +77,7 @@ export class AuthService {
   }
 
   /** Login as guest user */
-  // async loginAsGuest() {
-  //   localStorage.setItem('guest', 'true');
-  //   const { data, error } = await this.client.auth.signInWithPassword({
-  //     email: 'guest@join-app.com',
-  //     password: 'guest123456',
-  //   });
-  //   if (error) throw error;
-  //   return data;
-  // }
-   async loginAsGuest(): Promise<AuthResult> {
+  async loginAsGuest(): Promise<AuthResult> {
     try {
       localStorage.setItem('guest', 'true');
       const { data, error } = await this.client.auth.signInWithPassword({
