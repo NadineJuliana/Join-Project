@@ -215,7 +215,12 @@
           <span class="material-icons" aria-hidden="true">close</span>
         </button>
 
-        <button type="button" class="btn btn--primary" (click)="submitTask()"  [disabled]="form.invalid || isSubmitting">
+        <button
+          type="button"
+          class="btn btn--primary"
+          (click)="submitTask()"
+          [disabled]="form.invalid || isSubmitting"
+        >
           Create Task
           <span class="material-icons" aria-hidden="true">check</span>
         </button>

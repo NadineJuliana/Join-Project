@@ -26,9 +26,8 @@
       </button>
     </div>
   </div>
-  <!-- Der äußere Container muss cdkDropListGroup haben -->
+
   <div class="kanban" cdkDropListGroup>
-    <!-- Jede Spalte ist eine cdkDropList (Ablagebereich) -->
     @for (column of boardColumns(); track column.id) {
       <div class="kanban__container">
         <div class="kanban__headline">
@@ -38,7 +37,6 @@
           </button>
         </div>
 
-        <!-- Das ist der Drop-Container für eine Spalte -->
         <div
           cdkDropList
           [id]="column.id"
@@ -52,14 +50,12 @@
           }"
           class="kanban__container-cards"
         >
-          <!-- "No task" nur zeigen, wenn keine Tasks existieren -->
           @if (column.tasks.length === 0) {
             <div class="kanban__notask">
               <p>No tasks</p>
             </div>
           }
 
-          <!-- Jede Task ist ein draggable Element -->
           @for (task of column.tasks; track task.id) {
             <div
               (click)="openDetailDialog(task)"
@@ -110,10 +106,10 @@
               </div>
               <div class="board__card-content">
                 <p class="board__card-content__card-headline">
-                  {{ task.title }}
+                  {{ task.title | ellipsis: 50 }}
                 </p>
                 <p class="board__card-content__card-description">
-                  {{ task.description | ellipsis: 50 }}
+                  {{ task.description | ellipsis: 40 }}
                 </p>
               </div>
               <div class="board__card-tools">

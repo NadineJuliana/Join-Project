@@ -8,7 +8,7 @@
       <div class="contacts__list__groupletter">
         <h5>{{ group.letter }}</h5>
       </div>
-      <hr class="contacts__hrline">
+      <hr class="contacts__hrline" />
 
       @for (contact of group.contacts; track contact.id) {
         <div
@@ -24,8 +24,8 @@
           </div>
 
           <div class="contacts__list__rows">
-            <h5>{{ contact.name | ellipsis:18 }}</h5>
-            <p>{{ contact.email | ellipsis:30 }}</p>
+            <h5>{{ contact.name | ellipsis: 18 }}</h5>
+            <p>{{ contact.email | ellipsis: 30 }}</p>
           </div>
         </div>
       }

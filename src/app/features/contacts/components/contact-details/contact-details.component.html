@@ -3,7 +3,12 @@
     <h1>Contacts</h1>
     <div class="contacts__separator"></div>
     <h4>Better with a team</h4>
-    <button class="contacts__back-btn" type="button" (click)="back.emit()" aria-label="Back to list">
+    <button
+      class="contacts__back-btn"
+      type="button"
+      (click)="back.emit()"
+      aria-label="Back to list"
+    >
       <span class="material-icons">arrow_back</span>
     </button>
   </div>
@@ -40,7 +45,9 @@
 
         <div class="contacts__mail">
           <h6>Email</h6>
-          <p><span>{{ contact.email }}</span></p>
+          <p>
+            <span>{{ contact.email }}</span>
+          </p>
         </div>
 
         <div class="contacts__phone">

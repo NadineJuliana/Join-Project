@@ -80,7 +80,7 @@
       @if (
         form.controls.password.touched &&
         !form.controls.password.disabled &&
-        form.controls.password.hasError('required')
+        form.controls.password.hasError("required")
       ) {
         <p>Please enter a password</p>
       }
@@ -88,7 +88,7 @@
       @if (
         form.controls.password.touched &&
         !form.controls.password.disabled &&
-        form.controls.password.hasError('minlength')
+        form.controls.password.hasError("minlength")
       ) {
         <p>Password must be at least 6 characters</p>
       }
