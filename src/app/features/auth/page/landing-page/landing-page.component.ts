@@ -7,36 +7,36 @@ import { AuthService } from '../../services/auth.service';
 /**
  * @category Pages
  * @description Landing page component showing login or signup forms and controlling intro playback.
- */
-@Component({
-  selector: 'app-landing-page',
-  imports: [LoginFormComponent, SignupFormComponent, RouterLink],
-  templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.scss',
-})
-export class LandingPageComponent implements OnInit {
-  /** Flag to skip intro animation */
-  skipIntro = false;
+  */
+  @Component({
+    selector: 'app-landing-page',
+    imports: [LoginFormComponent, SignupFormComponent, RouterLink],
+    templateUrl: './landing-page.component.html',
+    styleUrl: './landing-page.component.scss',
+  })
+  export class LandingPageComponent implements OnInit {
+    /** Flag to skip intro animation */
+      skipIntro = false;
 
-  /** Injected Router and AuthService */
-  constructor(
-    private readonly router: Router,
-    private readonly authService: AuthService,
-  ) {}
+    /** Injected Router and AuthService */
+      constructor(
+        private readonly router: Router,
+        private readonly authService: AuthService,
+      ) {}
 
-  /** Initialize component and update landing intro state */
-  ngOnInit() {
-    this.skipIntro = this.authService.landingIntroPlayed;
-    this.authService.landingIntroPlayed = true;
+    /** Initialize component and update landing intro state */
+      ngOnInit() {
+        this.skipIntro = this.authService.landingIntroPlayed;
+        this.authService.landingIntroPlayed = true;
+      }
+
+    /** Show signup form if URL starts with /signup */
+      get showSignupForm() {
+        return this.router.url.startsWith('/signup');
+      }
+
+    /** Navigate to signup form */
+      openSignupForm() {
+        this.router.navigate(['/signup']);
+      }
   }
-
-  /** Show signup form if URL starts with /signup */
-  get showSignupForm() {
-    return this.router.url.startsWith('/signup');
-  }
-
-  /** Navigate to signup form */
-  openSignupForm() {
-    this.router.navigate(['/signup']);
-  }
-}

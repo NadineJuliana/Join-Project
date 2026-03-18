@@ -9,35 +9,35 @@ import { ToastsService } from '../../../../core/services/toasts.service';
  * @description Dialog component used to create a new contact.
  * Uses ContactFormComponent and handles persistence and toast notifications.
  */
-@Component({
-  selector: 'app-contact-dialog',
-  imports: [ContactFormComponent],
-  templateUrl: './contact-dialog.component.html',
-  styleUrl: './contact-dialog.component.scss',
-})
-export class ContactDialogComponent {
-  /** Injected ContactsService for database operations */
-  private contactsService = inject(ContactsService);
+  @Component({
+    selector: 'app-contact-dialog',
+    imports: [ContactFormComponent],
+    templateUrl: './contact-dialog.component.html',
+    styleUrl: './contact-dialog.component.scss',
+  })
+  export class ContactDialogComponent {
+    /** Injected ContactsService for database operations */
+      private contactsService = inject(ContactsService);
 
-  /** Injected ToastsService for user notifications */
-  private toastService = inject(ToastsService);
+    /** Injected ToastsService for user notifications */
+      private toastService = inject(ToastsService);
 
-  /** Emits when the dialog should close */
-  closeDialog = output<void>();
+    /** Emits when the dialog should close */
+      closeDialog = output<void>();
 
-  /** Close the dialog */
-  onClose() {
-    this.closeDialog.emit();
+    /** Close the dialog */
+      onClose() {
+        this.closeDialog.emit();
+      }
+
+    /** Handle contact creation */
+      async onCreateContact(contact: Contact) {
+        await this.contactsService.addContact(contact);
+        this.toastService.showToast({
+          message: 'Contact successfully created',
+          classname: 'toast__success',
+          duration: 1000,
+        });
+        this.onClose();
+      }
   }
-
-  /** Handle contact creation */
-  async onCreateContact(contact: Contact) {
-    await this.contactsService.addContact(contact);
-    this.toastService.showToast({
-      message: 'Contact successfully created',
-      classname: 'toast__success',
-      duration: 1000,
-    });
-    this.onClose();
-  }
-}

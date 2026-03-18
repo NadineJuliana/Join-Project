@@ -2,74 +2,74 @@
  * @category Models
  * @description Model representing a contact with name, email, phone, and color.
  */
-export class Contact {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  color: string;
+  export class Contact {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    color: string;
 
-  /** Create a contact instance from partial data */
-  constructor(data: Partial<Contact>) {
-    this.id = data.id ?? 0;
-    this.name = this.getFormattedName(data.name ?? '');
-    this.email = data.email ?? '';
-    this.phone = this.getFormattedPhone(data.phone ?? '');
-    this.color = data.color ?? this.getRandomColor();
-  }
+    /** Create a contact instance from partial data */
+      constructor(data: Partial<Contact>) {
+        this.id = data.id ?? 0;
+        this.name = this.getFormattedName(data.name ?? '');
+        this.email = data.email ?? '';
+        this.phone = this.getFormattedPhone(data.phone ?? '');
+        this.color = data.color ?? this.getRandomColor();
+      }
 
-  /** Return a random color from predefined palette */
-  getRandomColor(): string {
-    const colors = [
-      '#FF7A00',
-      '#9327FF',
-      '#6E52FF',
-      '#FC71FF',
-      '#FFBB2B',
-      '#1FD7C1',
-      '#462F8A',
-      '#FF4646',
-      '#00BEE8',
-    ];
-    const randomColor = Math.floor(Math.random() * colors.length);
-    return colors[randomColor];
-  }
+    /** Return a random color from predefined palette */
+      getRandomColor(): string {
+        const colors = [
+          '#FF7A00',
+          '#9327FF',
+          '#6E52FF',
+          '#FC71FF',
+          '#FFBB2B',
+          '#1FD7C1',
+          '#462F8A',
+          '#FF4646',
+          '#00BEE8',
+        ];
+        const randomColor = Math.floor(Math.random() * colors.length);
+        return colors[randomColor];
+      }
 
-  /** Return clean JSON for database insertion */
-  getCleanAddJson() {
-    return {
-      name: this.getFormattedName(this.name),
-      email: this.email,
-      phone: this.getFormattedPhone(this.phone),
-      color: this.color,
-    };
-  }
+    /** Return clean JSON for database insertion */
+      getCleanAddJson() {
+        return {
+          name: this.getFormattedName(this.name),
+          email: this.email,
+          phone: this.getFormattedPhone(this.phone),
+          color: this.color,
+        };
+      }
 
-  /** Format name with capitalized first letters */
-  getFormattedName(name: string): string {
-    return name
-      .trim()
-      .toLowerCase()
-      .split(' ')
-      .filter((i) => i.length > 0)
-      .map((i) => i.charAt(0).toUpperCase() + i.slice(1))
-      .join(' ');
-  }
+    /** Format name with capitalized first letters */
+      getFormattedName(name: string): string {
+        return name
+          .trim()
+          .toLowerCase()
+          .split(' ')
+          .filter((i) => i.length > 0)
+          .map((i) => i.charAt(0).toUpperCase() + i.slice(1))
+          .join(' ');
+      }
 
-  /** Format phone to human-readable string */
-  getPrettyPhone(phone: string): string {
-    const match = phone.match(/^(\+\d{2})(\d{3})(\d+)$/);
-    if (!match) return phone;
-    return `${match[1]} ${match[2]} ${match[3].replace(/(\d{3})(?=\d)/g, '$1 ')}`;
-  }
+    /** Format phone to human-readable string */
+      getPrettyPhone(phone: string): string {
+        const match = phone.match(/^(\+\d{2})(\d{3})(\d+)$/);
+        if (!match) return phone;
+        return `${match[1]} ${match[2]} ${match[3].replace(/(\d{3})(?=\d)/g, '$1 ')}`;
+      }
 
-  /** Format phone and ensure proper international format */
-  getFormattedPhone(phone?: string | null): string {
-    if (!phone) return '';
-    phone = phone.replace(/[^\d+]/g, '');
-    if (phone.startsWith('0')) {
-      phone = '+49' + phone.substring(1);
-    }
-    return this.getPrettyPhone(phone);
+    /** Format phone and ensure proper international format */
+      getFormattedPhone(phone?: string | null): string {
+        if (!phone) return '';
+        phone = phone.replace(/[^\d+]/g, '');
+        if (phone.startsWith('0')) {
+          phone = '+49' + phone.substring(1);
+        }
+        return this.getPrettyPhone(phone);
+      }
   }
-}
